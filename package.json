@@ -1,0 +1,32 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/danang-rent/website#readme",
+  "bugs": {
+    "url": "https://github.com/danang-rent/website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danang-rent/website.git"
+  },
+  "license": "MIT",
+  "author": "Vladimir Spirin (spirin.vladimir@gmail.com)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "ads2wasm": "node ads2wasm.cjs",
+    "asbuild": "asc assembly/index.ts --target release",
+    "build": "npm run ads2wasm && npm run asbuild",
+    "start": "node nhatot.cjs"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.28.18"
+  },
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  }
+}

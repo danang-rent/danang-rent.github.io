@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Danang Rent Map</title>
+    <meta property="og:description" content="Map of Danang with apartment/room/flat/house rental ads" />
+    <mezta property="og:created" content="2026-06-01" />
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css' />
+    <script src='https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js'></script>
+    <script>
+    const styles = {
+        bright: 'https://tiles.openfreemap.org/styles/bright',
+        dark: 'https://tiles.openfreemap.org/styles/dark'
+    }
+    window.dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    document.documentElement.toggleAttribute('dark', window.dark)
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        mediaQuery.addEventListener('change', e => {
+            document.documentElement.toggleAttribute('dark', window.dark = e.matches)
+            map.setStyle(window.dark ? styles.dark : styles.bright)
+        })
+    }
+    </script>
+    <style>
+        body { margin: 0; padding: 0; }
+        html, body, #map { height: 100%; }
+        html[dark] .maplibregl-ctrl-attrib {
+            background: rgba(30, 30, 30, 0.9);
+            color: grey;
+        }    
+        html[dark] .maplibregl-ctrl-attrib a {
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+<style>
+
+</style>
+
+<div id="map"></div>
+<div class="logo">
+</div>
+<script type="module">
+    import { init, get_danang_bounds, get_ads, get_ad_size, get_url, get_key_created_at } from "./danang.kim.js";
+    const raw_danang_bounds = get_danang_bounds()
+    const danang_bounds = new maplibregl.LngLatBounds(
+        [raw_danang_bounds[0], raw_danang_bounds[1]],
+        [raw_danang_bounds[2], raw_danang_bounds[3]]
+    )
+    const ad_size = get_ad_size()
+    const raw_ads = get_ads()
+    const ads = Array(raw_ads.length / ad_size)
+    const southwest = [Infinity, Infinity]
+    const northeast = [-Infinity, -Infinity]
+    for (var i = 0; i < raw_ads.length; i += ad_size) {
+        var id = raw_ads[i]
+        var price = raw_ads[i + 1]
+        var longitude = raw_ads[i + 2]
+        var latitude = raw_ads[i + 3]
+        ads[i / ad_size] = { id, price, longitude, latitude }
+        if (longitude < southwest[0]) southwest[0] = longitude
+        if (longitude > northeast[0]) northeast[0] = longitude
+        if (latitude < southwest[1]) southwest[1] = latitude
+        if (latitude > northeast[1]) northeast[1] = latitude
+    }
+    const ads_bounds = new maplibregl.LngLatBounds(southwest, northeast)
+    const KEY = '2f7b49d2bfa8e33c86896a560d87e1be9b8bc98a03bb337898b8be5146a6bb32'// contact spirin.vladimir@gmail.com
+    
+    const auth = init(
+        BigInt(Date.now()),
+        location.href,
+        window.innerWidth,
+        window.innerHeight,
+        KEY
+    )
+    
+    const expired_in_hours = (Date.now() - get_key_created_at()) / 1000 / 60 / 60//hours
+    
+    console.log('Key', KEY, 'expired in', expired_in_hours, 'hours')
+
+    window.map = new maplibregl.Map({
+        container: 'map',
+        style: window.dark
+            ? 'https://tiles.openfreemap.org/styles/dark'
+            : 'https://tiles.openfreemap.org/styles/bright',
+        bounds: ads_bounds,
+        fitBoundsOptions: {
+            padding: 20
+        },
+        maxBounds: danang_bounds
+    })
+
+    map.on('style.load', () => {
+        map.getSource('prices') || map.addSource('prices', {
+            type: 'geojson',
+            data: {
+                type: 'FeatureCollection',
+                features: ads.map(ad => ({
+                    id: ad.id,
+                    type: 'Feature',
+                    properties: {
+                        price: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [ad.longitude, ad.latitude]
+                    }
+                }))
+            }
+        });
+        const hover_scale = [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1.8,
+            1
+        ]
+        map.addLayer({
+            id: 'price-circle',
+            type: 'circle',
+            source: 'prices',
+            paint: {
+                'circle-radius': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    1, ['*', 1, hover_scale],
+                    22, ['*', 4, hover_scale]
+                ],
+                'circle-color': '#ff0000'
+            }
+        });
+        map.addLayer({
+            id: 'price-text',
+            type: 'symbol',
+            source: 'prices',
+            minzoom: 13,
+            layout: {
+                'text-field': ['get', 'price'],
+                'text-size': 10,
+                'text-font': ['Noto Sans Bold'],
+                'text-anchor': 'top',
+                'text-offset': [0, 0.3]
+            },
+            paint: {
+                'text-color': dark ? '#ffffff' : '#000000',
+            }
+        })
+        var hovered_id = null
+        const mouseenter = e => {            
+            if (hovered_id != null) {
+                map.setFeatureState(
+                    { source: 'prices', id: hovered_id },
+                    { hover: false }
+                )
+            }
+            
+            if (!e.features || !e.features.length) return
+            
+            hovered_id = e.features[0].id
+            
+            map.setFeatureState(
+                { source: 'prices', id: hovered_id },
+                { hover: true }
+            )
+            
+            map.getCanvas().style.cursor = 'pointer'
+        }
+        const mouseleave = () => {
+            if (hovered_id != null) {
+                map.setFeatureState(
+                    { source: 'prices', id: hovered_id },
+                    { hover: false }
+                )
+            }
+            
+            hovered_id = null
+            map.getCanvas().style.cursor = ''
+        }
+        map.on('mouseenter', 'price-circle', mouseenter)            
+        map.on('mouseenter', 'price-text', mouseenter) 
+        map.on('mouseleave', 'price-circle', mouseleave)
+        map.on('mouseleave', 'price-text', mouseleave)
+        map.on('click', e => {
+            const features = map.queryRenderedFeatures(e.point, {
+                layers: ['price-circle', 'price-text']
+            })
+            if (!features.length) return
+            const id = features[0].id
+            
+            window.open(get_url(id), '_blank')
+        })
+    })
+</script>
+</body>
+</html>
