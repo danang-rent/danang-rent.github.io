@@ -2103,17 +2103,13 @@
     window.map = new maplibregl.Map({
         container: 'map',
         style: dark ? styles.dark : styles.bright,
-        //bounds: ads_bounds,
-        //fitBoundsOptions: {
-        //    padding: 20
-        //},
-        //center: [108.202, 16.054],
-        //zoom: 12.5,
+        center: [108.18, 16.054],
+        zoom: 12,
         maxBounds: danang_bounds
     })
     
     map.on('style.load', () => {
-        //map.fitBounds(ads_bounds, {padding: 20})
+
         map.getSource('prices') || map.addSource('prices', {
             type: 'geojson',
             data: {
@@ -2130,7 +2126,10 @@
                     }
                 }))
             }
-        });
+        })
+        const scale = window.devicePixelRatio || 1
+        const font_size = scale >= 2 ? 12 * scale : 22
+        const circle_radius = scale >= 2 ? 5 * scale : 6
         const hover_scale = [
             'case',
             ['boolean', ['feature-state', 'hover'], false],
@@ -2146,10 +2145,11 @@
                     'interpolate',
                     ['linear'],
                     ['zoom'],
-                    1, ['*', 1, hover_scale],
-                    22, ['*', 4, hover_scale]
+                    1, ['*', 2 * scale, hover_scale],
+                    14, ['*', circle_radius, hover_scale]
                 ],
-                'circle-color': '#ff0000'
+                'circle-color': '#ff69b4',   // hot pink
+                'circle-opacity': 0.6
             }
         });
         map.addLayer({
@@ -2159,10 +2159,10 @@
             minzoom: 13,
             layout: {
                 'text-field': ['get', 'price'],
-                'text-size': 10,
+                'text-size': font_size,
                 'text-font': ['Noto Sans Bold'],
                 'text-anchor': 'top',
-                'text-offset': [0, 0.3]
+                'text-offset': [0, 0.5]
             },
             paint: {
                 'text-color': dark ? '#ffffff' : '#000000',
