@@ -2108,6 +2108,8 @@
         zoom: 12,
         maxBounds: danang_bounds
     })
+    map.dragRotate.disable()
+    map.touchZoomRotate.disableRotation()
     
     map.on('style.load', () => {
 
