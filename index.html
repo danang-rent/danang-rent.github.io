@@ -2127,9 +2127,16 @@
                 }))
             }
         })
-        const scale = window.devicePixelRatio || 1
-        const font_size = scale >= 2 ? 12 * scale : 22
-        const circle_radius = scale >= 2 ? 5 * scale : 6
+        const w = window.innerWidth;
+        const font_size =
+            w < 500 ? 14 :
+            w < 1200 ? 16 :
+            20
+
+        const circle_radius =
+            w < 500 ? 3 :
+            w < 1200 ? 4 :
+            5
         const hover_scale = [
             'case',
             ['boolean', ['feature-state', 'hover'], false],
@@ -2145,7 +2152,7 @@
                     'interpolate',
                     ['linear'],
                     ['zoom'],
-                    1, ['*', 2 * scale, hover_scale],
+                    1, ['*', 2, hover_scale],
                     14, ['*', circle_radius, hover_scale]
                 ],
                 'circle-color': '#ff69b4',   // hot pink
