@@ -167,7 +167,8 @@
                     id: ad.id,
                     type: 'Feature',
                     properties: {
-                        price: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                        price: ad.price, 
+                        price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
                     },
                     geometry: {
                         type: 'Point',
@@ -214,11 +215,12 @@
             source: 'prices',
             minzoom: 13,
             layout: {
-                'text-field': ['get', 'price'],
+                'text-field': ['get', 'price_label'],
                 'text-size': font_size,
                 'text-font': ['Noto Sans Bold'],
                 'text-anchor': 'top',
-                'text-offset': [0, 0.5]
+                'text-offset': [0, 0.5],
+                'symbol-sort-key': ['get', 'price']
             },
             paint: {
                 'text-color': dark ? '#ffffff' : '#000000',
@@ -263,8 +265,17 @@
             const features = map.queryRenderedFeatures(e.point, {
                 layers: ['price-circle', 'price-text']
             })
-            if (!features.length) return
-            const id = features[0].id
+            if (!features || !features.length) return
+            var i = 0
+            var i_min_price = i
+            var min_price = features[i_min_price].properties.price
+            for (i = 1; i < features.length; i++) {
+                if (features[i].properties.price < min_price) {
+                    min_price = features[i].properties.price
+                    i_min_price = i
+                }    
+            }
+            const id = features[i_min_price].id
             
             window.open(get_url(id), '_blank')
         })
