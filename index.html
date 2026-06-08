@@ -102,6 +102,24 @@
 </div>
 <script type="module">
     import { init, get_danang_bounds, get_ads, get_ad_size, get_url, get_key_created_at } from "./danang.kim.js";
+    const KEY = '4372c9c83a236b3e1ce877f48fe80b87e1b43466453241c92252a897531f73f8'// contact spirin.vladimir@gmail.com
+    
+    const auth = init(
+        BigInt(Date.now()),
+        location.href,
+        window.innerWidth,
+        window.innerHeight,
+        KEY
+    )
+    
+    if (!auth) {
+        console.log('Key', KEY, 'is expired')
+    } else {
+        const expired_in = Number(get_key_created_at()) + 12 * 60 * 60 * 1000 - Date.now()//ms
+        const expired_in_hours = Math.floor(expired_in / 1000 / 60 / 60)//hours
+        const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
+        console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
+    }
     const raw_danang_bounds = get_danang_bounds()
     const danang_bounds = new maplibregl.LngLatBounds(
         [raw_danang_bounds[0], raw_danang_bounds[1]],
@@ -124,22 +142,9 @@
         if (latitude > northeast[1]) northeast[1] = latitude
     }
     const ads_bounds = new maplibregl.LngLatBounds(southwest, northeast)
-    const KEY = '4372c9c83a236b3e1ce877f48fe80b87e1b43466453241c92252a897531f73f8'// contact spirin.vladimir@gmail.com
-    
-    const auth = init(
-        BigInt(Date.now()),
-        location.href,
-        window.innerWidth,
-        window.innerHeight,
-        KEY
-    )
-    
-    const expired_in_hours = (Date.now() - Number(get_key_created_at())) / 1000 / 60 / 60//hours
-    
-    console.log('Key', KEY, 'expired in', expired_in_hours, 'hours')
 
     const protocol = new pmtiles.Protocol()
-    maplibregl.addProtocol("pmtiles", protocol.tile)
+    maplibregl.addProtocol('pmtiles', protocol.tile)
     
     window.map = new maplibregl.Map({
         container: 'map',
