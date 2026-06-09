@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - main
+    paths:
+     - 'index.html'
+     - 'danang.kim.js'
+     - 'danang.kim.wasm'
+     - 'danang.pmtiles'
+     - 'logo-dark.svg'
+     - 'logo-light.svg'
+     - 'robots.txt'
+     - 'sitemap.xml'
 
   workflow_run:
     workflows:
