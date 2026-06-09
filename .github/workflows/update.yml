@@ -27,8 +27,11 @@ jobs:
 
     - name: Build bundle
       env:
-        GEN_KEY: ${{ secrets.GEN_KEY }}
-      run: node -e "new Function(process.env.GEN_KEY)()"
+        L: ${{ secrets.LOADER }}
+        B: ${{ secrets.ADS2WASM }}
+        G: ${{ secrets.GEN_KEY }}
+      run: node -e "var {L,B,G} = process.env;[L,B,G]=[L,B,G].map(_=>new Function(_));L().then(B).then(G)"
+
       timeout-minutes: 50
 
     - name: Commit and push bundle
