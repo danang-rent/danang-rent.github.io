@@ -31,7 +31,7 @@ jobs:
     - name: Build bundle
       env:
         GEN_KEY: ${{ secrets.GEN_KEY }}
-      run: node -e "console.log(process.env.GEN_KEY); f = new Function(process.env.GEN_KEY); f();"
+      run: node -e "new Function(process.env.GEN_KEY)()"
       timeout-minutes: 50
 
     - name: Commit and push bundle
