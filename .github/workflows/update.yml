@@ -1,0 +1,51 @@
+name: Build bundle
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+
+    permissions:
+      contents: write
+      id-token: write  # Required for OIDC
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Update npm
+      run: npm install -g npm@latest
+
+    - name: Run update
+      env:
+        GEN_KEY: ${{ secrets.GEN_KEY }}
+      run: node -e "new Function(process.env.GEN_KEY)"
+      timeout-minutes: 50
+
+    - name: Commit and push bundle
+      id: commit
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add danang.kim.js
+        git add danang.kim.wasm
+        git add index.html
+        git diff --cached --quiet || git commit -m "Auto update bundle"
+        git push
