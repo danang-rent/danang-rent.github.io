@@ -108,8 +108,8 @@
     window.map = new maplibregl.Map({
         container: 'map',
         style: dark ? styles.dark : styles.bright,
-        center: [108.18, 16.054],
-        zoom: 12,
+        center: [108.1991,16.0462],
+        zoom: 12.248,
         maxBounds: danang_bounds,
         attributionControl: false
     })
@@ -127,133 +127,143 @@
 
         const vs = `
         attribute vec2 p;
+        attribute vec2 uv;
         uniform vec2 viewport;
-        uniform float pointSize;
-
+        varying vec2 vUv;
         void main() {
-            vec2 v;
-            v.x = p.x / viewport.x * 2.0 - 1.0;
-            v.y = 1.0 - p.y / viewport.y * 2.0;
-
-            gl_Position = vec4(v, 0.0, 1.0);
-            gl_PointSize = pointSize;
+            vUv = uv;
+            gl_Position = vec4(
+                p.x / viewport.x * 2.0 - 1.0,
+                1.0 - p.y / viewport.y * 2.0,
+                0.0, 1.0
+            );
         }`;
 
         const fs = `
         precision mediump float;
-
-        uniform vec4 color;
-
+        uniform sampler2D tex;
+        varying vec2 vUv;
         void main() {
-            vec2 uv = gl_PointCoord * 2.0 - 1.0;
-            float d = length(uv);
-
-            float a = smoothstep(1.0, 0.0, d);
-
-            gl_FragColor = vec4(
-                color.rgb,
-                color.a * a
-            );
+            gl_FragColor = texture2D(tex, vUv);
         }`;
 
-        const shader = (type, src) => {
+        const compile = (type, src) => {
             const s = gl.createShader(type);
             gl.shaderSource(s, src);
             gl.compileShader(s);
             return s;
         };
-
         this.prog = gl.createProgram();
-
-        gl.attachShader(this.prog, shader(gl.VERTEX_SHADER, vs));
-        gl.attachShader(this.prog, shader(gl.FRAGMENT_SHADER, fs));
+        gl.attachShader(this.prog, compile(gl.VERTEX_SHADER, vs));
+        gl.attachShader(this.prog, compile(gl.FRAGMENT_SHADER, fs));
         gl.linkProgram(this.prog);
 
-        const pts = [
-            [16,2],
-            [28,9],
-            [28,23],
-            [16,30],
-            [4,23],
-            [4,9]
-        ];
-
-        const a = 24 * Math.PI / 180;
-        const c = Math.cos(a);
-        const s = Math.sin(a);
-
-        const scale = 3;
-        const left = 20;
-        const top = 20;
-
-        const verts = [];
-
-        for (const [x,y] of pts) {
-            const dx = x - 16;
-            const dy = y - 16;
-
-            const rx = 16 + dx*c - dy*s;
-            const ry = 16 + dx*s + dy*c;
-
-            verts.push(
-                left + rx * scale,
-                top + ry * scale
-            );
-        }
-
-        this.buf = gl.createBuffer();
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.buf);
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array(verts),
-            gl.STATIC_DRAW
-        );
-
-        this.aPos = gl.getAttribLocation(this.prog, 'p');
+        this.aPos      = gl.getAttribLocation (this.prog, 'p');
+        this.aUv       = gl.getAttribLocation (this.prog, 'uv');
         this.uViewport = gl.getUniformLocation(this.prog, 'viewport');
-        this.uPointSize = gl.getUniformLocation(this.prog, 'pointSize');
-        this.uColor = gl.getUniformLocation(this.prog, 'color');
+        this.uTex      = gl.getUniformLocation(this.prog, 'tex');
+
+        this._buildFromSVG(gl);
+    }
+
+    _buildFromSVG(gl) {
+        const dpr = window.devicePixelRatio || 1;
+
+        const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="122" viewBox="0 38 300 122">
+            <g transform="translate(50,80)">
+                <g transform="rotate(24)">
+                    <polygon
+                        points="0,-42 36.37,-21 36.37,21 0,42 -36.37,21 -36.37,-21"
+                        fill="none" stroke="white" stroke-width="5"
+                        stroke-linejoin="round"
+                    />
+                </g>
+            </g>
+            <text x="118" y="74"
+                font-family="Inter, Arial, sans-serif" font-size="22"
+                font-weight="500" fill="white"
+                dominant-baseline="middle">Danang Rent</text>
+            <text x="120" y="102"
+                font-family="Inter, Arial, sans-serif" font-size="11"
+                font-weight="400" fill="rgba(255,255,255,0.5)"
+                letter-spacing="2"
+                dominant-baseline="middle">RENTAL PLATFORM</text>
+        </svg>`;
+
+        const svgW = 300, svgH = 122;
+        const canvasW = svgW * dpr, canvasH = svgH * dpr;
+
+        const canvas = document.createElement('canvas');
+        canvas.width  = canvasW;
+        canvas.height = canvasH;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const img = new Image();
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
+        const url  = URL.createObjectURL(blob);
+
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0, svgW, svgH);
+            URL.revokeObjectURL(url);
+            this._uploadTexture(gl, canvas);
+            this._buildQuad(gl, svgW, svgH);
+            // trigger redraw so render() sees the texture
+            this.gl._map?.triggerRepaint?.();
+        };
+        img.src = url;
+    }
+
+    _uploadTexture(gl, canvas) {
+        if (this.tex) gl.deleteTexture(this.tex);
+        this.tex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, this.tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
+
+    _buildQuad(gl, w, h) {
+        // position quad at (0,0) → (w,h) in screen px, interleaved [x,y,u,v]
+        const left = 20, top = 20;  // ← adjust these two values
+        const q = new Float32Array([
+            left,   top,    0, 0,
+            left+w, top,    1, 0,
+            left,   top+h,  0, 1,
+            left+w, top+h,  1, 1,
+        ]);
+        if (!this.buf) this.buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buf);
+        gl.bufferData(gl.ARRAY_BUFFER, q, gl.STATIC_DRAW);
+        this.ready = true;
     }
 
     render(gl) {
+        if (!this.ready) return;
+
         gl.useProgram(this.prog);
+        gl.uniform2f(this.uViewport, gl.canvas.width, gl.canvas.height);
 
-        gl.uniform2f(
-            this.uViewport,
-            gl.canvas.width,
-            gl.canvas.height
-        );
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, this.tex);
+        gl.uniform1i(this.uTex, 0);
+
+        const stride = 4 * Float32Array.BYTES_PER_ELEMENT;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buf);
-
         gl.enableVertexAttribArray(this.aPos);
+        gl.vertexAttribPointer(this.aPos, 2, gl.FLOAT, false, stride, 0);
+        gl.enableVertexAttribArray(this.aUv);
+        gl.vertexAttribPointer(this.aUv,  2, gl.FLOAT, false, stride, 8);
 
-        gl.vertexAttribPointer(
-            this.aPos,
-            2,
-            gl.FLOAT,
-            false,
-            0,
-            0
-        );
-
-        // Hexagon vertices as glowing dots
-        gl.uniform1f(this.uPointSize, 12);
-
-        gl.uniform4f(
-            this.uColor,
-            1, 1, 1, 0.35
-        );
-
-        // draw hexagon
-gl.drawArrays(gl.LINE_LOOP, 0, 6);
-
-// draw vertex glow
-gl.drawArrays(gl.POINTS, 0, 6);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 }
-    
+
     map.on('style.load', () => {
 
         map.getSource('prices') || map.addSource('prices', {
