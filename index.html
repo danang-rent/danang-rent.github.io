@@ -8,20 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
-    <script defer src="https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js"></script>
     <script>
+    const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
+    const URL_MAPLIBRE = 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js'
+
     maplibre_ready = caches.open('maplibre')
     .then(c =>
-        c.match('https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js')
+        c.match(URL_MAPLIBRE)
         .then(r =>
-            r || fetch('https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js')
+            r || fetch(URL_MAPLIBRE)
             .then(r =>
-                c.put('https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js', r.clone()).then(_ => r)
+                c.put(URL_MAPLIBRE, r.clone()).then(_ => r)
             )
         )
     )
     .then(_ => _.text())
     .then(_ => eval(_))
+
+    pmtiles_ready = caches.open('pmtiles_lib')
+    .then(c =>
+        c.match(URL_PMTILES)
+        .then(r =>
+            r || fetch(URL_PMTILES)
+            .then(r =>
+                c.put(URL_PMTILES, r.clone()).then(_ => r)
+            )
+        )
+    )
+    .then(_ => _.text())
+    .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
+
 
     var cache = null
     
@@ -37,7 +53,7 @@
     )
     .then(_ => _.arrayBuffer())
     .then(_ => cache = new Uint8Array(_))
-
+    
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
@@ -183,6 +199,11 @@
     }
     const raw_danang_bounds = get_danang_bounds()
     
+    Promise.all([
+        pmtiles_ready,
+        maplibre_ready
+    ])
+    .then(() => {
     const protocol = new pmtiles.Protocol()
     maplibregl.addProtocol('pmtiles', protocol.tile)
     
@@ -191,8 +212,6 @@
         window.innerHeight
     ]
 
-    maplibre_ready
-    .then(() => {
     window.map = new maplibregl.Map({
         container: 'map',
         style: dark ? styles.dark : styles.bright,
