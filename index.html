@@ -202,304 +202,282 @@
         maplibre_ready
     ])
     .then(() => {
-    const protocol = new pmtiles.Protocol()
-    maplibregl.addProtocol('pmtiles', protocol.tile)
-    
-    const initial_inner_size = [
-        window.innerWidth,
-        window.innerHeight
-    ]
+        const protocol = new pmtiles.Protocol()
+        maplibregl.addProtocol('pmtiles', protocol.tile)
+        
+        const initial_inner_size = [
+            window.innerWidth,
+            window.innerHeight
+        ]
 
-    window.map = new maplibregl.Map({
-        container: 'map',
-        style: dark ? styles.dark : styles.bright,
-        center: get_center(),
-        zoom: get_zoom(),
-        maxBounds: new maplibregl.LngLatBounds(
-            [raw_danang_bounds[0], raw_danang_bounds[1]],
-            [raw_danang_bounds[2], raw_danang_bounds[3]]
-        ),
-        attributionControl: false
-    })
-    
-    map.dragRotate.disable()
-    map.touchZoomRotate.disableRotation()
-
-    class LogoLayer {
-        id = 'logo'
-        type = 'custom'
-        renderingMode = '2d'
-
-        onAdd(map, gl) {
-            this.gl = gl;
-
-            const vs = `
-            attribute vec2 p;
-            attribute vec2 uv;
-            uniform vec2 viewport;
-            varying vec2 vUv;
-            void main() {
-                vUv = uv;
-                gl_Position = vec4(
-                    p.x / viewport.x * 2.0 - 1.0,
-                    1.0 - p.y / viewport.y * 2.0,
-                    0.0, 1.0
-                );
-            }`;
-
-            const fs = `
-            precision mediump float;
-            uniform sampler2D tex;
-            varying vec2 vUv;
-            void main() {
-                gl_FragColor = texture2D(tex, vUv);
-            }`;
-
-            const compile = (type, src) => {
-                const s = gl.createShader(type);
-                gl.shaderSource(s, src);
-                gl.compileShader(s);
-                return s;
-            };
-            this.prog = gl.createProgram();
-            gl.attachShader(this.prog, compile(gl.VERTEX_SHADER, vs));
-            gl.attachShader(this.prog, compile(gl.FRAGMENT_SHADER, fs));
-            gl.linkProgram(this.prog);
-
-            this.aPos      = gl.getAttribLocation (this.prog, 'p');
-            this.aUv       = gl.getAttribLocation (this.prog, 'uv');
-            this.uViewport = gl.getUniformLocation(this.prog, 'viewport');
-            this.uTex      = gl.getUniformLocation(this.prog, 'tex');
-
-            this._buildFromSVG(gl);
-        }
-
-        _buildFromSVG(gl) {
-            const dpr = window.devicePixelRatio || 1
-            const svg = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="300" height="122" viewBox="0 38 300 122">
-                <g transform="translate(50,80)">
-                    <g transform="rotate(24)">
-                        <polygon
-                            points="0,-42 36.37,-21 36.37,21 0,42 -36.37,21 -36.37,-21"
-                            fill="none" stroke="${dark ? 'white' : 'black'}" stroke-width="5"
-                            stroke-linejoin="round"
-                        />
-                    </g>
-                </g>
-                <text x="118" y="74"
-                    font-family="Inter, Arial, sans-serif" font-size="22"
-                    font-weight="500" fill="${dark ? 'white' : 'black'}"
-                    dominant-baseline="middle"
-                >Danang Rent</text>
-                <text x="120" y="102"
-                    font-family="Inter, Arial, sans-serif" font-size="11"
-                    font-weight="400" fill="rgba(${dark ? '255,255,255' : '0,0,0'},0.5)"
-                    letter-spacing="2"
-                    dominant-baseline="middle"
-                >RENTAL PLATFORM</text>
-            </svg>`
-
-            const svgW = 300, svgH = 122;
-            const canvasW = svgW * dpr, canvasH = svgH * dpr;
-
-            const canvas = document.createElement('canvas');
-            canvas.width  = canvasW;
-            canvas.height = canvasH;
-            const ctx = canvas.getContext('2d');
-            ctx.scale(dpr, dpr);
-
-            const img = new Image();
-            const blob = new Blob([svg], { type: 'image/svg+xml' });
-            const url  = URL.createObjectURL(blob);
-
-            img.onload = () => {
-                ctx.fillStyle = dark ? '#1a1a2e' : '#ffffff';
-                ctx.drawImage(img, 0, 0, svgW, svgH);
-                URL.revokeObjectURL(url);
-                this._uploadTexture(gl, canvas);
-                this._buildQuad(gl, svgW, svgH);
-                // trigger redraw so render() sees the texture
-                this.gl._map?.triggerRepaint?.();
-            }
-            img.src = url
-        }
-
-        _uploadTexture(gl, canvas) {
-            if (this.tex) gl.deleteTexture(this.tex)
-            this.tex = gl.createTexture()
-            gl.bindTexture(gl.TEXTURE_2D, this.tex)
-            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-        }
-
-        _buildQuad(gl, w, h) {
-            // position quad at (0,0) → (w,h) in screen px, interleaved [x,y,u,v]
-            const left = 20, top = 20;  // ← adjust these two values
-            const q = new Float32Array([
-                left,   top,    0, 0,
-                left+w, top,    1, 0,
-                left,   top+h,  0, 1,
-                left+w, top+h,  1, 1,
-            ])
-            if (!this.buf) this.buf = gl.createBuffer()
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
-            gl.bufferData(gl.ARRAY_BUFFER, q, gl.STATIC_DRAW)
-            this.ready = true
-        }
-
-        render(gl) {
-            if (!this.ready) return
-            gl.useProgram(this.prog)
-            gl.uniform2f(this.uViewport, gl.canvas.width, gl.canvas.height)
-            gl.enable(gl.BLEND)
-            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA) // ← not SRC_ALPHA, ONE
-            gl.activeTexture(gl.TEXTURE0)
-            gl.bindTexture(gl.TEXTURE_2D, this.tex)
-            gl.uniform1i(this.uTex, 0)
-            const stride = 4 * Float32Array.BYTES_PER_ELEMENT
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
-            gl.enableVertexAttribArray(this.aPos)
-            gl.vertexAttribPointer(this.aPos, 2, gl.FLOAT, false, stride, 0)
-            gl.enableVertexAttribArray(this.aUv)
-            gl.vertexAttribPointer(this.aUv,  2, gl.FLOAT, false, stride, 8)
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
-        }
-    }
-
-    map.on('style.load', () => {
-        if (
-            initial_inner_size[0] != window.innerWidth ||
-            initial_inner_size[1] != window.innerHeight
-        ) map.resize()
-
-        map.getSource('prices') || map.addSource('prices', {
-            type: 'geojson',
-            data: {
-                type: 'FeatureCollection',
-                features: ads.map(ad => ({
-                    id: ad.id,
-                    type: 'Feature',
-                    properties: {
-                        price: ad.price, 
-                        price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
-                    },
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [ad.longitude, ad.latitude]
-                    }
-                }))
-            }
+        window.map = new maplibregl.Map({
+            container: 'map',
+            style: dark ? styles.dark : styles.bright,
+            center: get_center(),
+            zoom: get_zoom(),
+            maxBounds: new maplibregl.LngLatBounds(
+                [raw_danang_bounds[0], raw_danang_bounds[1]],
+                [raw_danang_bounds[2], raw_danang_bounds[3]]
+            ),
+            attributionControl: false
         })
-        const w = window.innerWidth;
-        const font_size =
+    
+        map.dragRotate.disable()
+        map.touchZoomRotate.disableRotation()
+
+        class LogoLayer {
+            id = 'logo'
+            type = 'custom'
+            renderingMode = '2d'
+
+            onAdd(map, gl) {
+                this.gl = gl;
+
+                const vs = `
+                attribute vec2 p;
+                attribute vec2 uv;
+                uniform vec2 viewport;
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(
+                        p.x / viewport.x * 2.0 - 1.0,
+                        1.0 - p.y / viewport.y * 2.0,
+                        0.0, 1.0
+                    );
+                }`;
+
+                const fs = `
+                precision mediump float;
+                uniform sampler2D tex;
+                varying vec2 vUv;
+                void main() {
+                    gl_FragColor = texture2D(tex, vUv);
+                }`;
+
+                const compile = (type, src) => {
+                    const s = gl.createShader(type);
+                    gl.shaderSource(s, src);
+                    gl.compileShader(s);
+                    return s;
+                };
+                this.prog = gl.createProgram();
+                gl.attachShader(this.prog, compile(gl.VERTEX_SHADER, vs));
+                gl.attachShader(this.prog, compile(gl.FRAGMENT_SHADER, fs));
+                gl.linkProgram(this.prog);
+
+                this.aPos      = gl.getAttribLocation (this.prog, 'p');
+                this.aUv       = gl.getAttribLocation (this.prog, 'uv');
+                this.uViewport = gl.getUniformLocation(this.prog, 'viewport');
+                this.uTex      = gl.getUniformLocation(this.prog, 'tex');
+
+                this._buildFromSVG(gl);
+            }
+
+            _buildFromSVG(gl) {
+                const dpr = window.devicePixelRatio || 1
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="122" viewBox="0 38 300 122"><g transform="translate(50,80)"><g transform="rotate(24)"><polygon points="0,-42 36.37,-21 36.37,21 0,42 -36.37,21 -36.37,-21" fill="none" stroke="${dark ? 'white' : 'black'}" stroke-width="5" stroke-linejoin="round" /></g></g><text x="118" y="74" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="500" fill="${dark ? 'white' : 'black'}" dominant-baseline="middle" >Danang Rent</text><text x="120" y="102" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="400" fill="rgba(${dark ? '255,255,255' : '0,0,0'},0.5)" letter-spacing="2" dominant-baseline="middle">RENTAL PLATFORM</text></svg>`
+
+                const svgW = 300, svgH = 122;
+                const canvasW = svgW * dpr, canvasH = svgH * dpr;
+
+                const canvas = document.createElement('canvas');
+                canvas.width  = canvasW;
+                canvas.height = canvasH;
+                const ctx = canvas.getContext('2d');
+                ctx.scale(dpr, dpr);
+
+                const img = new Image();
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const url  = URL.createObjectURL(blob);
+
+                img.onload = () => {
+                    ctx.fillStyle = dark ? '#1a1a2e' : '#ffffff';
+                    ctx.drawImage(img, 0, 0, svgW, svgH);
+                    URL.revokeObjectURL(url);
+                    this._uploadTexture(gl, canvas);
+                    this._buildQuad(gl, svgW, svgH);
+                    // trigger redraw so render() sees the texture
+                    this.gl._map?.triggerRepaint?.();
+                }
+                img.src = url
+            }
+
+            _uploadTexture(gl, canvas) {
+                if (this.tex) gl.deleteTexture(this.tex)
+                this.tex = gl.createTexture()
+                gl.bindTexture(gl.TEXTURE_2D, this.tex)
+                gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+            }
+
+            _buildQuad(gl, w, h) {
+                // position quad at (0,0) → (w,h) in screen px, interleaved [x,y,u,v]
+                const left = 20, top = 20;  // ← adjust these two values
+                const q = new Float32Array([
+                    left,   top,    0, 0,
+                    left+w, top,    1, 0,
+                    left,   top+h,  0, 1,
+                    left+w, top+h,  1, 1,
+                ])
+                if (!this.buf) this.buf = gl.createBuffer()
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
+                gl.bufferData(gl.ARRAY_BUFFER, q, gl.STATIC_DRAW)
+                this.ready = true
+            }
+
+            render(gl) {
+                if (!this.ready) return
+                gl.useProgram(this.prog)
+                gl.uniform2f(this.uViewport, gl.canvas.width, gl.canvas.height)
+                gl.enable(gl.BLEND)
+                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA) // ← not SRC_ALPHA, ONE
+                gl.activeTexture(gl.TEXTURE0)
+                gl.bindTexture(gl.TEXTURE_2D, this.tex)
+                gl.uniform1i(this.uTex, 0)
+                const stride = 4 * Float32Array.BYTES_PER_ELEMENT
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
+                gl.enableVertexAttribArray(this.aPos)
+                gl.vertexAttribPointer(this.aPos, 2, gl.FLOAT, false, stride, 0)
+                gl.enableVertexAttribArray(this.aUv)
+                gl.vertexAttribPointer(this.aUv,  2, gl.FLOAT, false, stride, 8)
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+            }
+        }
+
+        map.on('style.load', () => {
+            if (
+                initial_inner_size[0] != window.innerWidth ||
+                initial_inner_size[1] != window.innerHeight
+            ) map.resize()
+
+            map.getSource('prices') || map.addSource('prices', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: ads.map(ad => ({
+                        id: ad.id,
+                        type: 'Feature',
+                        properties: {
+                            price: ad.price, 
+                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                        },
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [ad.longitude, ad.latitude]
+                        }
+                    }))
+                }
+            })
+            const w = window.innerWidth;
+            const font_size =
             w < 500 ? 14 :
             w < 1200 ? 16 :
             20
 
-        const circle_radius =
+            const circle_radius =
             w < 500 ? 3 :
             w < 1200 ? 4 :
             5
-        const hover_scale = [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
-            1.8,
-            1
-        ]
-        map.addLayer({
-            id: 'price-circle',
-            type: 'circle',
-            source: 'prices',
-            paint: {
-                'circle-radius': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    1, ['*', 2, hover_scale],
-                    14, ['*', circle_radius, hover_scale]
-                ],
-                'circle-color': '#ff69b4',   // hot pink
-                'circle-opacity': 0.6
-            }
-        });
-        map.addLayer({
-            id: 'price-text',
-            type: 'symbol',
-            source: 'prices',
-            minzoom: 13,
-            layout: {
-                'text-field': ['get', 'price_label'],
-                'text-size': font_size,
-                'text-font': ['Noto Sans Bold'],
-                'text-anchor': 'top',
-                'text-offset': [0, 0.5],
-                'symbol-sort-key': ['get', 'price']
-            },
-            paint: {
-                'text-color': dark ? '#ffffff' : '#000000',
-            }
-        })
-        if (map.getLayer('logo')) map.removeLayer('logo')
-        map.addLayer(new LogoLayer())
-
-        var hovered_id = null
-        const mouseenter = e => {            
-            if (hovered_id != null) {
-                map.setFeatureState(
-                    { source: 'prices', id: hovered_id },
-                    { hover: false }
-                )
-            }
-            
-            if (!e.features || !e.features.length) return
-            
-            hovered_id = e.features[0].id
-            
-            map.setFeatureState(
-                { source: 'prices', id: hovered_id },
-                { hover: true }
-            )
-            
-            map.getCanvas().style.cursor = 'pointer'
-        }
-        const mouseleave = () => {
-            if (hovered_id != null) {
-                map.setFeatureState(
-                    { source: 'prices', id: hovered_id },
-                    { hover: false }
-                )
-            }
-            
-            hovered_id = null
-            map.getCanvas().style.cursor = ''
-        }
-        map.on('mouseenter', 'price-circle', mouseenter)            
-        map.on('mouseenter', 'price-text', mouseenter) 
-        map.on('mouseleave', 'price-circle', mouseleave)
-        map.on('mouseleave', 'price-text', mouseleave)
-        map.on('click', e => {
-            const features = map.queryRenderedFeatures(e.point, {
-                layers: ['price-circle', 'price-text']
+            const hover_scale = [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1.8,
+                1
+            ]
+            map.addLayer({
+                id: 'price-circle',
+                type: 'circle',
+                source: 'prices',
+                paint: {
+                    'circle-radius': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        1, ['*', 2, hover_scale],
+                        14, ['*', circle_radius, hover_scale]
+                    ],
+                    'circle-color': '#ff69b4',   // hot pink
+                    'circle-opacity': 0.6
+                }
             })
-            if (!features || !features.length) return
-            var i = 0
-            var i_min_price = i
-            var min_price = features[i_min_price].properties.price
-            for (i = 1; i < features.length; i++) {
-                if (features[i].properties.price < min_price) {
-                    min_price = features[i].properties.price
-                    i_min_price = i
-                }    
+            map.addLayer({
+                id: 'price-text',
+                type: 'symbol',
+                source: 'prices',
+                minzoom: 13,
+                layout: {
+                    'text-field': ['get', 'price_label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0.5],
+                    'symbol-sort-key': ['get', 'price']
+                },
+                paint: {
+                    'text-color': dark ? '#ffffff' : '#000000',
+                }
+            })
+            if (map.getLayer('logo')) map.removeLayer('logo')
+            map.addLayer(new LogoLayer())
+
+            var hovered_id = null
+            const mouseenter = e => {            
+                if (hovered_id != null) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_id },
+                        { hover: false }
+                    )
+                }
+                
+                if (!e.features || !e.features.length) return
+                
+                hovered_id = e.features[0].id
+                
+                map.setFeatureState(
+                    { source: 'prices', id: hovered_id },
+                    { hover: true }
+                )
+                
+                map.getCanvas().style.cursor = 'pointer'
             }
-            const id = features[i_min_price].id
-            
-            window.open(get_url(id), '_blank')
+            const mouseleave = () => {
+                if (hovered_id != null) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_id },
+                        { hover: false }
+                    )
+                }
+                
+                hovered_id = null
+                map.getCanvas().style.cursor = ''
+            }
+            map.on('mouseenter', 'price-circle', mouseenter)            
+            map.on('mouseenter', 'price-text', mouseenter) 
+            map.on('mouseleave', 'price-circle', mouseleave)
+            map.on('mouseleave', 'price-text', mouseleave)
+            map.on('click', e => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['price-circle', 'price-text']
+                })
+                if (!features || !features.length) return
+                var i = 0
+                var i_min_price = i
+                var min_price = features[i_min_price].properties.price
+                for (i = 1; i < features.length; i++) {
+                    if (features[i].properties.price < min_price) {
+                        min_price = features[i].properties.price
+                        i_min_price = i
+                    }    
+                }
+                const id = features[i_min_price].id
+                
+                window.open(get_url(id), '_blank')
+            })
         })
-    })
     })
     
     const ad_size = get_ad_size()
