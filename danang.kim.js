@@ -25,6 +25,10 @@ async function instantiate(module, imports = {}) {
       // assembly/index/get_danang_bounds() => ~lib/staticarray/StaticArray<f32>
       return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
     },
+    get_center() {
+      // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
+      return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+    },
     get_key_created_at() {
       // assembly/index/get_key_created_at() => u64
       return BigInt.asUintN(64, exports.get_key_created_at());
@@ -124,6 +128,8 @@ export const {
   memory,
   get_url,
   get_danang_bounds,
+  get_center,
+  get_zoom,
   get_key_created_at,
   init,
   get_ads,

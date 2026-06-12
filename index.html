@@ -179,7 +179,7 @@
 <body>
 <div id="map"></div>
 <script type="module">
-    import { init, get_danang_bounds, get_ads, get_ad_size, get_url, get_key_created_at } from "./danang.kim.js";
+    import { init, get_danang_bounds, get_ads, get_ad_size, get_url, get_key_created_at, get_center, get_zoom } from "./danang.kim.js";
     const KEY = '28c461f615d19ac02f6c249fb6a2ef1f871173f3f4cdaf21a8c6c6191adfd710'// contact spirin.vladimir@gmail.com
     const auth = init(
         BigInt(Date.now()),
@@ -215,8 +215,8 @@
     window.map = new maplibregl.Map({
         container: 'map',
         style: dark ? styles.dark : styles.bright,
-        center: [108.1991,16.0462],
-        zoom: 12.248,
+        center: get_center(),
+        zoom: get_zoom(),
         maxBounds: new maplibregl.LngLatBounds(
             [raw_danang_bounds[0], raw_danang_bounds[1]],
             [raw_danang_bounds[2], raw_danang_bounds[3]]
