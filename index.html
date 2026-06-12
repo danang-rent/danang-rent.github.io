@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css">
     <script defer src="https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js"></script>
     <script>
     maplibre_ready = caches.open('maplibre')
@@ -110,6 +109,54 @@
         }    
         html[dark] .maplibregl-ctrl-attrib a {
             color: grey;
+        }
+        .maplibregl-map {
+            font: 12px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: rgb(0 0 0 / 0);
+        }
+
+        .maplibregl-canvas {
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        .maplibregl-canvas-container.maplibregl-interactive {
+            cursor: grab;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-interactive:active {
+            cursor: grabbing;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-interactive.maplibregl-track-pointer {
+            cursor: pointer;
+        }
+        
+        /* touch handling - keep if you support mobile */
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate,
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate .maplibregl-canvas {
+            touch-action: pan-x pan-y;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-touch-drag-pan,
+        .maplibregl-canvas-container.maplibregl-touch-drag-pan .maplibregl-canvas {
+            touch-action: pinch-zoom;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan,
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan .maplibregl-canvas {
+            touch-action: none;
+        }
+        
+        .maplibregl-map:fullscreen {
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
