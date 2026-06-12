@@ -57,9 +57,7 @@
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
-        if (String(url).includes('.wasm')) {
-            opts.cache = 'force-cache'
-        } else if (cache && String(url).includes('.pmtiles')) {
+        if (cache && String(url).includes('.pmtiles')) {
             const range = opts.headers?.get?.('Range')
                 || opts.headers?.range
                 || opts.headers?.Range
