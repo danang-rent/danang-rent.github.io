@@ -630,8 +630,10 @@
                     }    
                 }
                 const id = features[i_min_price].id
+                const url = get_url(id)
                 
-                window.open(get_url(id), '_blank')
+                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
+                window.open(url, '_blank')
             })
         })
         
