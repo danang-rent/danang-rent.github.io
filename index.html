@@ -9,10 +9,147 @@
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <script>
+    async function instantiate(module, imports = {}) {
+      const adaptedImports = {
+        env: Object.setPrototypeOf({
+          abort(message, fileName, lineNumber, columnNumber) {
+            // ~lib/builtins/abort(~lib/string/String | null?, ~lib/string/String | null?, u32?, u32?) => void
+            message = __liftString(message >>> 0);
+            fileName = __liftString(fileName >>> 0);
+            lineNumber = lineNumber >>> 0;
+            columnNumber = columnNumber >>> 0;
+            (() => {
+              // @external.js
+              throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
+            })();
+          },
+        }, Object.assign(Object.create(globalThis), imports.env || {})),
+      };
+      const { exports } = await WebAssembly.instantiate(module, adaptedImports);
+      const memory = exports.memory || imports.env.memory;
+      const adaptedExports = Object.setPrototypeOf({
+        get_url(id) {
+          // assembly/index/get_url(f64) => ~lib/string/String
+          return __liftString(exports.get_url(id) >>> 0);
+        },
+        get_danang_bounds() {
+          // assembly/index/get_danang_bounds() => ~lib/staticarray/StaticArray<f32>
+          return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
+        },
+        get_center() {
+          // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+        },
+        get_key_created_at() {
+          // assembly/index/get_key_created_at() => u64
+          return BigInt.asUintN(64, exports.get_key_created_at());
+        },
+        init(_timestamp, _domain, _width, _height, _key) {
+          // assembly/index/init(u64, ~lib/string/String, u32, u32, ~lib/string/String) => bool
+          _timestamp = _timestamp || 0n;
+          _domain = __retain(__lowerString(_domain) || __notnull());
+          _key = __lowerString(_key) || __notnull();
+          try {
+            return exports.init(_timestamp, _domain, _width, _height, _key) != 0;
+          } finally {
+            __release(_domain);
+          }
+        },
+        get_ads() {
+          // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
+        },
+      }, exports);
+      function __liftString(pointer) {
+        if (!pointer) return null;
+        const
+          end = pointer + new Uint32Array(memory.buffer)[pointer - 4 >>> 2] >>> 1,
+          memoryU16 = new Uint16Array(memory.buffer);
+        let
+          start = pointer >>> 1,
+          string = "";
+        while (end - start > 1024) string += String.fromCharCode(...memoryU16.subarray(start, start += 1024));
+        return string + String.fromCharCode(...memoryU16.subarray(start, end));
+      }
+      function __lowerString(value) {
+        if (value == null) return 0;
+        const
+          length = value.length,
+          pointer = exports.__new(length << 1, 2) >>> 0,
+          memoryU16 = new Uint16Array(memory.buffer);
+        for (let i = 0; i < length; ++i) memoryU16[(pointer >>> 1) + i] = value.charCodeAt(i);
+        return pointer;
+      }
+      function __liftStaticArray(liftElement, align, pointer) {
+        if (!pointer) return null;
+        const
+          length = __getU32(pointer - 4) >>> align,
+          values = new Array(length);
+        for (let i = 0; i < length; ++i) values[i] = liftElement(pointer + (i << align >>> 0));
+        return values;
+      }
+      const refcounts = new Map();
+      function __retain(pointer) {
+        if (pointer) {
+          const refcount = refcounts.get(pointer);
+          if (refcount) refcounts.set(pointer, refcount + 1);
+          else refcounts.set(exports.__pin(pointer), 1);
+        }
+        return pointer;
+      }
+      function __release(pointer) {
+        if (pointer) {
+          const refcount = refcounts.get(pointer);
+          if (refcount === 1) exports.__unpin(pointer), refcounts.delete(pointer);
+          else if (refcount) refcounts.set(pointer, refcount - 1);
+          else throw Error(`invalid refcount '${refcount}' for reference '${pointer}'`);
+        }
+      }
+      function __notnull() {
+        throw TypeError("value must not be null");
+      }
+      let __dataview = new DataView(memory.buffer);
+      function __getU32(pointer) {
+        try {
+          return __dataview.getUint32(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getUint32(pointer, true);
+        }
+      }
+      function __getF32(pointer) {
+        try {
+          return __dataview.getFloat32(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getFloat32(pointer, true);
+        }
+      }
+      function __getF64(pointer) {
+        try {
+          return __dataview.getFloat64(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getFloat64(pointer, true);
+        }
+      }
+      return adaptedExports;
+    }
+
+    window.wasm_ready = WebAssembly
+      .compileStreaming(fetch("danang.kim.wasm"))
+      .then(module => instantiate(module, {}))
+      .then(exports => {
+          window.get_zoom = exports.get_zoom
+          window.get_ad_size = exports.get_ad_size
+          Object.assign(window, exports)
+      })
+    </script>
+    <script>
     const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
     const URL_MAPLIBRE = 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js'
 
-    maplibre_ready = caches.open('maplibre')
+    window.maplibre_ready = caches.open('maplibre')
     .then(c =>
         c.match(URL_MAPLIBRE)
         .then(r =>
@@ -25,7 +162,7 @@
     .then(_ => _.text())
     .then(_ => eval(_))
 
-    pmtiles_ready = caches.open('pmtiles_lib')
+    window.pmtiles_ready = caches.open('pmtiles_lib')
     .then(c =>
         c.match(URL_PMTILES)
         .then(r =>
@@ -44,15 +181,11 @@
     caches.open('pmtiles')
     .then(c =>
         c.match('/danang.pmtiles')
-        .then(r =>
-            r || fetch('/danang.pmtiles')
-            .then(r =>
-                c.put('/danang.pmtiles', r.clone()).then(_ => r)
-            )
+        .then(_ =>
+            _?.arrayBuffer()
+            .then(_ => cache = new Uint8Array(_))
         )
     )
-    .then(_ => _.arrayBuffer())
-    .then(_ => cache = new Uint8Array(_))
     
     const orig_fetch = window.fetch
 
@@ -86,6 +219,41 @@
 
         return orig_fetch(url, opts)
     }
+    
+    window.wasm_ready.then(() => {
+        const KEY = 'b7b07bc937a432fda1caa3d0f871af518defaa710e4c810ea8b9868e9833a5d7'// contact spirin.vladimir@gmail.com
+        const auth = init(
+            BigInt(Date.now()),
+            location.href,
+            window.innerWidth,
+            window.innerHeight,
+            KEY
+        )
+        
+        if (!auth) {
+            console.log('Key', KEY, 'is expired')
+            if ((Date.now() - localStorage.getItem('last_reload_timestamp')) / 1000 / 60 > 60) {
+                localStorage.setItem('last_reload_timestamp', Date.now())
+                location.reload()
+            }
+        } else {
+            const expired_in = Number(get_key_created_at()) + 12 * 60 * 60 * 1000 - Date.now()//ms
+            const expired_in_hours = Math.floor(expired_in / 1000 / 60 / 60)//hours
+            const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
+            console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
+        }
+        window.raw_danang_bounds = get_danang_bounds()
+        const ad_size = get_ad_size()
+        const raw_ads = get_ads()
+        window.ads = Array(raw_ads.length / ad_size)
+        for (var i = 0; i < raw_ads.length; i += ad_size) {
+            var id = raw_ads[i]
+            var price = raw_ads[i + 1]
+            var longitude = raw_ads[i + 2]
+            var latitude = raw_ads[i + 3]
+            ads[i / ad_size] = { id, price, longitude, latitude }
+        }
+    })
 
     const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
     const layers_bright = [{"id":"background","type":"background","paint":{"background-color":"rgb(242,243,240)"}},{"id":"park","type":"fill","source":"danang","source-layer":"park","filter":["==","$type","Polygon"],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(230, 233, 229)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":true,"fill-color":"rgb(194, 200, 202)"}},{"id":"landcover_wood","type":"fill","source":"danang","source-layer":"landcover","minzoom":10,"filter":["all",["==","$type","Polygon"],["==","class","wood"]],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(220,224,220)","fill-opacity":{"base":1,"stops":[[8,0],[12,1]]}}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"hsl(195, 17%, 78%)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"paint":{"fill-antialias":true,"fill-color":"rgb(234, 234, 229)","fill-outline-color":"rgb(219, 219, 218)"}},{"id":"tunnel_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"tunnel_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(234,234,234)","line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"aeroway-runway-casing","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,6],[17,55]]}}},{"id":"aeroway-runway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"],["==","$type","LineString"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgba(255, 255, 255, 1)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,4],[17,50]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#fff","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"highway_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"highway_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"railway_service","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["all",["==","class","rail"],["has","service"]]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#dddddd","line-width":3}},{"id":"railway_service_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["==","class","rail"],["has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#fafafa","line-dasharray":[3,3],"line-width":2}},{"id":"highway_motorway_bridge_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,5],[20,45]]}}},{"id":"highway_motorway_bridge_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"#bbb","text-halo-blur":1,"text-halo-color":"#fff","text-halo-width":2,"text-translate":[0,0]}},{"id":"highway_name_motorway","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["==","$type","LineString"],["==","class","motorway"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{ref}","text-font":["Metropolis Light","Noto Sans Regular"],"text-pitch-alignment":"viewport","text-rotation-alignment":"viewport","text-size":10,"visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"hsl(0, 0%, 100%)","text-halo-width":1,"text-translate":[0,2]}},{"id":"place_suburb","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":15,"filter":["all",["==","$type","Point"],["==","class","suburb"]],"layout":{"text-anchor":"center","text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"center","text-offset":[0.5,0],"text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}},{"id":"place_capital","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":12,"filter":["all",["==","$type","Point"],["all",["==","capital",2],["==","class","city"]]],"layout":{"icon-image":{"base":1,"stops":[[0,"star-11"],[8,""]]},"icon-size":1,"text-anchor":{"base":1,"stops":[[0,"left"],[8,"center"]]},"text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"left","text-offset":[0.5,0.2],"text-size":14,"text-transform":"uppercase","visibility":"visible"},"paint":{"icon-opacity":0.7,"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}}]
@@ -176,34 +344,11 @@
 </head>
 <body>
 <div id="map"></div>
-<script type="module">
-    import { init, get_danang_bounds, get_ads, get_ad_size, get_url, get_key_created_at, get_center, get_zoom } from "./danang.kim.js";
-    const KEY = '45c8f9e5d8387b576696141871abe850a7bec147d21a58e76eac76739cbd31e5'// contact spirin.vladimir@gmail.com
-    const auth = init(
-        BigInt(Date.now()),
-        location.href,
-        window.innerWidth,
-        window.innerHeight,
-        KEY
-    )
-    
-    if (!auth) {
-        console.log('Key', KEY, 'is expired')
-        if ((Date.now() - localStorage.getItem('last_reload_timestamp')) / 1000 / 60 > 60) {
-            localStorage.setItem('last_reload_timestamp', Date.now())
-            location.reload()
-        }
-    } else {
-        const expired_in = Number(get_key_created_at()) + 12 * 60 * 60 * 1000 - Date.now()//ms
-        const expired_in_hours = Math.floor(expired_in / 1000 / 60 / 60)//hours
-        const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
-        console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
-    }
-    const raw_danang_bounds = get_danang_bounds()
-    
+<script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready
+        maplibre_ready,
+        window.wasm_ready
     ])
     .then(() => {
         const protocol = new pmtiles.Protocol()
@@ -482,19 +627,19 @@
                 window.open(get_url(id), '_blank')
             })
         })
-    })
-    
-    const ad_size = get_ad_size()
-    const raw_ads = get_ads()
-    const ads = Array(raw_ads.length / ad_size)
-    for (var i = 0; i < raw_ads.length; i += ad_size) {
-        var id = raw_ads[i]
-        var price = raw_ads[i + 1]
-        var longitude = raw_ads[i + 2]
-        var latitude = raw_ads[i + 3]
-        ads[i / ad_size] = { id, price, longitude, latitude }
-    }
+        
+        map.once('load', () =>
+            caches.open('pmtiles')
+            .then(c =>
+                c.match('/danang.pmtiles')
+                .then(_ =>
+                    _ || fetch('/danang.pmtiles')
+                    .then(_ => c.put('/danang.pmtiles', _.clone()))
+                )
+            )
+        )
 
+    })
 </script>
 </body>
 </html>
