@@ -54,4 +54,5 @@ jobs:
         git add danang.kim.wasm
         git add index.html
         git diff --cached --quiet || git commit -m "Auto update bundle [skip ci]"
+        git pull --rebase origin main
         git push
