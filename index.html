@@ -14,13 +14,11 @@
       const adaptedImports = {
         env: Object.setPrototypeOf({
           abort(message, fileName, lineNumber, columnNumber) {
-            // ~lib/builtins/abort(~lib/string/String | null?, ~lib/string/String | null?, u32?, u32?) => void
             message = __liftString(message >>> 0);
             fileName = __liftString(fileName >>> 0);
             lineNumber = lineNumber >>> 0;
             columnNumber = columnNumber >>> 0;
             (() => {
-              // @external.js
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
             })();
           },
@@ -30,23 +28,18 @@
       const memory = exports.memory || imports.env.memory;
       const adaptedExports = Object.setPrototypeOf({
         get_url(id) {
-          // assembly/index/get_url(f64) => ~lib/string/String
           return __liftString(exports.get_url(id) >>> 0);
         },
         get_danang_bounds() {
-          // assembly/index/get_danang_bounds() => ~lib/staticarray/StaticArray<f32>
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
         get_center() {
-          // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
           return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
         },
         get_key_created_at() {
-          // assembly/index/get_key_created_at() => u64
           return BigInt.asUintN(64, exports.get_key_created_at());
         },
         init(_timestamp, _domain, _width, _height, _key) {
-          // assembly/index/init(u64, ~lib/string/String, u32, u32, ~lib/string/String) => bool
           _timestamp = _timestamp || 0n;
           _domain = __retain(__lowerString(_domain) || __notnull());
           _key = __lowerString(_key) || __notnull();
@@ -57,7 +50,6 @@
           }
         },
         get_ads() {
-          // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
       }, exports);
