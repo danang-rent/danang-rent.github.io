@@ -144,7 +144,7 @@
     }
 
     window.wasm_ready = WebAssembly
-      .compileStreaming(fetch("danang.kim.wasm"))
+      .compileStreaming(fetch("/danang.kim.wasm"))
       .then(module => instantiate(module, {}))
       .then(exports => {
           window.get_zoom = exports.get_zoom
@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '8fe11b58d23df9e290de98f7f6ed5e1f87e12679f0ac054ab3ef834c02a27ed7'// contact spirin.vladimir@gmail.com
+        const KEY = '72badaee272d4c3c140822e618c7ea1f1db0c58d39aab72fe2afac5723c4d526'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -259,6 +259,15 @@
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             ads[i / ad_size] = { id, price, longitude, latitude }
+        }
+        if (location.pathname.split('/')[1] == 'id') {
+            var ad_id = location.pathname.split('/')[2]
+            var ad_current = ads.find(ad => ad.id == ad_id)
+            if (ad_current) {
+                window.ad_current = ad_current
+            } else {
+                document.title = '[SOLD] ' + document.title
+            }
         }
     })
 
@@ -385,8 +394,10 @@
         window.map = new maplibregl.Map({
             container: 'map',
             style: dark ? styles.dark : styles.bright,
-            center: get_center(),
-            zoom: get_zoom(),
+            center: window.ad_current
+                ? [ad_current.longitude, ad_current.latitude]
+                : get_center(),
+            zoom: window.ad_current ? 18 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
