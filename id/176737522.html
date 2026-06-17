@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CĂN PENTHOUSE 90M2 FULL NỘI THẤT CÓ BAN CÔNG  VIEW BIỂN  – MỸ AN</title>
+    <title>CHO THUÊ PENTHOUSE 100M2 TẦNG 8 - CÓ  VIEW BIỂN – KHU AN THƯỢNG</title>
     <meta property="og:url" content="https://danang.kim/">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CĂN PENTHOUSE 90M2 FULL NỘI THẤT CÓ BAN CÔNG  VIEW BIỂN  – MỸ AN" />
+    <meta property="og:title" content="CHO THUÊ PENTHOUSE 100M2 TẦNG 8 - CÓ  VIEW BIỂN – KHU AN THƯỢNG" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="CĂN PENTHOUSE 90M2 FULL NỘI THẤT CÓ BAN CÔNG  VIEW BIỂN  – MỸ AN" />
+    <meta name="description" content="CHO THUÊ PENTHOUSE 100M2 TẦNG 8 - CÓ  VIEW BIỂN – KHU AN THƯỢNG" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CĂN PENTHOUSE 90M2 FULL NỘI THẤT CÓ BAN CÔNG  VIEW BIỂN  – MỸ AN">
+    <meta name="twitter:title" content="CHO THUÊ PENTHOUSE 100M2 TẦNG 8 - CÓ  VIEW BIỂN – KHU AN THƯỢNG">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
     <link rel="canonical" href="https://danang.kim/">
@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = 'cb374eadeefca99df75efa5d77d7ca6187b1ae0927f63989e42b91d3a7834586'// contact spirin.vladimir@gmail.com
+        const KEY = '55643eaed165668f7878b7c618e7b1622c0c810da845fa333681b24087cd7c66'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -374,7 +374,7 @@
     </style>
 </head>
 <body>
-<h1 style="display:none">CĂN PENTHOUSE 90M2 FULL NỘI THẤT CÓ BAN CÔNG  VIEW BIỂN  – MỸ AN</h1>
+<h1 style="display:none">CHO THUÊ PENTHOUSE 100M2 TẦNG 8 - CÓ  VIEW BIỂN – KHU AN THƯỢNG</h1>
 <div id="map"></div>
 <script>
     Promise.all([
@@ -397,7 +397,7 @@
             center: window.ad_current
                 ? [ad_current.longitude, ad_current.latitude]
                 : get_center(),
-            zoom: window.ad_current ? 18 : get_zoom(),
+            zoom: window.ad_current ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
@@ -555,6 +555,23 @@
                     }))
                 }
             })
+
+            ads.map(ad =>
+                map.setFeatureState(
+                    {
+                        source: 'prices',
+                        id: ad.id
+                    },
+                    {
+                        mode: window.ad_current
+                            ? ad.id == ad_current.id
+                                ? 'selected'
+                                : 'other'
+                            : 'normal'
+                    }
+                )
+            )
+
             const w = window.innerWidth;
             const font_size =
             w < 500 ? 14 :
@@ -571,6 +588,20 @@
                 1.8,
                 1
             ]
+            const colors = {
+                light: {
+                    selected: '#ff69b4',
+                    other: '#888',
+                    normal: '#ff69b4'
+                },
+                dark: {
+                    selected: '#ff69b4',
+                    other: '#555',
+                    normal: '#ff69b4'
+                }
+            }
+            const color_theme = dark ? colors.dark : colors.light
+
             map.addLayer({
                 id: 'price-circle',
                 type: 'circle',
@@ -580,11 +611,35 @@
                         'interpolate',
                         ['linear'],
                         ['zoom'],
-                        1, ['*', 2, hover_scale],
-                        14, ['*', circle_radius, hover_scale]
+                        1, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', 4, hover_scale],
+                            'other', ['*', 2, hover_scale],
+                            ['*', 2, hover_scale]//normal
+                        ],
+                        14, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', circle_radius + 5, hover_scale],
+                            'other', ['*', circle_radius, hover_scale],
+                            ['*', circle_radius, hover_scale]//normal
+                        ]
                     ],
-                    'circle-color': '#ff69b4',   // hot pink
-                    'circle-opacity': 0.6
+                    'circle-color': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', color_theme.selected,
+                        'other', color_theme.other,
+                        color_theme.normal
+                    ],
+                    'circle-opacity': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', 1,
+                        'other', 0.6,
+                        0.6//normal
+                    ]
                 }
             })
             map.addLayer({
@@ -646,7 +701,26 @@
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
-                if (!features || !features.length) return
+                if (!features || !features.length) {
+                    if (window.ad_current) {
+                        history.pushState({}, '', '/')
+                        document.title = 'Danang Rent Map'
+                        //this should be at route handler
+                        ads.map(ad =>
+                            map.setFeatureState(
+                                {
+                                    source: 'prices',
+                                    id: ad.id
+                                },
+                                {
+                                    mode: 'normal'                                    
+                                }
+                            )
+                        )
+                        delete window.ad_current
+                    }
+                    return
+                }
                 var i = 0
                 var i_min_price = i
                 var min_price = features[i_min_price].properties.price
