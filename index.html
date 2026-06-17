@@ -555,6 +555,26 @@
                     }))
                 }
             })
+            if (window.ad_current)
+                map.setFeatureState(
+                    {
+                        source: 'prices',
+                        id: ad_current.id
+                    },
+                    {
+                        selected: true
+                    }
+                )
+            else ads.map(ad => map.setFeatureState(
+                    {
+                        source: 'prices',
+                        id: ad.id
+                    },
+                    {
+                        selected: true
+                    }
+                ))
+
             const w = window.innerWidth;
             const font_size =
             w < 500 ? 14 :
@@ -571,6 +591,18 @@
                 1.8,
                 1
             ]
+            const colors = {
+                light: {
+                    selected: '#ff69b4',
+                    other: '#888'
+                },
+                dark: {
+                    selected: '#ff69b4',
+                    other: '#555'
+                }
+            }
+            const color_theme = dark ? colors.dark : colors.light
+
             map.addLayer({
                 id: 'price-circle',
                 type: 'circle',
@@ -583,7 +615,12 @@
                         1, ['*', 2, hover_scale],
                         14, ['*', circle_radius, hover_scale]
                     ],
-                    'circle-color': '#ff69b4',   // hot pink
+                    'circle-color': [
+                        'case',
+                        ['boolean', ['feature-state', 'selected'], false],
+                        color_theme.selected,
+                        color_theme.other
+                    ],
                     'circle-opacity': 0.6
                 }
             })
@@ -646,7 +683,26 @@
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
-                if (!features || !features.length) return
+                if (!features || !features.length) {
+                    if (window.ad_current) {
+                        history.pushState({}, '', '/')
+                        document.title = 'Danang Rent Map'
+                        //this should be at route handler
+                        ads.map(ad =>
+                            map.setFeatureState(
+                                {
+                                    source: 'prices',
+                                    id: ad.id
+                                },
+                                {
+                                    selected: true
+                                }
+                            )
+                        )
+                        delete window.ad_current
+                    }
+                    return
+                }
                 var i = 0
                 var i_min_price = i
                 var min_price = features[i_min_price].properties.price
