@@ -34,7 +34,7 @@
             columnNumber = columnNumber >>> 0;
             (() => {
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })();
+            })()
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -48,7 +48,7 @@
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
         },
         get_key_created_at() {
           return BigInt.asUintN(64, exports.get_key_created_at());
@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '55643eaed165668f7878b7c618e7b1622c0c810da845fa333681b24087cd7c66'// contact spirin.vladimir@gmail.com
+        const KEY = 'e5dcfed2972cbb0f80067c79b61871a7af056d147105fbad9422c6b4577b2218'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
