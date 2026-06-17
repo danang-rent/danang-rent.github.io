@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>🌟MỚI ! CĂN HỘ GÁC LỬNG GẦN BẾN XE - ĐH DTU HÒA KHÁNH</title>
+    <meta property="og:url" content="https://danang.kim/">
+    <meta property="og:created" content="2026-06-09" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="🌟MỚI ! CĂN HỘ GÁC LỬNG GẦN BẾN XE - ĐH DTU HÒA KHÁNH" />
+    <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
+    <meta property="og:image" content="https://danang.kim/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta charset='utf-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="🌟MỚI ! CĂN HỘ GÁC LỬNG GẦN BẾN XE - ĐH DTU HÒA KHÁNH" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🌟MỚI ! CĂN HỘ GÁC LỬNG GẦN BẾN XE - ĐH DTU HÒA KHÁNH">
+    <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
+    <meta name="twitter:image" content="https://danang.kim/og.png">
+    <link rel="canonical" href="https://danang.kim/">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <script>
+    async function instantiate(module, imports = {}) {
+      const adaptedImports = {
+        env: Object.setPrototypeOf({
+          abort(message, fileName, lineNumber, columnNumber) {
+            message = __liftString(message >>> 0);
+            fileName = __liftString(fileName >>> 0);
+            lineNumber = lineNumber >>> 0;
+            columnNumber = columnNumber >>> 0;
+            (() => {
+              throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
+            })();
+          },
+        }, Object.assign(Object.create(globalThis), imports.env || {})),
+      };
+      const { exports } = await WebAssembly.instantiate(module, adaptedImports);
+      const memory = exports.memory || imports.env.memory;
+      const adaptedExports = Object.setPrototypeOf({
+        get_url(id) {
+          return __liftString(exports.get_url(id) >>> 0);
+        },
+        get_danang_bounds() {
+          return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
+        },
+        get_center() {
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+        },
+        get_key_created_at() {
+          return BigInt.asUintN(64, exports.get_key_created_at());
+        },
+        init(_timestamp, _domain, _width, _height, _key) {
+          _timestamp = _timestamp || 0n;
+          _domain = __retain(__lowerString(_domain) || __notnull());
+          _key = __lowerString(_key) || __notnull();
+          try {
+            return exports.init(_timestamp, _domain, _width, _height, _key) != 0;
+          } finally {
+            __release(_domain);
+          }
+        },
+        get_ads() {
+          return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
+        },
+      }, exports);
+      function __liftString(pointer) {
+        if (!pointer) return null;
+        const
+          end = pointer + new Uint32Array(memory.buffer)[pointer - 4 >>> 2] >>> 1,
+          memoryU16 = new Uint16Array(memory.buffer);
+        let
+          start = pointer >>> 1,
+          string = "";
+        while (end - start > 1024) string += String.fromCharCode(...memoryU16.subarray(start, start += 1024));
+        return string + String.fromCharCode(...memoryU16.subarray(start, end));
+      }
+      function __lowerString(value) {
+        if (value == null) return 0;
+        const
+          length = value.length,
+          pointer = exports.__new(length << 1, 2) >>> 0,
+          memoryU16 = new Uint16Array(memory.buffer);
+        for (let i = 0; i < length; ++i) memoryU16[(pointer >>> 1) + i] = value.charCodeAt(i);
+        return pointer;
+      }
+      function __liftStaticArray(liftElement, align, pointer) {
+        if (!pointer) return null;
+        const
+          length = __getU32(pointer - 4) >>> align,
+          values = new Array(length);
+        for (let i = 0; i < length; ++i) values[i] = liftElement(pointer + (i << align >>> 0));
+        return values;
+      }
+      const refcounts = new Map();
+      function __retain(pointer) {
+        if (pointer) {
+          const refcount = refcounts.get(pointer);
+          if (refcount) refcounts.set(pointer, refcount + 1);
+          else refcounts.set(exports.__pin(pointer), 1);
+        }
+        return pointer;
+      }
+      function __release(pointer) {
+        if (pointer) {
+          const refcount = refcounts.get(pointer);
+          if (refcount === 1) exports.__unpin(pointer), refcounts.delete(pointer);
+          else if (refcount) refcounts.set(pointer, refcount - 1);
+          else throw Error(`invalid refcount '${refcount}' for reference '${pointer}'`);
+        }
+      }
+      function __notnull() {
+        throw TypeError("value must not be null");
+      }
+      let __dataview = new DataView(memory.buffer);
+      function __getU32(pointer) {
+        try {
+          return __dataview.getUint32(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getUint32(pointer, true);
+        }
+      }
+      function __getF32(pointer) {
+        try {
+          return __dataview.getFloat32(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getFloat32(pointer, true);
+        }
+      }
+      function __getF64(pointer) {
+        try {
+          return __dataview.getFloat64(pointer, true);
+        } catch {
+          __dataview = new DataView(memory.buffer);
+          return __dataview.getFloat64(pointer, true);
+        }
+      }
+      return adaptedExports;
+    }
+
+    window.wasm_ready = WebAssembly
+      .compileStreaming(fetch("/danang.kim.wasm"))
+      .then(module => instantiate(module, {}))
+      .then(exports => {
+          window.get_zoom = exports.get_zoom
+          window.get_ad_size = exports.get_ad_size
+          Object.assign(window, exports)
+      })
+    </script>
+    <script>
+    const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
+    const URL_MAPLIBRE = 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js'
+
+    window.maplibre_ready = caches.open('maplibre')
+    .then(c =>
+        c.match(URL_MAPLIBRE)
+        .then(r =>
+            r || fetch(URL_MAPLIBRE)
+            .then(r =>
+                r.ok && c.put(URL_MAPLIBRE, r.clone()).then(_ => r)
+            )
+        )
+    )
+    .then(_ => _.text())
+    .then(_ => eval(_))
+
+    window.pmtiles_ready = caches.open('pmtiles_lib')
+    .then(c =>
+        c.match(URL_PMTILES)
+        .then(r =>
+            r || fetch(URL_PMTILES)
+            .then(r =>
+                r.ok && c.put(URL_PMTILES, r.clone()).then(_ => r)
+            )
+        )
+    )
+    .then(_ => _.text())
+    .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
+
+
+    var cache = null
+    
+    caches.open('pmtiles')
+    .then(c =>
+        c.match('/danang.pmtiles')
+        .then(_ =>
+            _?.arrayBuffer()
+            .then(_ => cache = new Uint8Array(_))
+        )
+    )
+    
+    const orig_fetch = window.fetch
+
+    window.fetch = (url, opts = {}) => {
+        if (cache && String(url).includes('.pmtiles')) {
+            const range = opts.headers?.get?.('Range')
+                || opts.headers?.range
+                || opts.headers?.Range
+
+            if (range) {
+                var [, from, to] =
+                    /bytes=(\d+)-(\d+)/.exec(range)
+
+                from = +from
+                to = +to
+
+                const chunk = cache.slice(from, to + 1)
+
+                return Promise.resolve(
+                    new Response(chunk, {
+                        status: 206,
+                        headers: {
+                            'Content-Length': chunk.length,
+                            'Content-Range': `bytes ${from}-${to}/${cache.length}`,
+                            'Accept-Ranges': 'bytes'
+                        }
+                    })
+                )
+            }
+        }
+
+        return orig_fetch(url, opts)
+    }
+    
+    window.wasm_ready.then(() => {
+        const KEY = 'cb374eadeefca99df75efa5d77d7ca6187b1ae0927f63989e42b91d3a7834586'// contact spirin.vladimir@gmail.com
+        const auth = init(
+            BigInt(Date.now()),
+            location.href,
+            window.innerWidth,
+            window.innerHeight,
+            KEY
+        )
+        
+        if (!auth) {
+            console.log('Key', KEY, 'is expired')
+            if ((Date.now() - localStorage.getItem('last_reload_timestamp')) / 1000 / 60 > 60) {
+                localStorage.setItem('last_reload_timestamp', Date.now())
+                location.reload()
+            }
+        } else {
+            const expired_in = Number(get_key_created_at()) + 12 * 60 * 60 * 1000 - Date.now()//ms
+            const expired_in_hours = Math.floor(expired_in / 1000 / 60 / 60)//hours
+            const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
+            console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
+        }
+        window.raw_danang_bounds = get_danang_bounds()
+        const ad_size = get_ad_size()
+        const raw_ads = get_ads()
+        window.ads = Array(raw_ads.length / ad_size)
+        for (var i = 0; i < raw_ads.length; i += ad_size) {
+            var id = raw_ads[i]
+            var price = raw_ads[i + 1]
+            var longitude = raw_ads[i + 2]
+            var latitude = raw_ads[i + 3]
+            ads[i / ad_size] = { id, price, longitude, latitude }
+        }
+        if (location.pathname.split('/')[1] == 'id') {
+            var ad_id = location.pathname.split('/')[2]
+            var ad_current = ads.find(ad => ad.id == ad_id)
+            if (ad_current) {
+                window.ad_current = ad_current
+            } else {
+                document.title = '[SOLD] ' + document.title
+            }
+        }
+    })
+
+    const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
+    const layers_bright = [{"id":"background","type":"background","paint":{"background-color":"rgb(242,243,240)"}},{"id":"park","type":"fill","source":"danang","source-layer":"park","filter":["==","$type","Polygon"],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(230, 233, 229)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":true,"fill-color":"rgb(194, 200, 202)"}},{"id":"landcover_wood","type":"fill","source":"danang","source-layer":"landcover","minzoom":10,"filter":["all",["==","$type","Polygon"],["==","class","wood"]],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(220,224,220)","fill-opacity":{"base":1,"stops":[[8,0],[12,1]]}}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"hsl(195, 17%, 78%)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"paint":{"fill-antialias":true,"fill-color":"rgb(234, 234, 229)","fill-outline-color":"rgb(219, 219, 218)"}},{"id":"tunnel_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"tunnel_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(234,234,234)","line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"aeroway-runway-casing","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,6],[17,55]]}}},{"id":"aeroway-runway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"],["==","$type","LineString"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgba(255, 255, 255, 1)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,4],[17,50]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#fff","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"highway_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"highway_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"railway_service","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["all",["==","class","rail"],["has","service"]]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#dddddd","line-width":3}},{"id":"railway_service_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["==","class","rail"],["has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#fafafa","line-dasharray":[3,3],"line-width":2}},{"id":"highway_motorway_bridge_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,5],[20,45]]}}},{"id":"highway_motorway_bridge_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"#bbb","text-halo-blur":1,"text-halo-color":"#fff","text-halo-width":2,"text-translate":[0,0]}},{"id":"highway_name_motorway","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["==","$type","LineString"],["==","class","motorway"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{ref}","text-font":["Metropolis Light","Noto Sans Regular"],"text-pitch-alignment":"viewport","text-rotation-alignment":"viewport","text-size":10,"visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"hsl(0, 0%, 100%)","text-halo-width":1,"text-translate":[0,2]}},{"id":"place_suburb","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":15,"filter":["all",["==","$type","Point"],["==","class","suburb"]],"layout":{"text-anchor":"center","text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"center","text-offset":[0.5,0],"text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}},{"id":"place_capital","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":12,"filter":["all",["==","$type","Point"],["all",["==","capital",2],["==","class","city"]]],"layout":{"icon-image":{"base":1,"stops":[[0,"star-11"],[8,""]]},"icon-size":1,"text-anchor":{"base":1,"stops":[[0,"left"],[8,"center"]]},"text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"left","text-offset":[0.5,0.2],"text-size":14,"text-transform":"uppercase","visibility":"visible"},"paint":{"icon-opacity":0.7,"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}}]
+
+    const style = {
+      version: 8,
+      sources: {
+          danang: {
+              type: 'vector',
+              url: `pmtiles://${location.origin}/danang.pmtiles`
+          }
+      }
+    }
+    const styles = {
+        bright: {...style, layers: layers_bright},
+        dark: {...style, layers: layers_dark}
+    }
+    window.dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    document.documentElement.toggleAttribute('dark', window.dark)
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        mediaQuery.addEventListener('change', e => {
+            document.documentElement.toggleAttribute('dark', window.dark = e.matches)
+            map.setStyle(window.dark ? styles.dark : styles.bright)
+        })
+    }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || []
+        function gtag(){dataLayer.push(arguments)}
+        gtag('js', new Date())
+        gtag('config', 'GT-TQL9TSPB')
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context":"https://schema.org",
+            "@type":"WebSite",
+            "name":"Danang Rent Map",
+            "url":"https://danang.kim/"
+        }
+    </script>
+    <style>
+        body { margin: 0; padding: 0; background: rgb(242,243,240);}
+        html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
+        html, body, #map { height: 100%; }
+        html[dark] .maplibregl-ctrl-attrib {
+            background: rgba(30, 30, 30, 0.9);
+            color: grey;
+        }    
+        html[dark] .maplibregl-ctrl-attrib a {
+            color: grey;
+        }
+        .maplibregl-map {
+            font: 12px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: rgb(0 0 0 / 0);
+        }
+
+        .maplibregl-canvas {
+            left: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        .maplibregl-canvas-container.maplibregl-interactive {
+            cursor: grab;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-interactive:active {
+            cursor: grabbing;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-interactive.maplibregl-track-pointer {
+            cursor: pointer;
+        }
+        
+        /* touch handling - keep if you support mobile */
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate,
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate .maplibregl-canvas {
+            touch-action: pan-x pan-y;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-touch-drag-pan,
+        .maplibregl-canvas-container.maplibregl-touch-drag-pan .maplibregl-canvas {
+            touch-action: pinch-zoom;
+        }
+        
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan,
+        .maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan .maplibregl-canvas {
+            touch-action: none;
+        }
+        
+        .maplibregl-map:fullscreen {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h1 style="display:none">🌟MỚI ! CĂN HỘ GÁC LỬNG GẦN BẾN XE - ĐH DTU HÒA KHÁNH</h1>
+<div id="map"></div>
+<script>
+    Promise.all([
+        pmtiles_ready,
+        maplibre_ready,
+        window.wasm_ready
+    ])
+    .then(() => {
+        const protocol = new pmtiles.Protocol()
+        maplibregl.addProtocol('pmtiles', protocol.tile)
+        
+        const initial_inner_size = [
+            window.innerWidth,
+            window.innerHeight
+        ]
+
+        window.map = new maplibregl.Map({
+            container: 'map',
+            style: dark ? styles.dark : styles.bright,
+            center: window.ad_current
+                ? [ad_current.longitude, ad_current.latitude]
+                : get_center(),
+            zoom: window.ad_current ? 18 : get_zoom(),
+            maxBounds: new maplibregl.LngLatBounds(
+                [raw_danang_bounds[0], raw_danang_bounds[1]],
+                [raw_danang_bounds[2], raw_danang_bounds[3]]
+            ),
+            attributionControl: false
+        })
+    
+        map.dragRotate.disable()
+        map.touchZoomRotate.disableRotation()
+
+        class LogoLayer {
+            id = 'logo'
+            type = 'custom'
+            renderingMode = '2d'
+
+            onAdd(map, gl) {
+                this.gl = gl;
+
+                const vs = `
+                attribute vec2 p;
+                attribute vec2 uv;
+                uniform vec2 viewport;
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(
+                        p.x / viewport.x * 2.0 - 1.0,
+                        1.0 - p.y / viewport.y * 2.0,
+                        0.0, 1.0
+                    );
+                }`;
+
+                const fs = `
+                precision mediump float;
+                uniform sampler2D tex;
+                varying vec2 vUv;
+                void main() {
+                    gl_FragColor = texture2D(tex, vUv);
+                }`;
+
+                const compile = (type, src) => {
+                    const s = gl.createShader(type);
+                    gl.shaderSource(s, src);
+                    gl.compileShader(s);
+                    return s;
+                };
+                this.prog = gl.createProgram();
+                gl.attachShader(this.prog, compile(gl.VERTEX_SHADER, vs));
+                gl.attachShader(this.prog, compile(gl.FRAGMENT_SHADER, fs));
+                gl.linkProgram(this.prog);
+
+                this.aPos      = gl.getAttribLocation (this.prog, 'p');
+                this.aUv       = gl.getAttribLocation (this.prog, 'uv');
+                this.uViewport = gl.getUniformLocation(this.prog, 'viewport');
+                this.uTex      = gl.getUniformLocation(this.prog, 'tex');
+
+                this._buildFromSVG(gl);
+            }
+
+            _buildFromSVG(gl) {
+                const dpr = window.devicePixelRatio || 1
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="122" viewBox="0 38 300 122"><g transform="translate(50,80)"><g transform="rotate(24)"><polygon points="0,-42 36.37,-21 36.37,21 0,42 -36.37,21 -36.37,-21" fill="none" stroke="${dark ? 'white' : 'black'}" stroke-width="5" stroke-linejoin="round" /></g></g><text x="118" y="74" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="500" fill="${dark ? 'white' : 'black'}" dominant-baseline="middle" >Danang Rent</text><text x="120" y="102" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="400" fill="rgba(${dark ? '255,255,255' : '0,0,0'},0.5)" letter-spacing="2" dominant-baseline="middle">RENTAL PLATFORM</text></svg>`
+
+                const svgW = 300, svgH = 122;
+                const canvasW = svgW * dpr, canvasH = svgH * dpr;
+
+                const canvas = document.createElement('canvas');
+                canvas.width  = canvasW;
+                canvas.height = canvasH;
+                const ctx = canvas.getContext('2d');
+                ctx.scale(dpr, dpr);
+
+                const img = new Image();
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const url  = URL.createObjectURL(blob);
+
+                img.onload = () => {
+                    ctx.fillStyle = dark ? '#1a1a2e' : '#ffffff';
+                    ctx.drawImage(img, 0, 0, svgW, svgH);
+                    URL.revokeObjectURL(url);
+                    this._uploadTexture(gl, canvas);
+                    this._buildQuad(gl, svgW, svgH);
+                    // trigger redraw so render() sees the texture
+                    this.gl._map?.triggerRepaint?.();
+                }
+                img.src = url
+            }
+
+            _uploadTexture(gl, canvas) {
+                if (this.tex) gl.deleteTexture(this.tex)
+                this.tex = gl.createTexture()
+                gl.bindTexture(gl.TEXTURE_2D, this.tex)
+                gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+            }
+
+            _buildQuad(gl, w, h) {
+                // position quad at (0,0) → (w,h) in screen px, interleaved [x,y,u,v]
+                const left = 20, top = 20;  // ← adjust these two values
+                const q = new Float32Array([
+                    left,   top,    0, 0,
+                    left+w, top,    1, 0,
+                    left,   top+h,  0, 1,
+                    left+w, top+h,  1, 1,
+                ])
+                if (!this.buf) this.buf = gl.createBuffer()
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
+                gl.bufferData(gl.ARRAY_BUFFER, q, gl.STATIC_DRAW)
+                this.ready = true
+            }
+
+            render(gl) {
+                if (!this.ready) return
+                gl.useProgram(this.prog)
+                gl.uniform2f(this.uViewport, gl.canvas.width, gl.canvas.height)
+                gl.enable(gl.BLEND)
+                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA) // ← not SRC_ALPHA, ONE
+                gl.activeTexture(gl.TEXTURE0)
+                gl.bindTexture(gl.TEXTURE_2D, this.tex)
+                gl.uniform1i(this.uTex, 0)
+                const stride = 4 * Float32Array.BYTES_PER_ELEMENT
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
+                gl.enableVertexAttribArray(this.aPos)
+                gl.vertexAttribPointer(this.aPos, 2, gl.FLOAT, false, stride, 0)
+                gl.enableVertexAttribArray(this.aUv)
+                gl.vertexAttribPointer(this.aUv,  2, gl.FLOAT, false, stride, 8)
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+            }
+        }
+
+        map.on('style.load', () => {
+            if (
+                initial_inner_size[0] != window.innerWidth ||
+                initial_inner_size[1] != window.innerHeight
+            ) map.resize()
+
+            map.getSource('prices') || map.addSource('prices', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: ads.map(ad => ({
+                        id: ad.id,
+                        type: 'Feature',
+                        properties: {
+                            price: ad.price, 
+                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                        },
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [ad.longitude, ad.latitude]
+                        }
+                    }))
+                }
+            })
+            const w = window.innerWidth;
+            const font_size =
+            w < 500 ? 14 :
+            w < 1200 ? 16 :
+            20
+
+            const circle_radius =
+            w < 500 ? 3 :
+            w < 1200 ? 4 :
+            5
+            const hover_scale = [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1.8,
+                1
+            ]
+            map.addLayer({
+                id: 'price-circle',
+                type: 'circle',
+                source: 'prices',
+                paint: {
+                    'circle-radius': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        1, ['*', 2, hover_scale],
+                        14, ['*', circle_radius, hover_scale]
+                    ],
+                    'circle-color': '#ff69b4',   // hot pink
+                    'circle-opacity': 0.6
+                }
+            })
+            map.addLayer({
+                id: 'price-text',
+                type: 'symbol',
+                source: 'prices',
+                minzoom: 13,
+                layout: {
+                    'text-field': ['get', 'price_label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0.5],
+                    'symbol-sort-key': ['get', 'price']
+                },
+                paint: {
+                    'text-color': dark ? '#ffffff' : '#000000',
+                }
+            })
+            if (map.getLayer('logo')) map.removeLayer('logo')
+            map.addLayer(new LogoLayer())
+
+            var hovered_id = null
+            const mouseenter = e => {            
+                if (hovered_id != null) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_id },
+                        { hover: false }
+                    )
+                }
+                
+                if (!e.features || !e.features.length) return
+                
+                hovered_id = e.features[0].id
+                
+                map.setFeatureState(
+                    { source: 'prices', id: hovered_id },
+                    { hover: true }
+                )
+                
+                map.getCanvas().style.cursor = 'pointer'
+            }
+            const mouseleave = () => {
+                if (hovered_id != null) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_id },
+                        { hover: false }
+                    )
+                }
+                
+                hovered_id = null
+                map.getCanvas().style.cursor = ''
+            }
+            map.on('mouseenter', 'price-circle', mouseenter)            
+            map.on('mouseenter', 'price-text', mouseenter) 
+            map.on('mouseleave', 'price-circle', mouseleave)
+            map.on('mouseleave', 'price-text', mouseleave)
+            map.on('click', e => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['price-circle', 'price-text']
+                })
+                if (!features || !features.length) return
+                var i = 0
+                var i_min_price = i
+                var min_price = features[i_min_price].properties.price
+                for (i = 1; i < features.length; i++) {
+                    if (features[i].properties.price < min_price) {
+                        min_price = features[i].properties.price
+                        i_min_price = i
+                    }    
+                }
+                const id = features[i_min_price].id
+                const url = get_url(id)
+                
+                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
+                window.open(url, '_blank')
+            })
+        })
+        
+        map.once('load', () =>
+            caches.open('pmtiles')
+            .then(c =>
+                c.match('/danang.pmtiles')
+                .then(_ =>
+                    _ || fetch('/danang.pmtiles', {cache: 'no-store'})
+                    .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
+                )
+            )
+        )
+
+    })
+</script>
+</body>
+</html>
