@@ -34,7 +34,7 @@
             columnNumber = columnNumber >>> 0;
             (() => {
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })();
+            })()
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
