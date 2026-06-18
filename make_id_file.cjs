@@ -21,6 +21,18 @@ module.exports = (html, ad) => {
         '<meta name="twitter:title" content="Danang Rent Map">',
         `<meta name="twitter:title" content="${ad.subject}">`
     )
+    html = html.replace(
+        '"@type":"WebSite"',
+        `"@type":"Offer"`
+    )
+    html = html.replace(
+        '"name":"Danang Rent Map"',
+        `"name":"${ad.subject}"`
+    )
+    html = html.replace(
+        '"url":"https://danang.kim/"',
+        `"url":"https://danang.kim/id/${ad.ad_id}",\n\t\t\t"price":"${ad.price}",\n\t\t\t"priceCurrency":"VND"`
+    )
     
     fs.writeFileSync('id/' + ad.ad_id + '.html', html)
 }
