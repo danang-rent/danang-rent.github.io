@@ -14,6 +14,10 @@ module.exports = (html, ad) => {
         `<meta property="og:title" content="${ad.subject}" />`
     )
     html = html.replace(
+        '<meta property="og:url" content="https://danang.kim/">',
+        `<meta property="og:url" content="https://danang.kim/id/${ad.ad_id}">`
+    )
+    html = html.replace(
         '<meta name="description" content="Interactive map for Danang, Vietnam with rental ads" />',
         `<meta name="description" content="${ad.subject}" />`
     )
