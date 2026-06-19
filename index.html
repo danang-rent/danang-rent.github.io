@@ -316,6 +316,36 @@
         body { margin: 0; padding: 0; background: rgb(242,243,240);}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
+        article {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: transparent;
+            color: #000;
+            max-height: 40vh;
+            overflow: hidden;
+            font-size: clamp(2px, 1.5vh, 12px);
+        }
+        
+        article p {
+            margin: 8px 0 0 0;
+        }
+        
+        article h1 {
+            margin: 0;
+        }
+        
+        article p,
+        article h1 {
+            white-space: pre-line;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            article {
+                color: #fff;
+            }
+        }
         html[dark] .maplibregl-ctrl-attrib {
             background: rgba(30, 30, 30, 0.9);
             color: grey;
@@ -374,7 +404,6 @@
     </style>
 </head>
 <body>
-<h1 style="display:none">Danang Rent Map – Apartments, Rooms and Houses for Rent in Da Nang, Vietnam</h1>
 <div id="map"></div>
 <script>
     Promise.all([
