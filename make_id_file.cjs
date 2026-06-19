@@ -22,6 +22,10 @@ module.exports = (html, ad) => {
         `<meta name="twitter:title" content="${ad.subject}">`
     )
     html = html.replace(
+        '<link rel="canonical" href="https://danang.kim/">',
+        `<link rel="canonical" href="https://danang.kim/id/${ad.ad_id}">`,
+    )
+    html = html.replace(
         '"@type":"WebSite"',
         `"@type":"Offer"`
     )
