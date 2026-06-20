@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '657bd570dee52b01f49d1bb6b49cc18c7ddf16968b18ead7a3ddd12adf633193'// contact spirin.vladimir@gmail.com
+        const KEY = '8ec96e063291ffdeedc6a26f71184ca9a1871f94a70fff26494ca1e98f3e0680'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -310,7 +310,7 @@
             "@type":"Offer",
             "name":"Cho thuê căn hộ đường Hồ xuân hương, quận ngũ hành sơn",
             "url":"https://danang.kim/id/176893119",
-			"price":"7200000",
+			"price":"7500000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -406,7 +406,7 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê căn hộ đường Hồ xuân hương, quận ngũ hành sơn</h1><p>Trống sẵn căn hộ đường hồ xuân hương,  quận ngũ hành sơn, chỉ 7tr2/ tháng
+<div id="map"></div><article><h1>Cho thuê căn hộ đường Hồ xuân hương, quận ngũ hành sơn</h1><p>Trống sẵn căn hộ đường hồ xuân hương,  quận ngũ hành sơn, chỉ 7tr5/ tháng
 gần furamar, biển mỹ khê, chợ bắc mỹ an
 có nhận khách nước ngoài, khách 1 tháng
 full nội thất, có sofa, cửa sổ thoáng
@@ -414,7 +414,7 @@ zalo, whatsapp </p></article>
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
