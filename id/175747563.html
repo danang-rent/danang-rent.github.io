@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu</title>
-    <meta property="og:url" content="https://danang.kim/">
+    <meta property="og:url" content="https://danang.kim/id/175747563">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu" />
@@ -19,7 +19,7 @@
     <meta name="twitter:title" content="nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/">
+    <link rel="canonical" href="https://danang.kim/id/175747563">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -34,7 +34,7 @@
             columnNumber = columnNumber >>> 0;
             (() => {
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })();
+            })()
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -48,7 +48,7 @@
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
         },
         get_key_created_at() {
           return BigInt.asUintN(64, exports.get_key_created_at());
@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '657bd570dee52b01f49d1bb6b49cc18c7ddf16968b18ead7a3ddd12adf633193'// contact spirin.vladimir@gmail.com
+        const KEY = '8ec96e063291ffdeedc6a26f71184ca9a1871f94a70fff26494ca1e98f3e0680'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -307,15 +307,47 @@
     <script type="application/ld+json">
         {
             "@context":"https://schema.org",
-            "@type":"WebSite",
-            "name":"Danang Rent Map",
-            "url":"https://danang.kim/"
+            "@type":"Offer",
+            "name":"nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu",
+            "url":"https://danang.kim/id/175747563",
+			"price":"10000000",
+			"priceCurrency":"VND"
         }
     </script>
     <style>
         body { margin: 0; padding: 0; background: rgb(242,243,240);}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
+        article {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: transparent;
+            color: #000;
+            max-height: 40vh;
+            overflow: hidden;
+            font-size: clamp(2px, 1.5vh, 12px);
+        }
+        
+        article p {
+            margin: 8px 0 0 0;
+        }
+        
+        article h1 {
+            margin: 0;
+        }
+        
+        article p,
+        article h1 {
+            white-space: pre-line;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            article {
+                color: #fff;
+            }
+        }
         html[dark] .maplibregl-ctrl-attrib {
             background: rgba(30, 30, 30, 0.9);
             color: grey;
@@ -374,12 +406,15 @@
     </style>
 </head>
 <body>
-<h1 style="display:none">nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu</h1>
-<div id="map"></div>
+<div id="map"></div><article><h1>nhà 3 tầng mặt tiền gần chợ hoà an vi trí kd giá chỉ 10 triêu</h1><p>Dự án: 
+Thông tin chi tiết: Cho thuê nhà 3 tầng mặt tiền gần chợ hoà an vị trí kinh doanh
+Giá rẻ 10 triệu tháng
+3 phòng ngủ
+Xem nhà alo trực tiếp hoặc inbox zalo để biết thông tin nhé!</p></article>
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
@@ -531,6 +566,15 @@
             }
         }
 
+        var price_filter = null
+        const is_filtered = price => {
+            if (price_filter == '< 5m') return price > 5e6
+            if (price_filter == '< 10m') return price > 10e6
+            if (price_filter == '< 15m') return price > 15e6
+            if (price_filter == '> 15m') return price < 15e6
+            return false
+        }
+
         map.on('style.load', () => {
             if (
                 initial_inner_size[0] != window.innerWidth ||
@@ -546,7 +590,7 @@
                         type: 'Feature',
                         properties: {
                             price: ad.price, 
-                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
                         },
                         geometry: {
                             type: 'Point',
@@ -556,7 +600,7 @@
                 }
             })
 
-            ads.map(ad =>
+            ads.forEach(ad =>
                 map.setFeatureState(
                     {
                         source: 'prices',
@@ -567,7 +611,9 @@
                             ? ad.id == ad_current.id
                                 ? 'selected'
                                 : 'other'
-                            : 'normal'
+                            : is_filtered(ad.price)
+                                ? 'filtered'
+                                : 'normal'
                     }
                 )
             )
@@ -592,11 +638,13 @@
                 light: {
                     selected: '#ff69b4',
                     other: '#888',
+                    filtered: '#888',
                     normal: '#ff69b4'
                 },
                 dark: {
                     selected: '#ff69b4',
                     other: '#555',
+                    filtered: '#555',
                     normal: '#ff69b4'
                 }
             }
@@ -616,6 +664,7 @@
                             ['feature-state', 'mode'],
                             'selected', ['*', 4, hover_scale],
                             'other', ['*', 2, hover_scale],
+                            'filtered', ['*', 2, hover_scale],
                             ['*', 2, hover_scale]//normal
                         ],
                         14, [
@@ -623,6 +672,7 @@
                             ['feature-state', 'mode'],
                             'selected', ['*', circle_radius + 5, hover_scale],
                             'other', ['*', circle_radius, hover_scale],
+                            'filtered', ['*', circle_radius, hover_scale],
                             ['*', circle_radius, hover_scale]//normal
                         ]
                     ],
@@ -631,6 +681,7 @@
                         ['feature-state', 'mode'],
                         'selected', color_theme.selected,
                         'other', color_theme.other,
+                        'filtered', color_theme.filtered,
                         color_theme.normal
                     ],
                     'circle-opacity': [
@@ -638,6 +689,7 @@
                         ['feature-state', 'mode'],
                         'selected', 1,
                         'other', 0.6,
+                        'filtered', 0.6,
                         0.6//normal
                     ]
                 }
@@ -662,6 +714,172 @@
             if (map.getLayer('logo')) map.removeLayer('logo')
             map.addLayer(new LogoLayer())
 
+            map.addSource('filter-header', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            type: 'Feature',
+                            id: 'filter',
+                            properties: {
+                                kind: 'filter'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.08620413039165]
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            id: 'filter',
+                            properties: {
+                                kind: 'currency',
+                                label: '₫'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.09]
+                            }
+                        }                        
+                    ]
+                }
+            })
+            const offset_from_icon = 0.007
+            const gap = 0.006
+            map.addSource('filter-price-options', {
+                type: 'geojson',
+                promoteId: 'label',
+                data: {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            type: 'Feature',
+                            properties: {
+                                label: '< 5m'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 0]
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            properties: {
+                                label: '< 10m'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 1]
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            properties: {
+                                label: '< 15m'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 2]
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            properties: {
+                                label: '> 15m'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 3]
+                            }
+                        }
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'filter-price-text',
+                type: 'symbol',
+                source: 'filter-price-options',
+                layout: {
+                    'text-field': ['get', 'label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-allow-overlap': true,
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-color': [
+                        'case',
+                        ['boolean', ['feature-state', 'selected'], false],
+                        '#ff69b4',
+                        dark ? '#ffffff' : '#000000'
+                    ]
+                }
+            })
+            function add_svg_icon(name, svg) {
+                const img = new Image();
+                
+                img.onload = () => {
+                    map.addImage(name, img);
+                };
+                
+                img.src = 'data:image/svg+xml;charset=utf-8,' +
+                encodeURIComponent(svg);
+            }
+            add_svg_icon('icon-filter', `
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                <path d="M6 8h20l-8 8v8l-4-2v-6z" fill="#fff"/>
+                </svg>
+            `)
+            add_svg_icon('icon-close', `
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                <path d="M8 8L24 24M24 8L8 24"
+                stroke="#fff"
+                stroke-width="4"/>
+                </svg>
+            `)
+            add_svg_icon('icon-check', `
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                <path d="M7 17L13 23L25 10"
+                fill="none"
+                stroke="#fff"
+                stroke-width="4"/>
+                </svg>
+            `)
+            map.addLayer({
+                id: 'filter-icon',
+                type: 'symbol',
+                source: 'filter-header',
+                filter: ['==', ['get', 'kind'], 'filter'],
+                layout: {
+                    'icon-image': [
+                        'match',
+                        ['get', 'mode'],
+                            'apply', 'icon-check',
+                            'close', 'icon-close',
+                            'icon-filter'
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'filter-currency',
+                type: 'symbol',
+                source: 'filter-header',
+                filter: ['==', ['get', 'kind'], 'currency'],
+                layout: {
+                    'text-field': ['get', 'label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0],
+                    'text-allow-overlap': true,
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-color': dark ? '#ffffff' : '#000000',
+                }
+            })
+            
             var hovered_id = null
             const mouseenter = e => {            
                 if (hovered_id != null) {
@@ -697,7 +915,63 @@
             map.on('mouseenter', 'price-text', mouseenter) 
             map.on('mouseleave', 'price-circle', mouseleave)
             map.on('mouseleave', 'price-text', mouseleave)
+
+            const filters = {
+                '< 5m': ['<=', ['get', 'price'], 5e6],
+                '< 10m': ['<=', ['get', 'price'], 10e6],
+                '< 15m': ['<=', ['get', 'price'], 15e6],
+                '> 15m': ['>=', ['get', 'price'], 15e6]
+            }
+
+            map.on('click', 'filter-price-text', e => {
+                if (price_filter == e.features[0].properties.label) {
+                    price_filter = null
+                    map.setFilter('price-text', null)
+                    map.setFeatureState(
+                        {
+                            source: 'filter-price-options',
+                            id: e.features[0].properties.label
+                        },
+                        {
+                            selected: false
+                        }
+                    )
+                } else {
+                    map.setFeatureState(
+                        {
+                            source: 'filter-price-options',
+                            id: price_filter
+                        },
+                        {
+                            selected: false
+                        }
+                    )
+                    price_filter = e.features[0].properties.label
+                    map.setFilter('price-text', filters[price_filter])
+                    map.setFeatureState(
+                        {
+                            source: 'filter-price-options',
+                            id: price_filter
+                        },
+                        {
+                            selected: true
+                        }
+                    )
+                }
+                ads.forEach(ad =>
+                    map.setFeatureState(
+                        {
+                            source: 'prices',
+                            id: ad.id
+                        },
+                        {
+                            mode: is_filtered(ad.price) ? 'filtered' : 'normal'
+                        }
+                    )
+                )
+            })
             map.on('click', e => {
+                console.log(`[${e.lngLat.lng}, ${e.lngLat.lat}]`)
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
@@ -706,7 +980,7 @@
                         history.pushState({}, '', '/')
                         document.title = 'Danang Rent Map'
                         //this should be at route handler
-                        ads.map(ad =>
+                        ads.forEach(ad =>
                             map.setFeatureState(
                                 {
                                     source: 'prices',

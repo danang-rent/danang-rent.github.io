@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '657bd570dee52b01f49d1bb6b49cc18c7ddf16968b18ead7a3ddd12adf633193'// contact spirin.vladimir@gmail.com
+        const KEY = '8ec96e063291ffdeedc6a26f71184ca9a1871f94a70fff26494ca1e98f3e0680'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -417,7 +417,7 @@ Thông tin chi tiết: ☘Cho thuê nhà 2tầng HẢI PHÒNG gần ST AEON Mal
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
