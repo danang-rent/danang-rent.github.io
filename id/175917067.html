@@ -228,7 +228,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '657bd570dee52b01f49d1bb6b49cc18c7ddf16968b18ead7a3ddd12adf633193'// contact spirin.vladimir@gmail.com
+        const KEY = '8ec96e063291ffdeedc6a26f71184ca9a1871f94a70fff26494ca1e98f3e0680'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -310,7 +310,7 @@
             "@type":"Offer",
             "name":"Cho thuê Căn hộ 40m2  - 2MT đường Hà Đặc- An Cư 1, gần Biển Mỹ Khê",
             "url":"https://danang.kim/id/175917067",
-			"price":"8500000",
+			"price":"8000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -409,12 +409,12 @@
 <div id="map"></div><article><h1>Cho thuê Căn hộ 40m2  - 2MT đường Hà Đặc- An Cư 1, gần Biển Mỹ Khê</h1><p>‼️🍀Cho thuê Căn hộ 40m2  - 2MT đường Hà Đặc- An Cư 1, gần Biển Mỹ Khê, Sơn Trà, Đà Nẵng.
 ✳- DT 40m2 - 1 giường sạch đẹp rộng rãi, đầy đủ nội thất, có bếp, có cửa sổ view thoáng, thang máy, sấy giặt, sạch sẽ
 - Vị trí 2 mặt tiền đường 5m5 Khu Dương Đình Nghệ, cách biển, Công viên Biển Đông chỉ 300m, ngay sast chợ tiện ích xung quanh không thiếu thứ gì
-🌷- Giá thuê 8tr5/th - HĐ dài hạn
+🌷- Giá thuê 8tr/th - HĐ dài hạn
 ☎️- Liên hệ xem nhà: *** Call/zalo</p></article>
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
