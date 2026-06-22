@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4</title>
-    <meta property="og:url" content="https://danang.kim/">
+    <meta property="og:url" content="https://danang.kim/id/176846270">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4" />
@@ -19,10 +19,16 @@
     <meta name="twitter:title" content="🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/">
+    <link rel="canonical" href="https://danang.kim/id/176846270">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Windows tiles (legacy, IE11/old Edge Start Menu pinning) -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icon-192.png">
+    <meta name="msapplication-config" content="none">
     <script>
     async function instantiate(module, imports = {}) {
       const adaptedImports = {
@@ -228,7 +234,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '190e11d6ec2bc0f7de545be708ded0287ac14fae66189ace4745b914f947f34c'// contact spirin.vladimir@gmail.com
+        const KEY = '2f9d6ea32469692b7d5ca97802871b0106d7befef5945e68c2b331236276abab'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -318,6 +324,36 @@
         body { margin: 0; padding: 0; background: rgb(242,243,240);}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
+        article {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: transparent;
+            color: #000;
+            max-height: 40vh;
+            overflow: hidden;
+            font-size: clamp(2px, 1.5vh, 12px);
+        }
+        
+        article p {
+            margin: 8px 0 0 0;
+        }
+        
+        article h1 {
+            margin: 0;
+        }
+        
+        article p,
+        article h1 {
+            white-space: pre-line;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            article {
+                color: #fff;
+            }
+        }
         html[dark] .maplibregl-ctrl-attrib {
             background: rgba(30, 30, 30, 0.9);
             color: grey;
@@ -376,12 +412,18 @@
     </style>
 </head>
 <body>
-<h1 style="display:none">🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4</h1>
-<div id="map"></div>
+<div id="map"></div><article><h1>🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4</h1><p>Dự án: 
+Thông tin chi tiết: 🏡 CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN ĐƯỜNG PHƯỚC TƯỜNG 4
+📐 Diện tích đất: 76,5m²
+🏠 Kết cấu: Nhà 3 tầng thiết kế hiện đại, kiên cố
+🛏️ Công năng: 3 phòng ngủ, không gian sinh hoạt rộng rãi
+🚗 Vị trí: Mặt tiền đường Phước Tường 4, khu dân cư an ninh, thuận tiện ở kết hợp kinh doanh hoặc làm văn phòng
+✨ Nhà sạch đẹp, dọn vào ở ngay
+💰 Giá cho thuê: 20 triệu/tháng</p></article>
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
