@@ -23,6 +23,12 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Windows tiles (legacy, IE11/old Edge Start Menu pinning) -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icon-192.png">
+    <meta name="msapplication-config" content="none">
     <script>
     async function instantiate(module, imports = {}) {
       const adaptedImports = {
@@ -228,7 +234,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '222d6f8b766613df0b14dfca50b1c12e87133330e9dd27e29b270e7b72117580'// contact spirin.vladimir@gmail.com
+        const KEY = 'be50751fb04e1bd9cd79433cd3d128e7e12d081e00b8715862437a7ebb0f7b5c'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -419,7 +425,7 @@ Thông tin chi tiết: CHO THUÊ NHÀ 2 TẦNG MẶT TIỀN HOÀ CƯỜNG NAM - 
 <script>
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
