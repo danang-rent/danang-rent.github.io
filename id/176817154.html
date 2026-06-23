@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '7c1620cbf867de1bde340ce02bc3de1eaf2ade2871a08b7948ab91bab2860bb1'// contact spirin.vladimir@gmail.com
+        const KEY = 'eb735f8702c3bba2d98567d8cc1d2e28fe71fea9ef6c1463f0370f3a55356094'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -416,53 +416,47 @@
         #filter, #icon, #scale, #min, #max {
             position: absolute;
         }
-        #filter {
-            background: yellow;
-            opacity: 0.5;
-        }
-        #scale {
-            background: white;
-        }
         #icon {
-            background-color: white;
             background: white;
-        }
-        #min {
-            background: blue;
-            opacity: 0.5;
-        }
-        #min {
-            background: blue;
-            opacity: 0.5;
-        }
-        #max {
-            background: red;
-            opacity: 0.5;
         }
         #filter {
             bottom: 3vh;
             right: 3vh;
-            width: 5vh;
+            width: 3vh;
             height: 38vh;
         }
         #icon {
             bottom: 3vh;
             right: 3vh;
-            width: 5vh;
-            height: 5vh;
+            width: 3vh;
+            height: 3vh;
         }
         #scale {
-            bottom: 8vh;
-            right: 2vh;
-            width: 1vh;
+            bottom: 5vh;
+            right: 1.1vh;
+            width: 0.8vh;
             height: 30vh;
+            border-color: white;
+            border-width: thin;
+            border-style: solid;
         }
         #min, #max {
-            bottom: 8vh;
+            bottom: 5vh;
             right: 0vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
-            width: 5vh;
-            height: 5vh;
+            width: 3vh;
+            height: 3vh;
             touch-action: none;
+            border-radius: 50%;
+            background: white;
+        }
+        .label {
+            color: white;
+            font: 12px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-150%, -50%);
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -472,10 +466,13 @@ Thông tin chi tiết: Căn hộ 1PN + 1. rộng rãi, thoáng mát, có ánh s�
 <div id="icon" hidden></div>
 <div id="filter" hidden>
     <div id="scale"></div>
-    <div id="min"></div>
-    <div id="max"></div>
+    <div id="min"><span class="label"></span></div>
+    <div id="max"><span class="label"></span></div>
 </div>
 <script>
+const $min_label = min.firstElementChild
+const $max_label = max.firstElementChild
+
 const limit = {
     min: null,
     max: null
@@ -518,6 +515,14 @@ function pointerdown(e) {
     el.addEventListener('pointerup', pointerup)
     el.addEventListener('pointercancel', pointerup)
 }
+    
+function get_dy(e) {
+    switch (e.deltaMode) {
+        case 0: return e.deltaY// pixels
+        case 1: return e.deltaY * 16 // typical line height// lines
+        case 2: return e.deltaY * window.innerHeight// pages
+    }
+}
 
 icon.onclick = () => {
     if (filter.hasAttribute('hidden')) {
@@ -528,6 +533,7 @@ icon.onclick = () => {
             localStorage.setItem('min_y', min_y)
             localStorage.setItem('max_y', max_y)
         }
+        filter.onwheel = null
         return
     }
     rect_scale = scale.getBoundingClientRect()
@@ -540,9 +546,100 @@ icon.onclick = () => {
 
     min.style.transform = `translate3d(0, ${min_y}px, 0)`
     max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $min_label.textContent = '0.2'
+    $max_label.textContent = '0.5'
   
     min.addEventListener('pointerdown', pointerdown)
     max.addEventListener('pointerdown', pointerdown)
+    
+    filter.onwheel = e => {
+        e.preventDefault()
+        const SPEED = 0.04
+        const dy = get_dy(e) * SPEED
+        if (!dy) return
+        const DOWN = dy > 0
+        const UP   = dy < 0
+        const pos = e.clientY - rect_scale.bottom + rect_min.height / 2
+        const dist_min = Math.abs(min_y - pos)
+        const dist_max = Math.abs(max_y - pos)
+        var target = null
+        if (dist_min < dist_max) {
+            if (DOWN) {
+                if (min_y == limit.min) {
+                    target = null
+                    /*
+                    // swith target max
+                    if (max_y == min_y - rect_min.height) {
+                        target = null // max near min
+                    } else {
+                        target = max
+                    }
+                    */
+                } else {
+                    target = min
+                }
+            }
+            if (UP) {
+                if (min_y == max_y + rect_min.height) {
+                    target = null
+                    /*
+                    // switch target max
+                    if (max_y == limit.max) {
+                        target = null // max & min at top border
+                    } else {
+                        target = max
+                    }
+                    */
+                } else {
+                    target = min
+                }
+            }
+        } else {
+            if (DOWN) {
+                if (max_y == min_y - rect_min.height) {
+                    target = null
+                    /*
+                    // swith target min
+                    if (min_y == limit.min) {
+                        target = null // max & min at lower border
+                    } else {
+                        target = min
+                    }
+                    */
+                } else {
+                    target = max
+                }
+            }
+            if (UP) {
+                if (max_y == limit.max) {
+                    target = null
+                    /*
+                    //target min
+                    if (min_y == max_y + rect_min.height) {
+                        target = null // max & min at top border
+                    } else {
+                        target = min
+                    }
+                    */
+                } else {
+                    target = max
+                }
+            }
+        }
+        if (target == min) {
+            min_y += dy
+            if (min_y > limit.min) min_y = limit.min
+            if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
+            min.style.transform = `translate3d(0, ${min_y}px, 0)`
+            $min_label.textContent = '0.5'
+        } else if (target == max) {
+            max_y += dy
+            if (max_y < limit.max) max_y = limit.max
+            if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
+            max.style.transform = `translate3d(0, ${max_y}px, 0)`
+            $max_label.textContent = '0.5'
+        }
+    }
 }
 
 
