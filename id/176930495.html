@@ -25,7 +25,6 @@
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- Windows tiles (legacy, IE11/old Edge Start Menu pinning) -->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/icon-192.png">
     <meta name="msapplication-config" content="none">
@@ -234,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '69e0c83ab553a8d8450d71aae91287f1c37b1b6bf55d87806c5053e9e6584143'// contact spirin.vladimir@gmail.com
+        const KEY = 'e2f1f476ec3ebada70c7b5bdc8ab8cfcd80b228a71657fe1c5d1cebe6cc3b5a5'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -321,7 +320,11 @@
         }
     </script>
     <style>
-        body { margin: 0; padding: 0; background: rgb(242,243,240);}
+        [hidden] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
         article {
@@ -409,6 +412,58 @@
             height: 100%;
             width: 100%;
         }
+
+        #filter, #icon, #scale, #min, #max {
+            position: absolute;
+        }
+        #filter {
+            background: yellow;
+            opacity: 0.5;
+        }
+        #scale {
+            background: white;
+        }
+        #icon {
+            background-color: white;
+            background: white;
+        }
+        #min {
+            background: blue;
+            opacity: 0.5;
+        }
+        #min {
+            background: blue;
+            opacity: 0.5;
+        }
+        #max {
+            background: red;
+            opacity: 0.5;
+        }
+        #filter {
+            bottom: 3vh;
+            right: 3vh;
+            width: 5vh;
+            height: 38vh;
+        }
+        #icon {
+            bottom: 3vh;
+            right: 3vh;
+            width: 5vh;
+            height: 5vh;
+        }
+        #scale {
+            bottom: 8vh;
+            right: 2vh;
+            width: 1vh;
+            height: 30vh;
+        }
+        #min, #max {
+            bottom: 8vh;
+            right: 0vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
+            width: 5vh;
+            height: 5vh;
+            touch-action: none;
+        }
     </style>
 </head>
 <body>
@@ -417,7 +472,83 @@ Thông tin chi tiết: CHo thuê căn hộ siêu vip mặt tiền đường sát
 - Diện tích : 90m 
 - Căn hộ full nội thất siêu cao cấp gồm 2pn ,2wc,1 bếp,1 phòng khách, với không gian rộng rãi 2 ban công cực thoáng ánh sáng tự nhiên xem lẫn cây xanh, thiết kế hiện đại sang trọng đẳng cấp mới xây 100%, chỉ việc xách valli vào ở ngay.vị trí gần toà FPT plaza1 -2-3-4, gần Khu Phú Mỹ An, gần Trường singapore, đối diện khu Tân Trà gần Sông gần Biển, dân cư mới đồng bộ đẹp ,Tiện ích đầy đủ.
 - Giá cho thuê : 23,5tr/th cọc 1 TT 6</p></article>
+<div id="icon" hidden></div>
+<div id="filter" hidden>
+    <div id="scale"></div>
+    <div id="min"></div>
+    <div id="max"></div>
+</div>
 <script>
+const limit = {
+    min: null,
+    max: null
+}
+var rect_scale, rect_min
+var min_y, max_y
+
+if (new URLSearchParams(location.search).get('filter')) icon.hidden = false
+
+function pointerdown(e) {
+    const el = e.currentTarget      
+    el.setPointerCapture(e.pointerId)
+    let y = e.clientY
+
+    function pointermove(e) {
+        const dy = e.clientY - y
+        y = e.clientY
+
+        if (el == min) {
+            min_y += dy
+            if (min_y > limit.min) min_y = limit.min
+            if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
+            min.style.transform = `translate3d(0, ${min_y}px, 0)`
+        }
+        if (el == max) {
+            max_y += dy
+            if (max_y < limit.max) max_y = limit.max
+            if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
+            max.style.transform = `translate3d(0, ${max_y}px, 0)`
+        }
+    }
+  
+    function pointerup(e) {
+        el.removeEventListener('pointermove', pointermove)
+        el.removeEventListener('pointerup', pointerup)
+        el.removeEventListener('pointercancel', pointerup)
+    }
+  
+    el.addEventListener('pointermove', pointermove)
+    el.addEventListener('pointerup', pointerup)
+    el.addEventListener('pointercancel', pointerup)
+}
+
+icon.onclick = () => {
+    if (filter.hasAttribute('hidden')) {
+        filter.removeAttribute('hidden')
+    } else {
+        filter.setAttribute('hidden', '')
+        if (min_y && max_y) {
+            localStorage.setItem('min_y', min_y)
+            localStorage.setItem('max_y', max_y)
+        }
+        return
+    }
+    rect_scale = scale.getBoundingClientRect()
+    rect_min = min.getBoundingClientRect()
+    limit.min = 0
+    limit.max = 0 - (rect_scale.height - rect_min.height)
+    
+    min_y = +(localStorage.getItem('min_y') ?? limit.min)
+    max_y = +(localStorage.getItem('max_y') ?? limit.max)
+
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+  
+    min.addEventListener('pointerdown', pointerdown)
+    max.addEventListener('pointerdown', pointerdown)
+}
+
+
     Promise.all([
         pmtiles_ready,
         maplibre_ready.then(() => maplibregl.prewarm()),
@@ -1013,6 +1144,7 @@ Thông tin chi tiết: CHo thuê căn hộ siêu vip mặt tiền đường sát
                 const id = features[i_min_price].id
                 const url = get_url(id)
                 
+                console.log('https://danang.kim/id/' + id)
                 gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
                 window.open(url, '_blank')
             })
