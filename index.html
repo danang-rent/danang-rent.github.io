@@ -445,7 +445,7 @@
             bottom: 5vh;
             right: 1.1vh;
             width: 0.8vh;
-            height: 30vh;
+            height: 50vh;
             border-color: white;
             border-width: thin;
             border-style: solid;
@@ -472,12 +472,12 @@
 </head>
 <body>
 <div id="map"></div>
-<div id="icon" hidden></div>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min"><span class="label"></span></div>
     <div id="max"><span class="label"></span></div>
 </div>
+<div id="icon" hidden></div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -500,8 +500,6 @@ const get_y_by_$ = $ => {
 }
 var rect_scale, rect_min
 var min_y, max_y
-
-if (new URLSearchParams(location.search).get('filter')) icon.hidden = false
 
 function pointerdown(e) {
     const el = e.currentTarget      
@@ -1070,7 +1068,8 @@ apply_filter = () => {
             })
         })
         
-        map.once('load', () =>
+        map.once('load', () => {
+            icon.hidden = false
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
@@ -1079,7 +1078,7 @@ apply_filter = () => {
                     .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
                 )
             )
-        )
+        })
 
     })
 </script>
