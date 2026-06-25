@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '122a85118e05beb04ba01bd6f1f804b2ea87e1bbcaec3eade843662e086478a5'// contact spirin.vladimir@gmail.com
+        const KEY = 'cc640d4c9643d2632e068142d8bc7c163fbd8f4959ac56682f33e42c9bb05f4d'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -331,10 +331,12 @@
         }
         html {
             --text-color: black;
+            --text-color-inverse: white;
             --filter-color: black;
         }
         html[dark] {
             --text-color: white;
+            --text-color-inverse: black;
             --filter-color: white;
         }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
@@ -435,6 +437,7 @@
             width: 10vh;
             height: 48vh;
             touch-action: none;
+            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
         }
         #toggler {
             bottom: 0vh;
@@ -469,20 +472,33 @@
             bottom: 0vh;
             right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
+            line-height: 3vh; /* same as height */
             height: 3vh;
             border-radius: 50%;
             background: var(--filter-color);
+            text-align: center;
+            font-size: 2vh;
+            color: var(--text-color-inverse);
+            user-select: none;
+            -webkit-user-select: none;
         }
         .label {
+            font-variant-numeric: tabular-nums;
+            width: 4ch;
+            text-align: right;
+            font-size: 1.3vh;
+            line-height: 2vh;
             color: var(--filter-color);
-            font: 13px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
             position: absolute;
             left: 0;
             top: 50%;
             transform: translate(-180%, -50%);
             white-space: nowrap;
-            user-select: none;
-            -webkit-user-select: none;
+        }
+        #min svg,
+        #max svg {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -507,8 +523,24 @@ Chúng tôi gắn bó với FPT City từ những ngày đầu hình thành. Ch�
 Website: ***</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
-    <div id="min"><span class="label"></span></div>
-    <div id="max"><span class="label"></span></div>
+    <div id="min">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+    <div id="max">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
 </div>
 <div id="toggler" hidden>
       <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
