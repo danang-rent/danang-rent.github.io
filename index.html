@@ -236,7 +236,7 @@
         const KEY = 'ce2cf55f9f1197ef15460b63b28a712029f9eb5ebc577dc99ebe48cd39a85bbe'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            location.href,
+            'https://danang.kim',//location.href,
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -435,6 +435,7 @@
             right: 0vh;
             width: 10vh;
             height: 48vh;
+            touch-action: none;
         }
         #icon {
             bottom: 2vh;
@@ -457,7 +458,6 @@
             right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
             height: 3vh;
-            touch-action: none;
             border-radius: 50%;
             background: var(--filter-color);
         }
@@ -507,15 +507,18 @@ function pointerdown(e) {
     const el = e.currentTarget      
     el.setPointerCapture(e.pointerId)
     let y = e.clientY
-
+    const pos = y - rect_scale.bottom + rect_min.height / 2
+    const dist_min = Math.abs(min_y - pos)
+    const dist_max = Math.abs(max_y - pos)
+    var target = dist_min < dist_max ? min : max
     function pointermove(e) {
         const dy = e.clientY - y
         y = e.clientY
 
-        if (el == min) {
+        if (target == min) {
             update_min_y(dy)
         }
-        if (el == max) {
+        if (target == max) {
             update_max_y(dy)
         }
     }
@@ -535,15 +538,11 @@ var steps_count
 var step
 var min$
 var max$
-icon.onclick = () => {
+icon.onpointerdown = () => {
     if (filter.hasAttribute('hidden')) {
         filter.removeAttribute('hidden')
     } else {
         filter.setAttribute('hidden', '')
-        if (min_y && max_y) {
-            localStorage.setItem('min_y', min_y)
-            localStorage.setItem('max_y', max_y)
-        }
         filter.onwheel = null
         return
     }
@@ -569,8 +568,7 @@ icon.onclick = () => {
     max$ = $max_label.textContent * 1e6,
     apply_filter()
 
-    min.addEventListener('pointerdown', pointerdown)
-    max.addEventListener('pointerdown', pointerdown)
+    filter.addEventListener('pointerdown', pointerdown)
 
     icon.onwheel = onwheel
     filter.onwheel = onwheel
