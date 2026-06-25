@@ -1089,11 +1089,6 @@ apply_filter = () => {
         })
         
         map.once('load', () => {
-            window.dataLayer = window.dataLayer || []
-            function gtag(){dataLayer.push(arguments)}
-            gtag('js', new Date())
-            gtag('config', 'GT-TQL9TSPB')
-            
             toggler.hidden = false
             
             caches.open('pmtiles')
@@ -1108,6 +1103,13 @@ apply_filter = () => {
 
     })
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+</script>
+            
 </body>
 </html>
