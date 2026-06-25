@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = 'ed8ba777e6ea46110567df32871ea1040cf06117721120507bab1252959565fd'// contact spirin.vladimir@gmail.com
+        const KEY = '0422c81ba26de4b852df8288328cfffe7ba1b73e12809c6c57d9cb2bf2820987'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -426,29 +426,39 @@
             width: 100%;
         }
 
-        #filter, #icon, #scale, #min, #max {
+        #filter, #toggler, #icon, #scale, #min, #max {
             position: absolute;
         }
-        #icon {
-            background: var(--filter-color);
-        }
         #filter {
-            bottom: 2vh;
+            bottom: 7vh;
             right: 0vh;
             width: 10vh;
             height: 48vh;
             touch-action: none;
         }
+        #toggler {
+            bottom: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
         #icon {
+            display: block;
             bottom: 2vh;
             right: 2vh;
             width: 3vh;
             height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
         }
         #scale {
-            bottom: 5vh;
-            right: 3.1vh;
-            width: 0.8vh;
+            bottom: 0vh;
+            right: 3.2vh;/* 2 + (3 / 2) - (0.6 / 2) = 2 + 1.5 - 0.3  */
+            width: 0.6vh;
             height: 43vh;
             border-color: var(--filter-color);
             border-width: thin;
@@ -456,7 +466,7 @@
             border-style: solid;
         }
         #min, #max {
-            bottom: 5vh;
+            bottom: 0vh;
             right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
             height: 3vh;
@@ -490,7 +500,18 @@ Thông tin chi tiết: ✅Cho thuê nhà mặt tiền Hoà Xuân
     <div id="min"><span class="label"></span></div>
     <div id="max"><span class="label"></span></div>
 </div>
-<div id="icon" hidden></div>
+<div id="toggler" hidden>
+      <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+      <line x1="4" y1="6"  x2="20" y2="6"/>
+      <circle cx="10" cy="6" r="2.2"/>
+
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <circle cx="14" cy="12" r="2.2"/>
+
+      <line x1="4" y1="18" x2="20" y2="18"/>
+      <circle cx="8" cy="18" r="2.2"/>
+    </svg>
+</div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -514,8 +535,8 @@ const get_y_by_$ = $ => {
 var rect_scale, rect_min
 var min_y, max_y
 
-function pointerdown(e) {
-    const el = e.currentTarget      
+function pointerdown(e) {   
+    const el = e.currentTarget
     el.setPointerCapture(e.pointerId)
     let y = e.clientY
     const pos = y - rect_scale.bottom + rect_min.height / 2
@@ -535,6 +556,7 @@ function pointerdown(e) {
     }
   
     function pointerup(e) {
+        el.releasePointerCapture(e.pointerId)
         el.removeEventListener('pointermove', pointermove)
         el.removeEventListener('pointerup', pointerup)
         el.removeEventListener('pointercancel', pointerup)
@@ -549,7 +571,8 @@ var steps_count
 var step
 var min$
 var max$
-icon.onpointerdown = () => {
+
+toggler.onpointerup = e => {
     if (filter.hasAttribute('hidden')) {
         filter.removeAttribute('hidden')
     } else {
@@ -581,7 +604,7 @@ icon.onpointerdown = () => {
 
     filter.addEventListener('pointerdown', pointerdown)
 
-    icon.onwheel = onwheel
+    toggler.onwheel = onwheel
     filter.onwheel = onwheel
 
     function onwheel(e) {
@@ -689,7 +712,6 @@ apply_filter = () => {
         ['>=', ['get', 'price'], min$],
         ['<=', ['get', 'price'], max$]
     ])
-
     ads.forEach(ad =>
         map.setFeatureState(
             {
@@ -1078,12 +1100,7 @@ apply_filter = () => {
         })
         
         map.once('load', () => {
-            window.dataLayer = window.dataLayer || []
-            function gtag(){dataLayer.push(arguments)}
-            gtag('js', new Date())
-            gtag('config', 'GT-TQL9TSPB')
-            
-            icon.hidden = false
+            toggler.hidden = false
             
             caches.open('pmtiles')
             .then(c =>
@@ -1097,6 +1114,13 @@ apply_filter = () => {
 
     })
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+</script>
+            
 </body>
 </html>
