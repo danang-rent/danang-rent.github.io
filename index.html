@@ -493,14 +493,35 @@
             transform: translate(-180%, -50%);
             white-space: nowrap;
         }
+        #min svg,
+        #max svg {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
 <div id="map"></div>
 <div id="filter" hidden>
     <div id="scale"></div>
-    <div id="min"><span class="label"></span>₫</div>
-    <div id="max"><span class="label"></span>₫</div>
+    <div id="min">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+    <div id="max">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
 </div>
 <div id="toggler" hidden>
       <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
