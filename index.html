@@ -573,10 +573,10 @@ icon.onclick = () => {
     
     filter.onwheel = e => {
         e.preventDefault()
-        const dy = -Math.sign(e.deltaY) * step//get_dy(e) * 0.04 // .04 - is SPEED
-        if (!dy) return
-        const DOWN = dy > 0
-        const UP   = dy < 0
+        const DOWN = e.deltaY > 0
+        const UP   = e.deltaY < 0
+        if (!e.deltaY) return
+        const dy = DOWN ? -step : step
         const pos = e.clientY - rect_scale.bottom + rect_min.height / 2
         const dist_min = Math.abs(min_y - pos)
         const dist_max = Math.abs(max_y - pos)
@@ -585,14 +585,12 @@ icon.onclick = () => {
             if (DOWN) {
                 if (min_y == limit.min) {
                     target = null
-                    /*
                     // swith target max
                     if (max_y == min_y - rect_min.height) {
                         target = null // max near min
                     } else {
                         target = max
                     }
-                    */
                 } else {
                     target = min
                 }
@@ -631,14 +629,12 @@ icon.onclick = () => {
             if (UP) {
                 if (max_y == limit.max) {
                     target = null
-                    /*
                     //target min
                     if (min_y == max_y + rect_min.height) {
                         target = null // max & min at top border
                     } else {
                         target = min
                     }
-                    */
                 } else {
                     target = max
                 }
