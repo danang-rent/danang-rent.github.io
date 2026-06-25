@@ -233,10 +233,10 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = 'ce2cf55f9f1197ef15460b63b28a712029f9eb5ebc577dc99ebe48cd39a85bbe'// contact spirin.vladimir@gmail.com
+        const KEY = 'ed8ba777e6ea46110567df32871ea1040cf06117721120507bab1252959565fd'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            location.href,
+            'https://danang.kim',//location.href,
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -254,6 +254,7 @@
             const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
             console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
         }
+        window.limit$ = {min: Infinity, max: -Infinity}
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
         const raw_ads = get_ads()
@@ -263,8 +264,19 @@
             var price = raw_ads[i + 1]
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
+            if (price < limit$.min) limit$.min = price
+            if (price > limit$.max) limit$.max = price
             ads[i / ad_size] = { id, price, longitude, latitude }
         }
+        limit$.min = Math.max(
+            Math.floor(limit$.min / 1e5) / 10,
+            2
+        )
+        limit$.max = Math.min(
+            Math.floor(limit$.max / 1e5) / 10,
+            50
+        )
+        window.range$ = limit$.max - limit$.min
         if (location.pathname.split('/')[1] == 'id') {
             var ad_id = location.pathname.split('/')[2]
             var ad_current = ads.find(ad => ad.id == ad_id)
@@ -302,13 +314,6 @@
         })
     }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || []
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date())
-        gtag('config', 'GT-TQL9TSPB')
-    </script>
     <script type="application/ld+json">
         {
             "@context":"https://schema.org",
@@ -324,6 +329,14 @@
             display: none !important;
             visibility: hidden !important;
         }
+        html {
+            --text-color: black;
+            --filter-color: black;
+        }
+        html[dark] {
+            --text-color: white;
+            --filter-color: white;
+        }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
@@ -333,7 +346,7 @@
             right: 20px;
             bottom: 20px;
             background: transparent;
-            color: #000;
+            color: var(--text-color);
             max-height: 40vh;
             overflow: hidden;
             font-size: clamp(2px, 1.5vh, 12px);
@@ -417,45 +430,46 @@
             position: absolute;
         }
         #icon {
-            background: white;
+            background: var(--filter-color);
         }
         #filter {
-            bottom: 3vh;
-            right: 3vh;
-            width: 3vh;
-            height: 38vh;
+            bottom: 2vh;
+            right: 0vh;
+            width: 10vh;
+            height: 48vh;
+            touch-action: none;
         }
         #icon {
-            bottom: 3vh;
-            right: 3vh;
+            bottom: 2vh;
+            right: 2vh;
             width: 3vh;
             height: 3vh;
         }
         #scale {
             bottom: 5vh;
-            right: 1.1vh;
+            right: 3.1vh;
             width: 0.8vh;
-            height: 30vh;
-            border-color: white;
+            height: 43vh;
+            border-color: var(--filter-color);
             border-width: thin;
+            border-radius: 1vh;
             border-style: solid;
         }
         #min, #max {
             bottom: 5vh;
-            right: 0vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
+            right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
             height: 3vh;
-            touch-action: none;
             border-radius: 50%;
-            background: white;
+            background: var(--filter-color);
         }
         .label {
-            color: white;
-            font: 12px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
+            color: var(--filter-color);
+            font: 13px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
             position: absolute;
             left: 0;
             top: 50%;
-            transform: translate(-150%, -50%);
+            transform: translate(-180%, -50%);
             white-space: nowrap;
         }
     </style>
@@ -468,12 +482,12 @@
 *** Nội Thất: Có bếp (đầy đủ tủ bếp và bếp nấu), 1 phòng ngủ có điều hòa
 *** Cho Thuê: 12 triệu/ tháng
 </p></article>
-<div id="icon" hidden></div>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min"><span class="label"></span></div>
     <div id="max"><span class="label"></span></div>
 </div>
+<div id="icon" hidden></div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -482,31 +496,38 @@ const limit = {
     min: null,
     max: null
 }
+var range
+const step$ = 0.1
+const get_label = y => {
+    const abs_pos = (y - limit.min) / range
+    const pos$ = limit$.min + range$ * abs_pos
+    return pos$.toFixed(1)
+}
+const get_y_by_$ = $ => {
+    const abs_pos = ($ - limit$.min) / range$
+    const y = limit.min + range * abs_pos
+    return y
+}
 var rect_scale, rect_min
 var min_y, max_y
-
-if (new URLSearchParams(location.search).get('filter')) icon.hidden = false
 
 function pointerdown(e) {
     const el = e.currentTarget      
     el.setPointerCapture(e.pointerId)
     let y = e.clientY
-
+    const pos = y - rect_scale.bottom + rect_min.height / 2
+    const dist_min = Math.abs(min_y - pos)
+    const dist_max = Math.abs(max_y - pos)
+    var target = dist_min < dist_max ? min : max
     function pointermove(e) {
         const dy = e.clientY - y
         y = e.clientY
 
-        if (el == min) {
-            min_y += dy
-            if (min_y > limit.min) min_y = limit.min
-            if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
-            min.style.transform = `translate3d(0, ${min_y}px, 0)`
+        if (target == min) {
+            update_min_y(dy)
         }
-        if (el == max) {
-            max_y += dy
-            if (max_y < limit.max) max_y = limit.max
-            if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
-            max.style.transform = `translate3d(0, ${max_y}px, 0)`
+        if (target == max) {
+            update_max_y(dy)
         }
     }
   
@@ -520,24 +541,16 @@ function pointerdown(e) {
     el.addEventListener('pointerup', pointerup)
     el.addEventListener('pointercancel', pointerup)
 }
-    
-function get_dy(e) {
-    switch (e.deltaMode) {
-        case 0: return e.deltaY// pixels
-        case 1: return e.deltaY * 16 // typical line height// lines
-        case 2: return e.deltaY * window.innerHeight// pages
-    }
-}
 
-icon.onclick = () => {
+var steps_count
+var step
+var min$
+var max$
+icon.onpointerdown = () => {
     if (filter.hasAttribute('hidden')) {
         filter.removeAttribute('hidden')
     } else {
         filter.setAttribute('hidden', '')
-        if (min_y && max_y) {
-            localStorage.setItem('min_y', min_y)
-            localStorage.setItem('max_y', max_y)
-        }
         filter.onwheel = null
         return
     }
@@ -545,25 +558,35 @@ icon.onclick = () => {
     rect_min = min.getBoundingClientRect()
     limit.min = 0
     limit.max = 0 - (rect_scale.height - rect_min.height)
-    
-    min_y = +(localStorage.getItem('min_y') ?? limit.min)
-    max_y = +(localStorage.getItem('max_y') ?? limit.max)
+    range = limit.max - limit.min
+    steps_count = (limit$.max - limit$.min) / step$
+    step = (limit.max - limit.min) / steps_count
 
+    min$ = +localStorage.getItem('min$')
+    max$ = +localStorage.getItem('max$')
+
+    min_y = min$ ? get_y_by_$(min$ / 1e6) : limit.min
+    max_y = max$ ? get_y_by_$(max$ / 1e6) : limit.max
+    
     min.style.transform = `translate3d(0, ${min_y}px, 0)`
     max.style.transform = `translate3d(0, ${max_y}px, 0)`
-    $min_label.textContent = '0.2'
-    $max_label.textContent = '0.5'
-  
-    min.addEventListener('pointerdown', pointerdown)
-    max.addEventListener('pointerdown', pointerdown)
-    
-    filter.onwheel = e => {
+    $min_label.textContent = get_label(min_y)
+    $max_label.textContent = get_label(max_y)
+    min$ = $min_label.textContent * 1e6,
+    max$ = $max_label.textContent * 1e6,
+    apply_filter()
+
+    filter.addEventListener('pointerdown', pointerdown)
+
+    icon.onwheel = onwheel
+    filter.onwheel = onwheel
+
+    function onwheel(e) {
         e.preventDefault()
-        const SPEED = 0.04
-        const dy = get_dy(e) * SPEED
-        if (!dy) return
-        const DOWN = dy > 0
-        const UP   = dy < 0
+        const DOWN = e.deltaY > 0
+        const UP   = e.deltaY < 0
+        if (!e.deltaY) return
+        const dy = DOWN ? -step : step
         const pos = e.clientY - rect_scale.bottom + rect_min.height / 2
         const dist_min = Math.abs(min_y - pos)
         const dist_max = Math.abs(max_y - pos)
@@ -572,14 +595,12 @@ icon.onclick = () => {
             if (DOWN) {
                 if (min_y == limit.min) {
                     target = null
-                    /*
                     // swith target max
                     if (max_y == min_y - rect_min.height) {
                         target = null // max near min
                     } else {
                         target = max
                     }
-                    */
                 } else {
                     target = min
                 }
@@ -618,35 +639,68 @@ icon.onclick = () => {
             if (UP) {
                 if (max_y == limit.max) {
                     target = null
-                    /*
                     //target min
                     if (min_y == max_y + rect_min.height) {
                         target = null // max & min at top border
                     } else {
                         target = min
                     }
-                    */
                 } else {
                     target = max
                 }
             }
         }
         if (target == min) {
-            min_y += dy
-            if (min_y > limit.min) min_y = limit.min
-            if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
-            min.style.transform = `translate3d(0, ${min_y}px, 0)`
-            $min_label.textContent = '0.5'
+            update_min_y(dy)
         } else if (target == max) {
-            max_y += dy
-            if (max_y < limit.max) max_y = limit.max
-            if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
-            max.style.transform = `translate3d(0, ${max_y}px, 0)`
-            $max_label.textContent = '0.5'
+            update_max_y(dy)
         }
     }
 }
 
+update_min_y = dy => {
+    min_y += dy
+    if (min_y > limit.min) min_y = limit.min
+    if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    $min_label.textContent = get_label(min_y)
+    min$ = $min_label.textContent * 1e6,
+    localStorage.setItem('min$', min$)
+    apply_filter()
+}
+
+update_max_y = dy => {
+    max_y += dy
+    if (max_y < limit.max) max_y = limit.max
+    if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $max_label.textContent = get_label(max_y)
+    max$ = $max_label.textContent * 1e6
+    localStorage.setItem('max$', max$)
+    apply_filter()
+}
+
+apply_filter = () => {
+    map.setFilter('price-text', [
+        'all',
+        ['>=', ['get', 'price'], min$],
+        ['<=', ['get', 'price'], max$]
+    ])
+
+    ads.forEach(ad =>
+        map.setFeatureState(
+            {
+                source: 'prices',
+                id: ad.id
+            },
+            {
+                mode: ad.price > max$ || ad.price < min$
+                    ? 'filtered'
+                    : 'normal'
+            }
+        )
+    )
+}
 
     Promise.all([
         pmtiles_ready,
@@ -802,15 +856,6 @@ icon.onclick = () => {
             }
         }
 
-        var price_filter = null
-        const is_filtered = price => {
-            if (price_filter == '< 5m') return price > 5e6
-            if (price_filter == '< 10m') return price > 10e6
-            if (price_filter == '< 15m') return price > 15e6
-            if (price_filter == '> 15m') return price < 15e6
-            return false
-        }
-
         map.on('style.load', () => {
             if (
                 initial_inner_size[0] != window.innerWidth ||
@@ -847,7 +892,7 @@ icon.onclick = () => {
                             ? ad.id == ad_current.id
                                 ? 'selected'
                                 : 'other'
-                            : is_filtered(ad.price)
+                            : ad.price < min$ || ad.price > max$
                                 ? 'filtered'
                                 : 'normal'
                     }
@@ -949,172 +994,6 @@ icon.onclick = () => {
             })
             if (map.getLayer('logo')) map.removeLayer('logo')
             map.addLayer(new LogoLayer())
-
-            map.addSource('filter-header', {
-                type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: [
-                        {
-                            type: 'Feature',
-                            id: 'filter',
-                            properties: {
-                                kind: 'filter'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.08620413039165]
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            id: 'filter',
-                            properties: {
-                                kind: 'currency',
-                                label: '₫'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.09]
-                            }
-                        }                        
-                    ]
-                }
-            })
-            const offset_from_icon = 0.007
-            const gap = 0.006
-            map.addSource('filter-price-options', {
-                type: 'geojson',
-                promoteId: 'label',
-                data: {
-                    type: 'FeatureCollection',
-                    features: [
-                        {
-                            type: 'Feature',
-                            properties: {
-                                label: '< 5m'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 0]
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            properties: {
-                                label: '< 10m'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 1]
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            properties: {
-                                label: '< 15m'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 2]
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            properties: {
-                                label: '> 15m'
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [108.25489285289308, 16.08620413039165 - offset_from_icon - gap * 3]
-                            }
-                        }
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'filter-price-text',
-                type: 'symbol',
-                source: 'filter-price-options',
-                layout: {
-                    'text-field': ['get', 'label'],
-                    'text-size': font_size,
-                    'text-font': ['Noto Sans Bold'],
-                    'text-allow-overlap': true,
-                    'text-ignore-placement': true
-                },
-                paint: {
-                    'text-color': [
-                        'case',
-                        ['boolean', ['feature-state', 'selected'], false],
-                        '#ff69b4',
-                        dark ? '#ffffff' : '#000000'
-                    ]
-                }
-            })
-            function add_svg_icon(name, svg) {
-                const img = new Image();
-                
-                img.onload = () => {
-                    map.addImage(name, img);
-                };
-                
-                img.src = 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent(svg);
-            }
-            add_svg_icon('icon-filter', `
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                <path d="M6 8h20l-8 8v8l-4-2v-6z" fill="#fff"/>
-                </svg>
-            `)
-            add_svg_icon('icon-close', `
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                <path d="M8 8L24 24M24 8L8 24"
-                stroke="#fff"
-                stroke-width="4"/>
-                </svg>
-            `)
-            add_svg_icon('icon-check', `
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                <path d="M7 17L13 23L25 10"
-                fill="none"
-                stroke="#fff"
-                stroke-width="4"/>
-                </svg>
-            `)
-            map.addLayer({
-                id: 'filter-icon',
-                type: 'symbol',
-                source: 'filter-header',
-                filter: ['==', ['get', 'kind'], 'filter'],
-                layout: {
-                    'icon-image': [
-                        'match',
-                        ['get', 'mode'],
-                            'apply', 'icon-check',
-                            'close', 'icon-close',
-                            'icon-filter'
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'filter-currency',
-                type: 'symbol',
-                source: 'filter-header',
-                filter: ['==', ['get', 'kind'], 'currency'],
-                layout: {
-                    'text-field': ['get', 'label'],
-                    'text-size': font_size,
-                    'text-font': ['Noto Sans Bold'],
-                    'text-anchor': 'top',
-                    'text-offset': [0, 0],
-                    'text-allow-overlap': true,
-                    'text-ignore-placement': true
-                },
-                paint: {
-                    'text-color': dark ? '#ffffff' : '#000000',
-                }
-            })
             
             var hovered_id = null
             const mouseenter = e => {            
@@ -1152,60 +1031,6 @@ icon.onclick = () => {
             map.on('mouseleave', 'price-circle', mouseleave)
             map.on('mouseleave', 'price-text', mouseleave)
 
-            const filters = {
-                '< 5m': ['<=', ['get', 'price'], 5e6],
-                '< 10m': ['<=', ['get', 'price'], 10e6],
-                '< 15m': ['<=', ['get', 'price'], 15e6],
-                '> 15m': ['>=', ['get', 'price'], 15e6]
-            }
-
-            map.on('click', 'filter-price-text', e => {
-                if (price_filter == e.features[0].properties.label) {
-                    price_filter = null
-                    map.setFilter('price-text', null)
-                    map.setFeatureState(
-                        {
-                            source: 'filter-price-options',
-                            id: e.features[0].properties.label
-                        },
-                        {
-                            selected: false
-                        }
-                    )
-                } else {
-                    map.setFeatureState(
-                        {
-                            source: 'filter-price-options',
-                            id: price_filter
-                        },
-                        {
-                            selected: false
-                        }
-                    )
-                    price_filter = e.features[0].properties.label
-                    map.setFilter('price-text', filters[price_filter])
-                    map.setFeatureState(
-                        {
-                            source: 'filter-price-options',
-                            id: price_filter
-                        },
-                        {
-                            selected: true
-                        }
-                    )
-                }
-                ads.forEach(ad =>
-                    map.setFeatureState(
-                        {
-                            source: 'prices',
-                            id: ad.id
-                        },
-                        {
-                            mode: is_filtered(ad.price) ? 'filtered' : 'normal'
-                        }
-                    )
-                )
-            })
             map.on('click', e => {
                 console.log(`[${e.lngLat.lng}, ${e.lngLat.lat}]`)
                 const features = map.queryRenderedFeatures(e.point, {
@@ -1249,7 +1074,14 @@ icon.onclick = () => {
             })
         })
         
-        map.once('load', () =>
+        map.once('load', () => {
+            window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+            
+            icon.hidden = false
+            
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
@@ -1258,9 +1090,10 @@ icon.onclick = () => {
                     .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
                 )
             )
-        )
+        })
 
     })
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
 </body>
 </html>
