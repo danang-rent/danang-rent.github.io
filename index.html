@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = 'ed8ba777e6ea46110567df32871ea1040cf06117721120507bab1252959565fd'// contact spirin.vladimir@gmail.com
+        const KEY = '122a85118e05beb04ba01bd6f1f804b2ea87e1bbcaec3eade843662e086478a5'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -490,6 +490,8 @@
             top: 50%;
             transform: translate(-180%, -50%);
             white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
         }
     </style>
 </head>
@@ -1100,11 +1102,6 @@ apply_filter = () => {
         })
         
         map.once('load', () => {
-            window.dataLayer = window.dataLayer || []
-            function gtag(){dataLayer.push(arguments)}
-            gtag('js', new Date())
-            gtag('config', 'GT-TQL9TSPB')
-            
             toggler.hidden = false
             
             caches.open('pmtiles')
@@ -1119,6 +1116,13 @@ apply_filter = () => {
 
     })
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+</script>
+            
 </body>
 </html>
