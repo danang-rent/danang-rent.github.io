@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '6dc6b4f99f1721684e0b9f9ac32f8ea7193e497f9bba01614336022722d6bf62'// contact spirin.vladimir@gmail.com
+        const KEY = '122a85118e05beb04ba01bd6f1f804b2ea87e1bbcaec3eade843662e086478a5'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -481,6 +481,8 @@
             top: 50%;
             transform: translate(-180%, -50%);
             white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
         }
     </style>
 </head>
