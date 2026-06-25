@@ -314,13 +314,6 @@
         })
     }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || []
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date())
-        gtag('config', 'GT-TQL9TSPB')
-    </script>
     <script type="application/ld+json">
         {
             "@context":"https://schema.org",
@@ -334,6 +327,14 @@
             display: none !important;
             visibility: hidden !important;
         }
+        html {
+            --text-color: black;
+            --filter-color: black;
+        }
+        html[dark] {
+            --text-color: white;
+            --filter-color: white;
+        }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
@@ -343,7 +344,7 @@
             right: 20px;
             bottom: 20px;
             background: transparent;
-            color: #000;
+            color: var(--text-color);
             max-height: 40vh;
             overflow: hidden;
             font-size: clamp(2px, 1.5vh, 12px);
@@ -427,45 +428,46 @@
             position: absolute;
         }
         #icon {
-            background: white;
+            background: var(--filter-color);
         }
         #filter {
-            bottom: 3vh;
-            right: 3vh;
-            width: 3vh;
-            height: 38vh;
+            bottom: 2vh;
+            right: 0vh;
+            width: 10vh;
+            height: 48vh;
         }
         #icon {
-            bottom: 3vh;
-            right: 3vh;
+            bottom: 2vh;
+            right: 2vh;
             width: 3vh;
             height: 3vh;
         }
         #scale {
             bottom: 5vh;
-            right: 1.1vh;
+            right: 3.1vh;
             width: 0.8vh;
-            height: 50vh;
-            border-color: white;
+            height: 43vh;
+            border-color: var(--filter-color);
             border-width: thin;
+            border-radius: 1vh;
             border-style: solid;
         }
         #min, #max {
             bottom: 5vh;
-            right: 0vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
+            right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
             height: 3vh;
             touch-action: none;
             border-radius: 50%;
-            background: white;
+            background: var(--filter-color);
         }
         .label {
-            color: white;
-            font: 12px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
+            color: var(--filter-color);
+            font: 13px/20px Helvetica Neue, Arial, Helvetica, sans-serif;
             position: absolute;
             left: 0;
             top: 50%;
-            transform: translate(-150%, -50%);
+            transform: translate(-180%, -50%);
             white-space: nowrap;
         }
     </style>
@@ -566,12 +568,14 @@ icon.onclick = () => {
     min$ = $min_label.textContent * 1e6,
     max$ = $max_label.textContent * 1e6,
     apply_filter()
-  
+
     min.addEventListener('pointerdown', pointerdown)
     max.addEventListener('pointerdown', pointerdown)
-    
-    
-    filter.onwheel = e => {
+
+    icon.onwheel = onwheel
+    filter.onwheel = onwheel
+
+    function onwheel(e) {
         e.preventDefault()
         const DOWN = e.deltaY > 0
         const UP   = e.deltaY < 0
@@ -1065,7 +1069,13 @@ apply_filter = () => {
         })
         
         map.once('load', () => {
+            window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+            
             icon.hidden = false
+            
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
@@ -1078,5 +1088,6 @@ apply_filter = () => {
 
     })
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
 </body>
 </html>
