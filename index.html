@@ -424,29 +424,35 @@
             width: 100%;
         }
 
-        #filter, #icon, #scale, #min, #max {
+        #filter, #toggler, #icon, #scale, #min, #max {
             position: absolute;
         }
-        #icon {
-            background: var(--filter-color);
-        }
         #filter {
-            bottom: 2vh;
+            bottom: 7vh;
             right: 0vh;
             width: 10vh;
             height: 48vh;
             touch-action: none;
+        }
+        #toggler {
+            bottom: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
         }
         #icon {
             bottom: 2vh;
             right: 2vh;
             width: 3vh;
             height: 3vh;
+            background: var(--filter-color);
+            pointer-events: none;
         }
         #scale {
-            bottom: 5vh;
-            right: 3.1vh;
-            width: 0.8vh;
+            bottom: 0vh;
+            right: 3.2vh;/* 2 + (3 / 2) - (0.6 / 2) = 2 + 1.5 - 0.3  */
+            width: 0.6vh;
             height: 43vh;
             border-color: var(--filter-color);
             border-width: thin;
@@ -454,7 +460,7 @@
             border-style: solid;
         }
         #min, #max {
-            bottom: 5vh;
+            bottom: 0vh;
             right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
             width: 3vh;
             height: 3vh;
@@ -479,7 +485,9 @@
     <div id="min"><span class="label"></span></div>
     <div id="max"><span class="label"></span></div>
 </div>
-<div id="icon" hidden></div>
+<div id="toggler" hidden>
+    <div id="icon"></div>
+</div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -503,8 +511,8 @@ const get_y_by_$ = $ => {
 var rect_scale, rect_min
 var min_y, max_y
 
-function pointerdown(e) {
-    const el = e.currentTarget      
+function pointerdown(e) {   
+    const el = e.currentTarget
     el.setPointerCapture(e.pointerId)
     let y = e.clientY
     const pos = y - rect_scale.bottom + rect_min.height / 2
@@ -524,6 +532,7 @@ function pointerdown(e) {
     }
   
     function pointerup(e) {
+        el.releasePointerCapture(e.pointerId)
         el.removeEventListener('pointermove', pointermove)
         el.removeEventListener('pointerup', pointerup)
         el.removeEventListener('pointercancel', pointerup)
@@ -538,7 +547,8 @@ var steps_count
 var step
 var min$
 var max$
-icon.onpointerdown = () => {
+
+toggler.onpointerup = e => {
     if (filter.hasAttribute('hidden')) {
         filter.removeAttribute('hidden')
     } else {
@@ -570,7 +580,7 @@ icon.onpointerdown = () => {
 
     filter.addEventListener('pointerdown', pointerdown)
 
-    icon.onwheel = onwheel
+    toggler.onwheel = onwheel
     filter.onwheel = onwheel
 
     function onwheel(e) {
@@ -1072,7 +1082,7 @@ apply_filter = () => {
             gtag('js', new Date())
             gtag('config', 'GT-TQL9TSPB')
             
-            icon.hidden = false
+            toggler.hidden = false
             
             caches.open('pmtiles')
             .then(c =>
