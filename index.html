@@ -442,12 +442,16 @@
             touch-action: manipulation;
         }
         #icon {
+            display: block;
             bottom: 2vh;
             right: 2vh;
             width: 3vh;
             height: 3vh;
-            background: var(--filter-color);
             pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
         }
         #scale {
             bottom: 0vh;
@@ -486,7 +490,16 @@
     <div id="max"><span class="label"></span></div>
 </div>
 <div id="toggler" hidden>
-    <div id="icon"></div>
+      <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+      <line x1="4" y1="6"  x2="20" y2="6"/>
+      <circle cx="10" cy="6" r="2.2"/>
+
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <circle cx="14" cy="12" r="2.2"/>
+
+      <line x1="4" y1="18" x2="20" y2="18"/>
+      <circle cx="8" cy="18" r="2.2"/>
+    </svg>
 </div>
 <script>
 const $min_label = min.firstElementChild
@@ -688,7 +701,6 @@ apply_filter = () => {
         ['>=', ['get', 'price'], min$],
         ['<=', ['get', 'price'], max$]
     ])
-
     ads.forEach(ad =>
         map.setFeatureState(
             {
