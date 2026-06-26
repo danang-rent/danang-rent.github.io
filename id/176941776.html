@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '19e314f3e61be103c132e1aace54ad2871cacf3faabf721bf3f0a85b813ac3ee'// contact spirin.vladimir@gmail.com
+        const KEY = '7efaed8b689722850f17b6dbbe4d28c7d178db6e74e76d119df1eed3dac413a6'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -258,16 +258,25 @@
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
         const raw_ads = get_ads()
+        window.dup_map = new Map()
         window.ads = Array(raw_ads.length / ad_size)
         for (var i = 0; i < raw_ads.length; i += ad_size) {
             var id = raw_ads[i]
             var price = raw_ads[i + 1]
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
+            var key = longitude + '-' + latitude
+            var dup_set = dup_map.get(key) || new Set()
+            dup_set.add(id)
+            dup_map.set(key, dup_set)
             if (price < limit$.min) limit$.min = price
             if (price > limit$.max) limit$.max = price
             ads[i / ad_size] = { id, price, longitude, latitude }
         }
+        dup_map.forEach((dup_set, key) =>
+            dup_set.size == 1 &&
+            dup_map.delete(key)
+        )
         limit$.min = Math.max(
             Math.floor(limit$.min / 1e5) / 10,
             2
@@ -770,7 +779,14 @@ apply_filter = () => {
             },
             {
                 mode: ad.price > max$ || ad.price < min$
-                    ? 'filtered'
+                    ? dup_map.has(ad.longitude + '-' + ad.latitude)
+                        ? [...dup_map.get(ad.longitude + '-' + ad.latitude)].some(id => {
+                            const ad = ads.find(_ => _.id == id)
+                            return ad.price <= max$ && ad.price >= min$
+                        })
+                            ? 'hidden'
+                            : 'filtered'
+                        : 'filtered'
                     : 'normal'
             }
         )
@@ -1046,6 +1062,7 @@ apply_filter = () => {
                         'selected', 1,
                         'other', 0.6,
                         'filtered', 0.6,
+                        'hidden', 0.0,
                         0.6//normal
                     ]
                 }

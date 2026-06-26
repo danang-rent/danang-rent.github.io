@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ</title>
+    <title>CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ</title>
     <meta property="og:url" content="https://danang.kim/id/176982213">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ" />
+    <meta property="og:title" content="CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ" />
+    <meta name="description" content="CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ">
+    <meta name="twitter:title" content="CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
     <link rel="canonical" href="https://danang.kim/id/176982213">
@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '19e314f3e61be103c132e1aace54ad2871cacf3faabf721bf3f0a85b813ac3ee'// contact spirin.vladimir@gmail.com
+        const KEY = '7efaed8b689722850f17b6dbbe4d28c7d178db6e74e76d119df1eed3dac413a6'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -258,16 +258,25 @@
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
         const raw_ads = get_ads()
+        window.dup_map = new Map()
         window.ads = Array(raw_ads.length / ad_size)
         for (var i = 0; i < raw_ads.length; i += ad_size) {
             var id = raw_ads[i]
             var price = raw_ads[i + 1]
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
+            var key = longitude + '-' + latitude
+            var dup_set = dup_map.get(key) || new Set()
+            dup_set.add(id)
+            dup_map.set(key, dup_set)
             if (price < limit$.min) limit$.min = price
             if (price > limit$.max) limit$.max = price
             ads[i / ad_size] = { id, price, longitude, latitude }
         }
+        dup_map.forEach((dup_set, key) =>
+            dup_set.size == 1 &&
+            dup_map.delete(key)
+        )
         limit$.min = Math.max(
             Math.floor(limit$.min / 1e5) / 10,
             2
@@ -318,9 +327,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ",
+            "name":"CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ",
             "url":"https://danang.kim/id/176982213",
-			"price":"8000000",
+			"price":"12000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -503,18 +512,23 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ CĂN HỘ STUDIO  ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ</h1><p>🏡 CĂN HỘ CHO THUÊ ĐẦY ĐỦ NỘI THẤT CÓ HỒ BƠI – SƠN TRÀ
-📍 Đường Lê Văn Duyệt – Sơn Trà
-✨ Thông tin căn hộ:
-Studio – 40m², Đầy đủ nội thất
-🌿 Ban công rộng rãi
+<div id="map"></div><article><h1>CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ</h1><p>🏡 CHO THUÊ CĂN HỘ CAO CẤP 1 PHÒNG NGỦ CÓ TẦM NHÌN HƯỚNG VỊNH &amp; NÚI – SƠN TRÀ
+📍 Đường Nại Hiên Đông 20 – Sơn Trà
+✨ Chi tiết căn hộ:
+🛏️ 1 phòng ngủ riêng biệt
+📐 Diện tích: 45m²
+🏠 Nội thất hiện đại, đầy đủ tiện nghi
+🌿 Ban công rộng rãi với tầm nhìn tuyệt đẹp ra vịnh và núi
+🔇 Thiết kế cách âm, mang lại không gian sống yên tĩnh
 🧺 Máy giặt riêng
-🏊 Hồ bơi
-🏢 Tiện nghi:
-🏊 Hồ bơi miễn phí
-🧺 Máy giặt riêng
-🌿 Ban công rộng rãi
-📅 Tầng 3: Có sẵn, sẵn sàng dọn vào ở
+👕 Máy sấy dùng chung
+🏢 Tiện ích nổi bật:
+🛗 Thang máy
+📶 Wi-Fi miễn phí
+🧹 Dịch vụ dọn phòng miễn phí 2 lần/tuần
+💪 Phòng gym dành cho cư dân
+🌇 Sân thượng rộng rãi với tầm nhìn đẹp
+📅 Tầng 4 – Có thể dọn vào ở ngay
 </p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
@@ -757,7 +771,14 @@ apply_filter = () => {
             },
             {
                 mode: ad.price > max$ || ad.price < min$
-                    ? 'filtered'
+                    ? dup_map.has(ad.longitude + '-' + ad.latitude)
+                        ? [...dup_map.get(ad.longitude + '-' + ad.latitude)].some(id => {
+                            const ad = ads.find(_ => _.id == id)
+                            return ad.price <= max$ && ad.price >= min$
+                        })
+                            ? 'hidden'
+                            : 'filtered'
+                        : 'filtered'
                     : 'normal'
             }
         )
@@ -1033,6 +1054,7 @@ apply_filter = () => {
                         'selected', 1,
                         'other', 0.6,
                         'filtered', 0.6,
+                        'hidden', 0.0,
                         0.6//normal
                     ]
                 }
