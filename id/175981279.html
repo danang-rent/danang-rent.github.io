@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Cho Thuê Căn Hộ Ngũ Hành Sơn</title>
-    <meta property="og:url" content="https://danang.kim/">
+    <meta property="og:url" content="https://danang.kim/id/175981279">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Cho Thuê Căn Hộ Ngũ Hành Sơn" />
@@ -19,10 +19,15 @@
     <meta name="twitter:title" content="Cho Thuê Căn Hộ Ngũ Hành Sơn">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/">
+    <link rel="canonical" href="https://danang.kim/id/175981279">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icon-192.png">
+    <meta name="msapplication-config" content="none">
     <script>
     async function instantiate(module, imports = {}) {
       const adaptedImports = {
@@ -34,7 +39,7 @@
             columnNumber = columnNumber >>> 0;
             (() => {
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })();
+            })()
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -48,7 +53,7 @@
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
         },
         get_key_created_at() {
           return BigInt.asUintN(64, exports.get_key_created_at());
@@ -228,10 +233,10 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '784499933725e9e6b735669fccb7ad287c16d1131e200be7acfe2ec07e7106e7'// contact spirin.vladimir@gmail.com
+        const KEY = '26624d0f922f29a4a2cb84318f2a871762493347042b15e385d1ec395449c96b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            location.href,
+            'https://danang.kim',//location.href,
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -249,17 +254,38 @@
             const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
             console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
         }
+        window.limit$ = {min: Infinity, max: -Infinity}
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
         const raw_ads = get_ads()
+        window.dup_map = new Map()
         window.ads = Array(raw_ads.length / ad_size)
         for (var i = 0; i < raw_ads.length; i += ad_size) {
             var id = raw_ads[i]
             var price = raw_ads[i + 1]
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
+            var key = longitude + '-' + latitude
+            var dup_set = dup_map.get(key) || new Set()
+            dup_set.add(id)
+            dup_map.set(key, dup_set)
+            if (price < limit$.min) limit$.min = price
+            if (price > limit$.max) limit$.max = price
             ads[i / ad_size] = { id, price, longitude, latitude }
         }
+        dup_map.forEach((dup_set, key) =>
+            dup_set.size == 1 &&
+            dup_map.delete(key)
+        )
+        limit$.min = Math.max(
+            Math.floor(limit$.min / 1e5) / 10,
+            2
+        )
+        limit$.max = Math.min(
+            Math.floor(limit$.max / 1e5) / 10,
+            50
+        )
+        window.range$ = limit$.max - limit$.min
         if (location.pathname.split('/')[1] == 'id') {
             var ad_id = location.pathname.split('/')[2]
             var ad_current = ads.find(ad => ad.id == ad_id)
@@ -297,25 +323,64 @@
         })
     }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || []
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date())
-        gtag('config', 'GT-TQL9TSPB')
-    </script>
     <script type="application/ld+json">
         {
             "@context":"https://schema.org",
-            "@type":"WebSite",
-            "name":"Danang Rent Map",
-            "url":"https://danang.kim/"
+            "@type":"Offer",
+            "name":"Cho Thuê Căn Hộ Ngũ Hành Sơn",
+            "url":"https://danang.kim/id/175981279",
+			"price":"5200000",
+			"priceCurrency":"VND"
         }
     </script>
     <style>
-        body { margin: 0; padding: 0; background: rgb(242,243,240);}
+        [hidden] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        html {
+            --text-color: black;
+            --text-color-inverse: white;
+            --filter-color: black;
+        }
+        html[dark] {
+            --text-color: white;
+            --text-color-inverse: black;
+            --filter-color: white;
+        }
+        body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
+        article {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: transparent;
+            color: var(--text-color);
+            max-height: 40vh;
+            overflow: hidden;
+            font-size: clamp(2px, 1.5vh, 12px);
+        }
+        
+        article p {
+            margin: 8px 0 0 0;
+        }
+        
+        article h1 {
+            margin: 0;
+        }
+        
+        article p,
+        article h1 {
+            white-space: pre-line;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            article {
+                color: #fff;
+            }
+        }
         html[dark] .maplibregl-ctrl-attrib {
             background: rgba(30, 30, 30, 0.9);
             color: grey;
@@ -371,15 +436,348 @@
             height: 100%;
             width: 100%;
         }
+
+        #filter, #toggler, #icon, #scale, #min, #max {
+            position: absolute;
+        }
+        #filter {
+            bottom: 7vh;
+            right: 0vh;
+            width: 10vh;
+            height: 48vh;
+            touch-action: none;
+            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+        #toggler {
+            bottom: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
+        #icon {
+            display: block;
+            bottom: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #scale {
+            bottom: 0vh;
+            right: 3.2vh;/* 2 + (3 / 2) - (0.6 / 2) = 2 + 1.5 - 0.3  */
+            width: 0.6vh;
+            height: 43vh;
+            border-color: var(--filter-color);
+            border-width: thin;
+            border-radius: 1vh;
+            border-style: solid;
+        }
+        #min, #max {
+            bottom: 0vh;
+            right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
+            width: 3vh;
+            line-height: 3vh; /* same as height */
+            height: 3vh;
+            border-radius: 50%;
+            background: var(--filter-color);
+            text-align: center;
+            font-size: 2vh;
+            color: var(--text-color-inverse);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .label {
+            font-variant-numeric: tabular-nums;
+            width: 4ch;
+            text-align: right;
+            font-size: 1.3vh;
+            line-height: 2vh;
+            color: var(--filter-color);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-180%, -50%);
+            white-space: nowrap;
+        }
+        #min svg,
+        #max svg {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-<h1 style="display:none">Cho Thuê Căn Hộ Ngũ Hành Sơn</h1>
-<div id="map"></div>
+<div id="map"></div><article><h1>Cho Thuê Căn Hộ Ngũ Hành Sơn</h1><p>Dự án: 
+Thông tin chi tiết: 🎉🎉 KHAI TRƯƠNG CĂN HỘ MỚI - ƯU ĐÃI CHỈ VỚI 5,XTR/THÁNG- CHỐT NGAY LIỀN TAY 🎉🎉
+🌻🌻𝐂𝐚̆𝐧 𝐡𝐨̣̂ 𝐜𝐡𝐨 𝐭𝐡𝐮𝐞̂ - 𝐍𝐠𝐮̃ 𝐡𝐚̀𝐧𝐡 𝐒𝐨̛𝐧🌻🌻
+✅ Căn hộ đầy đủ nội thất, nhà xe rộng rãi, sân phơi thoáng mát có mái che 
+✅ Vị trí ngay khu Nam Việt Á, gần ĐH Kinh Tế, gần Khu FPT, Bệnh viện 600 giường,.... thuận tiện, gần chợ, gần biển, khu vực an ninh tốt
+⛔️ Cọc 1 tháng, thanh toán từng tháng
+⛔️ Địa chỉ: Nghiêm Xuân Yêm, Ngũ Hành Sơn
+☎️☎️Liên hệ chính chủ:</p></article>
+<div id="filter" hidden>
+    <div id="scale"></div>
+    <div id="min">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+    <div id="max">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+</div>
+<div id="toggler" hidden>
+      <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+      <line x1="4" y1="6"  x2="20" y2="6"/>
+      <circle cx="10" cy="6" r="2.2"/>
+
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <circle cx="14" cy="12" r="2.2"/>
+
+      <line x1="4" y1="18" x2="20" y2="18"/>
+      <circle cx="8" cy="18" r="2.2"/>
+    </svg>
+</div>
 <script>
+const $min_label = min.firstElementChild
+const $max_label = max.firstElementChild
+
+const limit = {
+    min: null,
+    max: null
+}
+var range
+const step$ = 0.1
+const get_label = y => {
+    const abs_pos = (y - limit.min) / range
+    const pos$ = limit$.min + range$ * abs_pos
+    return pos$.toFixed(1)
+}
+const get_y_by_$ = $ => {
+    const abs_pos = ($ - limit$.min) / range$
+    const y = limit.min + range * abs_pos
+    return y
+}
+var rect_scale, rect_min
+var min_y, max_y
+
+function pointerdown(e) {   
+    const el = e.currentTarget
+    el.setPointerCapture(e.pointerId)
+    let y = e.clientY
+    const pos = y - rect_scale.bottom + rect_min.height / 2
+    const dist_min = Math.abs(min_y - pos)
+    const dist_max = Math.abs(max_y - pos)
+    var target = dist_min < dist_max ? min : max
+    function pointermove(e) {
+        const dy = e.clientY - y
+        y = e.clientY
+
+        if (target == min) {
+            update_min_y(dy)
+        }
+        if (target == max) {
+            update_max_y(dy)
+        }
+    }
+  
+    function pointerup(e) {
+        el.releasePointerCapture(e.pointerId)
+        el.removeEventListener('pointermove', pointermove)
+        el.removeEventListener('pointerup', pointerup)
+        el.removeEventListener('pointercancel', pointerup)
+    }
+  
+    el.addEventListener('pointermove', pointermove)
+    el.addEventListener('pointerup', pointerup)
+    el.addEventListener('pointercancel', pointerup)
+}
+
+var steps_count
+var step
+var min$
+var max$
+
+toggler.onpointerup = e => {
+    if (filter.hasAttribute('hidden')) {
+        filter.removeAttribute('hidden')
+    } else {
+        filter.setAttribute('hidden', '')
+        filter.onwheel = null
+        return
+    }
+    rect_scale = scale.getBoundingClientRect()
+    rect_min = min.getBoundingClientRect()
+    limit.min = 0
+    limit.max = 0 - (rect_scale.height - rect_min.height)
+    range = limit.max - limit.min
+    steps_count = (limit$.max - limit$.min) / step$
+    step = (limit.max - limit.min) / steps_count
+
+    min$ = +localStorage.getItem('min$')
+    max$ = +localStorage.getItem('max$')
+
+    min_y = min$ ? get_y_by_$(min$ / 1e6) : limit.min
+    max_y = max$ ? get_y_by_$(max$ / 1e6) : limit.max
+    
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $min_label.textContent = get_label(min_y)
+    $max_label.textContent = get_label(max_y)
+    min$ = $min_label.textContent * 1e6,
+    max$ = $max_label.textContent * 1e6,
+    apply_filter()
+
+    filter.addEventListener('pointerdown', pointerdown)
+
+    toggler.onwheel = onwheel
+    filter.onwheel = onwheel
+
+    function onwheel(e) {
+        e.preventDefault()
+        const DOWN = e.deltaY > 0
+        const UP   = e.deltaY < 0
+        if (!e.deltaY) return
+        const dy = DOWN ? -step : step
+        const pos = e.clientY - rect_scale.bottom + rect_min.height / 2
+        const dist_min = Math.abs(min_y - pos)
+        const dist_max = Math.abs(max_y - pos)
+        var target = null
+        if (dist_min < dist_max) {
+            if (DOWN) {
+                if (min_y == limit.min) {
+                    target = null
+                    // swith target max
+                    if (max_y == min_y - rect_min.height) {
+                        target = null // max near min
+                    } else {
+                        target = max
+                    }
+                } else {
+                    target = min
+                }
+            }
+            if (UP) {
+                if (min_y == max_y + rect_min.height) {
+                    target = null
+                    /*
+                    // switch target max
+                    if (max_y == limit.max) {
+                        target = null // max & min at top border
+                    } else {
+                        target = max
+                    }
+                    */
+                } else {
+                    target = min
+                }
+            }
+        } else {
+            if (DOWN) {
+                if (max_y == min_y - rect_min.height) {
+                    target = null
+                    /*
+                    // swith target min
+                    if (min_y == limit.min) {
+                        target = null // max & min at lower border
+                    } else {
+                        target = min
+                    }
+                    */
+                } else {
+                    target = max
+                }
+            }
+            if (UP) {
+                if (max_y == limit.max) {
+                    target = null
+                    //target min
+                    if (min_y == max_y + rect_min.height) {
+                        target = null // max & min at top border
+                    } else {
+                        target = min
+                    }
+                } else {
+                    target = max
+                }
+            }
+        }
+        if (target == min) {
+            update_min_y(dy)
+        } else if (target == max) {
+            update_max_y(dy)
+        }
+    }
+}
+
+update_min_y = dy => {
+    min_y += dy
+    if (min_y > limit.min) min_y = limit.min
+    if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    $min_label.textContent = get_label(min_y)
+    min$ = $min_label.textContent * 1e6,
+    localStorage.setItem('min$', min$)
+    apply_filter()
+}
+
+update_max_y = dy => {
+    max_y += dy
+    if (max_y < limit.max) max_y = limit.max
+    if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $max_label.textContent = get_label(max_y)
+    max$ = $max_label.textContent * 1e6
+    localStorage.setItem('max$', max$)
+    apply_filter()
+}
+
+apply_filter = () => {
+    map.setFilter('price-text', [
+        'all',
+        ['>=', ['get', 'price'], min$],
+        ['<=', ['get', 'price'], max$]
+    ])
+    ads.forEach(ad =>
+        map.setFeatureState(
+            {
+                source: 'prices',
+                id: ad.id
+            },
+            {
+                mode: ad.price > max$ || ad.price < min$
+                    ? dup_map.has(ad.longitude + '-' + ad.latitude)
+                        ? [...dup_map.get(ad.longitude + '-' + ad.latitude)].some(id => {
+                            const ad = ads.find(_ => _.id == id)
+                            return ad.price <= max$ && ad.price >= min$
+                        })
+                            ? 'hidden'
+                            : 'filtered'
+                        : 'filtered'
+                    : 'normal'
+            }
+        )
+    )
+}
+
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
+        maplibre_ready.then(() => maplibregl.prewarm()),
         window.wasm_ready
     ])
     .then(() => {
@@ -397,7 +795,7 @@
             center: window.ad_current
                 ? [ad_current.longitude, ad_current.latitude]
                 : get_center(),
-            zoom: window.ad_current ? 18 : get_zoom(),
+            zoom: window.ad_current ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
@@ -546,7 +944,7 @@
                         type: 'Feature',
                         properties: {
                             price: ad.price, 
-                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
                         },
                         geometry: {
                             type: 'Point',
@@ -555,6 +953,25 @@
                     }))
                 }
             })
+
+            ads.forEach(ad =>
+                map.setFeatureState(
+                    {
+                        source: 'prices',
+                        id: ad.id
+                    },
+                    {
+                        mode: window.ad_current
+                            ? ad.id == ad_current.id
+                                ? 'selected'
+                                : 'other'
+                            : ad.price < min$ || ad.price > max$
+                                ? 'filtered'
+                                : 'normal'
+                    }
+                )
+            )
+
             const w = window.innerWidth;
             const font_size =
             w < 500 ? 14 :
@@ -571,6 +988,22 @@
                 1.8,
                 1
             ]
+            const colors = {
+                light: {
+                    selected: '#ff69b4',
+                    other: '#888',
+                    filtered: '#888',
+                    normal: '#ff69b4'
+                },
+                dark: {
+                    selected: '#ff69b4',
+                    other: '#555',
+                    filtered: '#555',
+                    normal: '#ff69b4'
+                }
+            }
+            const color_theme = dark ? colors.dark : colors.light
+
             map.addLayer({
                 id: 'price-circle',
                 type: 'circle',
@@ -580,11 +1013,40 @@
                         'interpolate',
                         ['linear'],
                         ['zoom'],
-                        1, ['*', 2, hover_scale],
-                        14, ['*', circle_radius, hover_scale]
+                        1, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', 4, hover_scale],
+                            'other', ['*', 2, hover_scale],
+                            'filtered', ['*', 2, hover_scale],
+                            ['*', 2, hover_scale]//normal
+                        ],
+                        14, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', circle_radius + 5, hover_scale],
+                            'other', ['*', circle_radius, hover_scale],
+                            'filtered', ['*', circle_radius, hover_scale],
+                            ['*', circle_radius, hover_scale]//normal
+                        ]
                     ],
-                    'circle-color': '#ff69b4',   // hot pink
-                    'circle-opacity': 0.6
+                    'circle-color': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', color_theme.selected,
+                        'other', color_theme.other,
+                        'filtered', color_theme.filtered,
+                        color_theme.normal
+                    ],
+                    'circle-opacity': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', 1,
+                        'other', 0.6,
+                        'filtered', 0.6,
+                        'hidden', 0.0,
+                        0.6//normal
+                    ]
                 }
             })
             map.addLayer({
@@ -606,7 +1068,7 @@
             })
             if (map.getLayer('logo')) map.removeLayer('logo')
             map.addLayer(new LogoLayer())
-
+            
             var hovered_id = null
             const mouseenter = e => {            
                 if (hovered_id != null) {
@@ -642,11 +1104,32 @@
             map.on('mouseenter', 'price-text', mouseenter) 
             map.on('mouseleave', 'price-circle', mouseleave)
             map.on('mouseleave', 'price-text', mouseleave)
+
             map.on('click', e => {
+                console.log(`[${e.lngLat.lng}, ${e.lngLat.lat}]`)
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
-                if (!features || !features.length) return
+                if (!features || !features.length) {
+                    if (window.ad_current) {
+                        history.pushState({}, '', '/')
+                        document.title = 'Danang Rent Map'
+                        //this should be at route handler
+                        ads.forEach(ad =>
+                            map.setFeatureState(
+                                {
+                                    source: 'prices',
+                                    id: ad.id
+                                },
+                                {
+                                    mode: 'normal'                                    
+                                }
+                            )
+                        )
+                        delete window.ad_current
+                    }
+                    return
+                }
                 var i = 0
                 var i_min_price = i
                 var min_price = features[i_min_price].properties.price
@@ -659,12 +1142,15 @@
                 const id = features[i_min_price].id
                 const url = get_url(id)
                 
+                console.log('https://danang.kim/id/' + id)
                 gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
                 window.open(url, '_blank')
             })
         })
         
-        map.once('load', () =>
+        map.once('load', () => {
+            toggler.hidden = false
+            
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
@@ -673,9 +1159,17 @@
                     .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
                 )
             )
-        )
+        })
 
     })
 </script>
+<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+</script>
+            
 </body>
 </html>
