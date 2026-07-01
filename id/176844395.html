@@ -233,7 +233,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '8d136b4c20ec73cf78a1ba90092dd87c1d6f38a92c6702b244a9f4e02340f6c8'// contact spirin.vladimir@gmail.com
+        const KEY = 'a5c86bbdc4a2ae56cacfa7f317c01928a711c15787a484f952ef57a8767b4b86'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -616,17 +616,18 @@ const $likes_count = document.getElementById('likes_count')
 var search_params = new URLSearchParams(location.search)
 var likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
 var likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
+var same_likes
+var PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
+var current_page
 
 const router = () => {
-    debugger
     const pathname = location.pathname.split('/')
     search_params = new URLSearchParams(location.search)
     likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
     likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
-    var same_likes = true
-
     if (pathname[1] == 'id') {
+        current_page = PAGE.SINGLE
         var ad_id = location.pathname.split('/')[2]
         var ad_current = ads.find(ad => ad.id == ad_id)
         if (ad_current) {
@@ -635,30 +636,41 @@ const router = () => {
             document.title = '[SOLD] ' + document.title
         }
     }
-    if (likes_search_params.length) {
-        same_likes = likes_search_params.length == likes_local_storage.length && likes_search_params.every((id, i) =>
+    
+    same_likes = likes_search_params.length == 0
+        ? likes_local_storage.length == 0
+        : likes_search_params.length == likes_local_storage.length && likes_search_params.every((id, i) =>
             likes_local_storage[i] == id
-        )        
-    }
-    if (same_likes && likes_local_storage.length) {
-        $likes_count.textContent = likes_local_storage.length
-    }
+        )
+ 
+    $likes_count.textContent = likes_local_storage.length || ''
+        
     if (search_params.has('likes')) {
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', same_likes ? 'visible' : 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', same_likes ? 'visible' : 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
         map.setLayoutProperty('price-circle', 'visibility', 'none')
-        map.setLayoutProperty('price-text', 'visibility', 'visible')
+        map.setLayoutProperty('price-text', 'visibility', 'none')
+        if (same_likes) {
+            current_page = PAGE.EDIT
+        } else {
+            current_page = PAGE.SHARED
+        }
     } else {
         map.setLayoutProperty('likes-filled', 'visibility', 'none')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-outline', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-text', 'visibility', 'visible')
+        current_page = PAGE.MAIN
     }
     
-    $close.toggleAttribute('hidden', same_likes)
-    $heart.toggleAttribute('hidden', !same_likes)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     
     const likes = likes_search_params.length
         ? likes_search_params
@@ -684,43 +696,36 @@ const router = () => {
     )
 }
 
-addEventListener('popstate', event => {
-    debugger
-    router()
-})
+addEventListener('popstate', router)
 
 $heart.onpointerup = e => {
-    debugger
     const url = new URL(location)
     if (url.searchParams.has('likes')) {
         url.searchParams.delete('likes')
         history.replaceState({}, '', url)
-        //id: 'price-circle',
-        //id: 'price-text',
-        //likes-filled
-        //likes-outline
-        //id: 'likes-hitbox',
-        //
+        current_page = PAGE.MAIN
         map.setLayoutProperty('likes-filled', 'visibility', 'none')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-outline', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-text', 'visibility', 'visible')
     } else {
-        //if (likes_local_storage.length) {
-            url.searchParams.set('likes', likes_local_storage.join(','))
-            history.replaceState({}, '', url)
-        //}
+        url.searchParams.set('likes', likes_local_storage.join(','))
+        history.replaceState({}, '', url)
+        current_page = PAGE.EDIT
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', 'visible')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
         map.setLayoutProperty('price-circle', 'visibility', 'none')
-        map.setLayoutProperty('price-text', 'visibility', 'visible')
+        map.setLayoutProperty('price-text', 'visibility', 'none')
     }
 }
 
 $close.onpointerup = e => {
-    debugger
     const url = new URL(location)
     url.searchParams.delete('likes')
     history.pushState({}, '', url)
@@ -1285,7 +1290,37 @@ const color_theme = dark ? colors.dark : colors.light
                     'icon-opacity': [
                         'case',
                         ['boolean', ['feature-state', 'liked'], false],
-                        1,
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            0,
+                            1
+                        ],
+                        0
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-filled-hovered',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-filled',
+                    'icon-size': 0.28,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ],
                         0
                     ]
                 }
@@ -1306,7 +1341,37 @@ const color_theme = dark ? colors.dark : colors.light
                         'case',
                         ['boolean', ['feature-state', 'liked'], false],
                         0,
-                        1
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-outline-hovered',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-outline',
+                    'icon-size': 0.28,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        0,
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ]
                     ]
                 }
             })
@@ -1318,7 +1383,7 @@ const color_theme = dark ? colors.dark : colors.light
                     'visibility': 'none'
                 },
                 paint: {
-                    'circle-radius': 12,
+                    'circle-radius': 30,
                     'circle-opacity': 0
                 }
             })
@@ -1327,7 +1392,7 @@ const color_theme = dark ? colors.dark : colors.light
             map.addLayer(new LogoLayer())
             
             var hovered_id = null
-            const mouseenter = e => {            
+            const mouseenter = e => {
                 if (hovered_id != null) {
                     map.setFeatureState(
                         { source: 'prices', id: hovered_id },
@@ -1337,11 +1402,24 @@ const color_theme = dark ? colors.dark : colors.light
                 
                 if (!e.features || !e.features.length) return
                 
-                hovered_id = e.features[0].id
-                
+                if (current_page == PAGE.SHARED) {
+                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
+                    if (hovered_feature) {
+                        hovered_id = hovered_feature.id
+                    } else {
+                        return
+                    }
+                } else {
+                    hovered_id = e.features[0].id
+                }
+
                 map.setFeatureState(
                     { source: 'prices', id: hovered_id },
                     { hover: true }
+                )
+                
+                console.log(
+                    map.getFeatureState({ source: 'prices', id: hovered_id })
                 )
                 
                 map.getCanvas().style.cursor = 'pointer'
@@ -1359,11 +1437,26 @@ const color_theme = dark ? colors.dark : colors.light
             }
             map.on('mouseenter', 'price-circle', mouseenter)            
             map.on('mouseenter', 'price-text', mouseenter) 
+            map.on('mouseenter', 'likes-hitbox', mouseenter)            
             map.on('mouseleave', 'price-circle', mouseleave)
             map.on('mouseleave', 'price-text', mouseleave)
+            map.on('mouseleave', 'likes-hitbox', mouseleave)            
 
             map.on('click', 'likes-hitbox', e => {
-                const id = e.features[0].id
+                var id = e.features[0].id
+                if (current_page == PAGE.SHARED) {
+                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
+                    if (hovered_feature) {
+                        id = hovered_feature.id
+                    } else {
+                        return
+                    }
+                    const url = get_url(id)
+                    console.log('https://danang.kim/id/' + id)
+                    gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: hovered_feature.properties.price, page: current_page})
+                    window.open(url, '_blank')
+                    return
+                }
                 var liked
                 const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
                 if (likes.has(id)) {
@@ -1422,7 +1515,7 @@ const color_theme = dark ? colors.dark : colors.light
                 const url = get_url(id)
                 
                 console.log('https://danang.kim/id/' + id)
-                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
+                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price, page: current_page})
                 window.open(url, '_blank')
             })
             
