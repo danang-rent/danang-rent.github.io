@@ -148,6 +148,8 @@
       return adaptedExports;
     }
 
+    window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
+
     window.wasm_ready = WebAssembly
       .compileStreaming(fetch("/danang.kim.wasm"))
       .then(module => instantiate(module, {}))
@@ -233,7 +235,7 @@
     }
     
     window.wasm_ready.then(() => {
-        const KEY = '3cdcea46f990e32a7b9aaf81ee5d892e8714fb5082bf26e19b747b67adb499e1'// contact spirin.vladimir@gmail.com
+        const KEY = 'bfda7898671be5a43c1a3a45c9aa9d2871ec5dd61970877bc603551d386df930'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             'https://danang.kim',//location.href,
@@ -253,6 +255,13 @@
             const expired_in_hours = Math.floor(expired_in / 1000 / 60 / 60)//hours
             const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
             console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
+        }
+        if (location.pathname.split('/')[1] == 'id') {
+            window.current_page = PAGES.SINGLE
+            var ad_id = location.pathname.split('/')[2]
+            var ad_current = ads.find(ad => ad.id == ad_id)
+            if (ad_current) window.ad_current = ad_current
+            else document.title = '[SOLD] ' + document.title
         }
         window.limit$ = {min: Infinity, max: -Infinity}
         window.raw_danang_bounds = get_danang_bounds()
@@ -646,8 +655,6 @@ var search_params = new URLSearchParams(location.search)
 var likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
 var likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 var same_likes
-var PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
-var current_page
 
 const router = () => {
     const pathname = location.pathname.split('/')
@@ -655,15 +662,16 @@ const router = () => {
     likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
     likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
+    if (window.current_page == PAGE.SINGLE && !window.ad_current) {
+        history.replaceState({}, '', '/')
+        window.title = 'Danang Rent Map'
+        current_page = PAGE.MAIN
+    }
+    
     if (pathname[1] == 'id') {
-        current_page = PAGE.SINGLE
-        var ad_id = location.pathname.split('/')[2]
-        var ad_current = ads.find(ad => ad.id == ad_id)
-        if (ad_current) {
-            window.ad_current = ad_current
-        } else {
-            document.title = '[SOLD] ' + document.title
-        }
+        window.current_page = PAGE.SINGLE
+    } else {
+        window.current_page = PAGE.MAIN
     }
     
     same_likes = likes_search_params.length == 0
@@ -684,7 +692,9 @@ const router = () => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
         if (same_likes) {
             current_page = PAGE.EDIT
+            map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
         } else {
+            map.setLayoutProperty('price-text-shared-likes', 'visibility', 'visible')
             current_page = PAGE.SHARED
         }
     } else {
@@ -695,11 +705,16 @@ const router = () => {
         map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-text', 'visibility', 'visible')
-        current_page = PAGE.MAIN
+        map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
+        if (!window.current_page) current_page = PAGE.MAIN
     }
-    
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
+    current_page == PAGE.SHARED && console.log('SHARED')
+    current_page == PAGE.MAIN && console.log('MAIN')
+    current_page == PAGE.EDIT && console.log('EDIT')
+    current_page == PAGE.SINGLE && console.log('SINGLE')
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     
     const likes = likes_search_params.length
         ? likes_search_params
@@ -712,7 +727,7 @@ const router = () => {
                 id: ad.id
             },
             {
-                mode: window.ad_current
+                mode: current_page == PAGE.SINGLE
                     ? ad.id == ad_current.id
                         ? 'selected'
                         : 'other'
@@ -723,6 +738,7 @@ const router = () => {
             }
         )
     )
+    gtag('event', 'page_view', {page_title: document.title, page_location: location.href})
 }
 
 addEventListener('popstate', router)
@@ -752,13 +768,18 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-circle', 'visibility', 'none')
         map.setLayoutProperty('price-text', 'visibility', 'none')
     }
+    toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
 }
 
 $close.onpointerup = e => {
-    const url = new URL(location)
-    url.searchParams.delete('likes')
-    history.pushState({}, '', url)
-    router()
+    if (
+        window.current_page == PAGE.SHARED ||
+        window.current_page == PAGE.SINGLE
+    ) {
+        current_page = PAGE.MAIN
+        history.pushState({}, '', '/')
+        router()
+    }
 }
 
 const limit = {
@@ -1011,14 +1032,8 @@ const color_theme = dark ? colors.dark : colors.light
                 new Blob([svg], { type: "image/svg+xml" })
             )
             const img = new Image()
-            img.onload = () => {
-                console.log("image loaded", img.width, img.height)
-                y(img)
-            }
-            img.onerror = e => {
-                console.error("img failed", e)
-                n(img)
-            }
+            img.onload = () => y(img)
+            img.onerror = e => n(e)
             img.src = url
         })))
     )(`<svg xmlns="http://www.w3.org/2000/svg"
@@ -1054,10 +1069,10 @@ const color_theme = dark ? colors.dark : colors.light
         window.map = new maplibregl.Map({
             container: 'map',
             style: dark ? styles.dark : styles.bright,
-            center: window.ad_current
+            center: window.current_page && current_page == PAGE.SINGLE
                 ? [ad_current.longitude, ad_current.latitude]
                 : get_center(),
-            zoom: window.ad_current ? 15 : get_zoom(),
+            zoom: window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
@@ -1302,6 +1317,32 @@ const color_theme = dark ? colors.dark : colors.light
                     'text-color': dark ? '#ffffff' : '#000000',
                 }
             })
+
+            map.addLayer({
+                id: 'price-text-shared-likes',
+                type: 'symbol',
+                source: 'prices',
+                minzoom: 13,
+                layout: {
+                    'visibility': 'none',
+                    'text-field': ['get', 'price_label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0.6],
+                    //'text-allow-overlap': true,
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-color': dark ? '#ffffff' : '#000000',
+                    'text-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        1,
+                        0
+                    ]
+                }
+            })
             
             
             map.addLayer({
@@ -1413,7 +1454,8 @@ const color_theme = dark ? colors.dark : colors.light
                 },
                 paint: {
                     'circle-radius': 30,
-                    'circle-opacity': 0
+                    'circle-color': '#00ffff',
+                    'circle-opacity': 0//0.2
                 }
             })
             
@@ -1445,10 +1487,6 @@ const color_theme = dark ? colors.dark : colors.light
                 map.setFeatureState(
                     { source: 'prices', id: hovered_id },
                     { hover: true }
-                )
-                
-                console.log(
-                    map.getFeatureState({ source: 'prices', id: hovered_id })
                 )
                 
                 map.getCanvas().style.cursor = 'pointer'
@@ -1507,27 +1545,14 @@ const color_theme = dark ? colors.dark : colors.light
                 history.replaceState({}, '', url)
             })
             map.on('click', e => {
-                console.log(`[${e.lngLat.lng}, ${e.lngLat.lat}]`)
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
                 if (!features || !features.length) {
-                    if (window.ad_current) {
+                    if (current_page == PAGE.SINGLE) {
+                        current_page = PAGE.MAIN
                         history.pushState({}, '', '/')
-                        document.title = 'Danang Rent Map'
-                        //this should be at route handler
-                        ads.forEach(ad =>
-                            map.setFeatureState(
-                                {
-                                    source: 'prices',
-                                    id: ad.id
-                                },
-                                {
-                                    mode: 'normal'                                    
-                                }
-                            )
-                        )
-                        delete window.ad_current
+                        router()
                     }
                     return
                 }
@@ -1552,8 +1577,6 @@ const color_theme = dark ? colors.dark : colors.light
         })
         
         map.once('load', () => {
-            toggler.hidden = false
-            
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
