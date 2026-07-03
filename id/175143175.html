@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH</title>
-    <meta property="og:url" content="https://danang.kim/">
+    <meta property="og:url" content="https://danang.kim/id/175143175">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH" />
@@ -19,10 +19,15 @@
     <meta name="twitter:title" content="CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/">
+    <link rel="canonical" href="https://danang.kim/id/175143175">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icon-192.png">
+    <meta name="msapplication-config" content="none">
     <script>
     async function instantiate(module, imports = {}) {
       const adaptedImports = {
@@ -34,7 +39,7 @@
             columnNumber = columnNumber >>> 0;
             (() => {
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })();
+            })()
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -48,7 +53,7 @@
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
         },
         get_key_created_at() {
           return BigInt.asUintN(64, exports.get_key_created_at());
@@ -143,6 +148,8 @@
       return adaptedExports;
     }
 
+    window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
+
     window.wasm_ready = WebAssembly
       .compileStreaming(fetch("/danang.kim.wasm"))
       .then(module => instantiate(module, {}))
@@ -231,7 +238,7 @@
         const KEY = '4046fd1642052165bee9115df0f387e1ff36d51337588243070bffd9dc1f4599'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            location.href,
+            'https://danang.kim',//location.href,
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -249,30 +256,49 @@
             const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
             console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
         }
+        if (location.pathname.split('/')[1] == 'id') {
+            window.current_page = PAGES.SINGLE
+            var ad_id = location.pathname.split('/')[2]
+            var ad_current = ads.find(ad => ad.id == ad_id)
+            if (ad_current) window.ad_current = ad_current
+            else document.title = '[SOLD] ' + document.title
+        }
+        window.limit$ = {min: Infinity, max: -Infinity}
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
         const raw_ads = get_ads()
+        window.dup_map = new Map()
         window.ads = Array(raw_ads.length / ad_size)
         for (var i = 0; i < raw_ads.length; i += ad_size) {
             var id = raw_ads[i]
             var price = raw_ads[i + 1]
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
+            var key = longitude + '-' + latitude
+            var dup_set = dup_map.get(key) || new Set()
+            dup_set.add(id)
+            dup_map.set(key, dup_set)
+            if (price < limit$.min) limit$.min = price
+            if (price > limit$.max) limit$.max = price
             ads[i / ad_size] = { id, price, longitude, latitude }
         }
-        if (location.pathname.split('/')[1] == 'id') {
-            var ad_id = location.pathname.split('/')[2]
-            var ad_current = ads.find(ad => ad.id == ad_id)
-            if (ad_current) {
-                window.ad_current = ad_current
-            } else {
-                document.title = '[SOLD] ' + document.title
-            }
-        }
+        dup_map.forEach((dup_set, key) =>
+            dup_set.size == 1 &&
+            dup_map.delete(key)
+        )
+        limit$.min = Math.max(
+            Math.floor(limit$.min / 1e5) / 10,
+            2
+        )
+        limit$.max = Math.min(
+            Math.floor(limit$.max / 1e5) / 10,
+            50
+        )
+        window.range$ = limit$.max - limit$.min
     })
 
-    const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
-    const layers_bright = [{"id":"background","type":"background","paint":{"background-color":"rgb(242,243,240)"}},{"id":"park","type":"fill","source":"danang","source-layer":"park","filter":["==","$type","Polygon"],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(230, 233, 229)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"layout":{"visibility":"visible"},"paint":{"fill-antialias":true,"fill-color":"rgb(194, 200, 202)"}},{"id":"landcover_wood","type":"fill","source":"danang","source-layer":"landcover","minzoom":10,"filter":["all",["==","$type","Polygon"],["==","class","wood"]],"layout":{"visibility":"visible"},"paint":{"fill-color":"rgb(220,224,220)","fill-opacity":{"base":1,"stops":[[8,0],[12,1]]}}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"layout":{"visibility":"visible"},"paint":{"line-color":"hsl(195, 17%, 78%)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"paint":{"fill-antialias":true,"fill-color":"rgb(234, 234, 229)","fill-outline-color":"rgb(219, 219, 218)"}},{"id":"tunnel_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"tunnel_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgb(234,234,234)","line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"aeroway-runway-casing","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,6],[17,55]]}}},{"id":"aeroway-runway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"],["==","$type","LineString"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"rgba(255, 255, 255, 1)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,4],[17,50]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":"#fff","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"highway_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"highway_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"railway_service","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["all",["==","class","rail"],["has","service"]]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#dddddd","line-width":3}},{"id":"railway_service_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["==","class","rail"],["has","service"]],"layout":{"line-join":"round","visibility":"visible"},"paint":{"line-color":"#fafafa","line-dasharray":[3,3],"line-width":2}},{"id":"highway_motorway_bridge_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter","visibility":"visible"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,5],[20,45]]}}},{"id":"highway_motorway_bridge_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round","visibility":"visible"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"#bbb","text-halo-blur":1,"text-halo-color":"#fff","text-halo-width":2,"text-translate":[0,0]}},{"id":"highway_name_motorway","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["==","$type","LineString"],["==","class","motorway"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{ref}","text-font":["Metropolis Light","Noto Sans Regular"],"text-pitch-alignment":"viewport","text-rotation-alignment":"viewport","text-size":10,"visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"hsl(0, 0%, 100%)","text-halo-width":1,"text-translate":[0,2]}},{"id":"place_suburb","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":15,"filter":["all",["==","$type","Point"],["==","class","suburb"]],"layout":{"text-anchor":"center","text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"center","text-offset":[0.5,0],"text-size":10,"text-transform":"uppercase","visibility":"visible"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}},{"id":"place_capital","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":12,"filter":["all",["==","$type","Point"],["all",["==","capital",2],["==","class","city"]]],"layout":{"icon-image":{"base":1,"stops":[[0,"star-11"],[8,""]]},"icon-size":1,"text-anchor":{"base":1,"stops":[[0,"left"],[8,"center"]]},"text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"left","text-offset":[0.5,0.2],"text-size":14,"text-transform":"uppercase","visibility":"visible"},"paint":{"icon-opacity":0.7,"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}}]
+    const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
+    const layers_bright = [{"id":"background","type":"background","paint":{"background-color":"rgb(242,243,240)"}},{"id":"park","type":"fill","source":"danang","source-layer":"park","filter":["==","$type","Polygon"],"paint":{"fill-color":"rgb(230, 233, 229)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"paint":{"fill-antialias":true,"fill-color":"rgb(194, 200, 202)"}},{"id":"landcover_wood","type":"fill","source":"danang","source-layer":"landcover","minzoom":10,"filter":["all",["==","$type","Polygon"],["==","class","wood"]],"paint":{"fill-color":"rgb(220,224,220)","fill-opacity":{"base":1,"stops":[[8,0],[12,1]]}}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"paint":{"line-color":"hsl(195, 17%, 78%)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"paint":{"fill-antialias":true,"fill-color":"rgb(234, 234, 229)","fill-outline-color":"rgb(219, 219, 218)"}},{"id":"tunnel_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"tunnel_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgb(234,234,234)","line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"aeroway-runway-casing","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,6],[17,55]]}}},{"id":"aeroway-runway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"],["==","$type","LineString"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgba(255, 255, 255, 1)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,4],[17,50]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#fff","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"highway_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"highway_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"railway_service","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["all",["==","class","rail"],["has","service"]]],"layout":{"line-join":"round"},"paint":{"line-color":"#dddddd","line-width":3}},{"id":"railway_service_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["==","class","rail"],["has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"#fafafa","line-dasharray":[3,3],"line-width":2}},{"id":"highway_motorway_bridge_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,5],[20,45]]}}},{"id":"highway_motorway_bridge_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"#bbb","text-halo-blur":1,"text-halo-color":"#fff","text-halo-width":2,"text-translate":[0,0]}},{"id":"highway_name_motorway","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["==","$type","LineString"],["==","class","motorway"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{ref}","text-font":["Metropolis Light","Noto Sans Regular"],"text-pitch-alignment":"viewport","text-rotation-alignment":"viewport","text-size":10},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"hsl(0, 0%, 100%)","text-halo-width":1,"text-translate":[0,2]}},{"id":"place_suburb","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":15,"filter":["all",["==","$type","Point"],["==","class","suburb"]],"layout":{"text-anchor":"center","text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"center","text-offset":[0.5,0],"text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}},{"id":"place_capital","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":12,"filter":["all",["==","$type","Point"],["all",["==","capital",2],["==","class","city"]]],"layout":{"icon-image":{"base":1,"stops":[[0,"star-11"],[8,""]]},"icon-size":1,"text-anchor":{"base":1,"stops":[[0,"left"],[8,"center"]]},"text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"left","text-offset":[0.5,0.2],"text-size":14,"text-transform":"uppercase"},"paint":{"icon-opacity":0.7,"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}}]
 
     const style = {
       version: 8,
@@ -297,25 +323,64 @@
         })
     }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || []
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date())
-        gtag('config', 'GT-TQL9TSPB')
-    </script>
     <script type="application/ld+json">
         {
             "@context":"https://schema.org",
-            "@type":"WebSite",
-            "name":"Danang Rent Map",
-            "url":"https://danang.kim/"
+            "@type":"Offer",
+            "name":"CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH",
+            "url":"https://danang.kim/id/175143175",
+			"price":"6000000",
+			"priceCurrency":"VND"
         }
     </script>
     <style>
-        body { margin: 0; padding: 0; background: rgb(242,243,240);}
+        [hidden] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        html {
+            --text-color: black;
+            --text-color-inverse: white;
+            --filter-color: black;
+        }
+        html[dark] {
+            --text-color: white;
+            --text-color-inverse: black;
+            --filter-color: white;
+        }
+        body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
+        article {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: transparent;
+            color: var(--text-color);
+            max-height: 40vh;
+            overflow: hidden;
+            font-size: clamp(2px, 1.5vh, 12px);
+        }
+        
+        article p {
+            margin: 8px 0 0 0;
+        }
+        
+        article h1 {
+            margin: 0;
+        }
+        
+        article p,
+        article h1 {
+            white-space: pre-line;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            article {
+                color: #fff;
+            }
+        }
         html[dark] .maplibregl-ctrl-attrib {
             background: rgba(30, 30, 30, 0.9);
             color: grey;
@@ -371,18 +436,602 @@
             height: 100%;
             width: 100%;
         }
+
+        #filter, #toggler, #close, #heart, #icon, #icon-heart, #icon-close, #scale, #min, #max {
+            position: absolute;
+        }
+        #filter {
+            bottom: 7vh;
+            right: 0vh;
+            width: 10vh;
+            height: 48vh;
+            touch-action: none;
+            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+        #toggler {
+            bottom: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
+        #close {
+            top: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
+        #heart {
+            top: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
+        #icon {
+            display: block;
+            bottom: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-heart {
+            display: block;
+            top: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-close {
+            display: block;
+            top: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke-width: 1;
+            stroke: var(--filter-color);
+            vector-effect: non-scaling-stroke;
+        }
+        #scale {
+            bottom: 0vh;
+            right: 3.2vh;/* 2 + (3 / 2) - (0.6 / 2) = 2 + 1.5 - 0.3  */
+            width: 0.6vh;
+            height: 43vh;
+            border-color: var(--filter-color);
+            border-width: thin;
+            border-radius: 1vh;
+            border-style: solid;
+        }
+        #min, #max {
+            bottom: 0vh;
+            right: 2vh;/* scale right - (width handler - width scale)/2 =  5 - (5-1)/2 = 3*/
+            width: 3vh;
+            line-height: 3vh; /* same as height */
+            height: 3vh;
+            border-radius: 50%;
+            background: var(--filter-color);
+            text-align: center;
+            font-size: 2vh;
+            color: var(--text-color-inverse);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .label {
+            font-variant-numeric: tabular-nums;
+            width: 4ch;
+            text-align: right;
+            font-size: 1.3vh;
+            line-height: 2vh;
+            color: var(--filter-color);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-180%, -50%);
+            white-space: nowrap;
+        }
+        #min svg,
+        #max svg {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-<h1 style="display:none">CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH</h1>
-<div id="map"></div>
+<div id="map"></div><article><h1>CHO THUÊ NHÀ 2. TẦNG LÊ TỰ NHẤT THỐNG GẦN MÊ LINH</h1><p>Dự án: 
+Thông tin chi tiết: Tôi cần cho thuê nhà 2 tầng 3 phòng ngủ đường 7m5 lê tự nhất thống
+Giá 6tr/1 tháng
+Thanh toán cọc 1 thanh toán 3
+Liên hệ gặp khánh mở cửa xem nhà</p></article>
+<div id="filter" hidden>
+    <div id="scale"></div>
+    <div id="min">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+    <div id="max">
+        <span class="label"></span>
+        <svg viewBox="0 0 100 100">
+            <text x="50" y="50"
+                  font-size="70"
+                  dominant-baseline="central"
+                  text-anchor="middle">₫</text>
+        </svg>
+    </div>
+</div>
+<div id="toggler" hidden>
+      <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+      <line x1="4" y1="6"  x2="20" y2="6"/>
+      <circle cx="10" cy="6" r="2.2"/>
+
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <circle cx="14" cy="12" r="2.2"/>
+
+      <line x1="4" y1="18" x2="20" y2="18"/>
+      <circle cx="8" cy="18" r="2.2"/>
+    </svg>
+</div>
+<div id="close" hidden>
+    <svg id="icon-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+        <line x1="4" y1="4" x2="20" y2="20"/>
+        <line x1="20" y1="4" x2="4" y2="20"/>
+    </svg>
+</div>
+<div id="heart" hidden>
+    <svg id="icon-heart" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 80 80">
+
+    <path
+        fill="none" stroke="var(--text-color)" stroke-width="4" stroke-linejoin="round" 
+        d="M40 72
+           L12 43
+           C2 33 2 17 15 12
+           C24 8 34 12 40 22
+           C46 12 56 8 65 12
+           C78 17 78 33 68 43
+           Z"/>
+
+    <text
+        id="likes_count"
+        x="40"
+        y="40"
+        fill="var(--text-color)"
+        font-size="30"
+        font-family="sans-serif"
+        font-weight="bold"
+        text-anchor="middle"
+        dominant-baseline="middle"></text>
+
+    </svg>
+</div>
+
 <script>
+const $min_label = min.firstElementChild
+const $max_label = max.firstElementChild
+const $close = document.getElementById('close')
+const $heart = document.getElementById('heart')
+const $likes_count = document.getElementById('likes_count')
+var search_params = new URLSearchParams(location.search)
+var likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
+var likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
+var same_likes
+
+const router = () => {
+    const pathname = location.pathname.split('/')
+    search_params = new URLSearchParams(location.search)
+    likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
+    likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
+
+    if (window.current_page == PAGE.SINGLE && !window.ad_current) {
+        history.replaceState({}, '', '/')
+        window.title = 'Danang Rent Map'
+        current_page = PAGE.MAIN
+    }
+    
+    if (pathname[1] == 'id') {
+        window.current_page = PAGE.SINGLE
+    } else {
+        window.current_page = PAGE.MAIN
+    }
+    
+    same_likes = likes_search_params.length == 0
+        ? likes_local_storage.length == 0
+        : likes_search_params.length == likes_local_storage.length && likes_search_params.every((id, i) =>
+            likes_local_storage[i] == id
+        )
+ 
+    $likes_count.textContent = likes_local_storage.length || ''
+        
+    if (search_params.has('likes')) {
+        map.setLayoutProperty('likes-filled', 'visibility', 'visible')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
+        map.setLayoutProperty('likes-outline', 'visibility', same_likes ? 'visible' : 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', same_likes ? 'visible' : 'none')
+        map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
+        map.setLayoutProperty('price-circle', 'visibility', 'none')
+        map.setLayoutProperty('price-text', 'visibility', 'none')
+        if (same_likes) {
+            current_page = PAGE.EDIT
+            map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
+        } else {
+            map.setLayoutProperty('price-text-shared-likes', 'visibility', 'visible')
+            current_page = PAGE.SHARED
+        }
+    } else {
+        map.setLayoutProperty('likes-filled', 'visibility', 'none')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
+        map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
+        map.setLayoutProperty('price-circle', 'visibility', 'visible')
+        map.setLayoutProperty('price-text', 'visibility', 'visible')
+        map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
+        if (!window.current_page) current_page = PAGE.MAIN
+    }
+    current_page == PAGE.SHARED && console.log('SHARED')
+    current_page == PAGE.MAIN && console.log('MAIN')
+    current_page == PAGE.EDIT && console.log('EDIT')
+    current_page == PAGE.SINGLE && console.log('SINGLE')
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    
+    const likes = likes_search_params.length
+        ? likes_search_params
+        : likes_local_storage
+
+    ads.forEach(ad =>
+        map.setFeatureState(
+            {
+                source: 'prices',
+                id: ad.id
+            },
+            {
+                mode: current_page == PAGE.SINGLE
+                    ? ad.id == ad_current.id
+                        ? 'selected'
+                        : 'other'
+                    : ad.price < min$ || ad.price > max$
+                        ? 'filtered'
+                        : 'normal',
+                liked: likes.includes(ad.id)
+            }
+        )
+    )
+    gtag('event', 'page_view', {page_title: document.title, page_location: location.href})
+}
+
+addEventListener('popstate', router)
+
+$heart.onpointerup = e => {
+    const url = new URL(location)
+    if (url.searchParams.has('likes')) {
+        url.searchParams.delete('likes')
+        history.replaceState({}, '', url)
+        current_page = PAGE.MAIN
+        map.setLayoutProperty('likes-filled', 'visibility', 'none')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline', 'visibility', 'none')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
+        map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
+        map.setLayoutProperty('price-circle', 'visibility', 'visible')
+        map.setLayoutProperty('price-text', 'visibility', 'visible')
+    } else {
+        url.searchParams.set('likes', likes_local_storage.join(','))
+        history.replaceState({}, '', url)
+        current_page = PAGE.EDIT
+        map.setLayoutProperty('likes-filled', 'visibility', 'visible')
+        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
+        map.setLayoutProperty('likes-outline', 'visibility', 'visible')
+        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'visible')
+        map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
+        map.setLayoutProperty('price-circle', 'visibility', 'none')
+        map.setLayoutProperty('price-text', 'visibility', 'none')
+    }
+    toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
+}
+
+$close.onpointerup = e => {
+    if (
+        window.current_page == PAGE.SHARED ||
+        window.current_page == PAGE.SINGLE
+    ) {
+        current_page = PAGE.MAIN
+        history.pushState({}, '', '/')
+        router()
+    }
+}
+
+const limit = {
+    min: null,
+    max: null
+}
+var range
+const step$ = 0.1
+const get_label = y => {
+    const abs_pos = (y - limit.min) / range
+    const pos$ = limit$.min + range$ * abs_pos
+    return pos$.toFixed(1)
+}
+const get_y_by_$ = $ => {
+    const abs_pos = ($ - limit$.min) / range$
+    const y = limit.min + range * abs_pos
+    return y
+}
+var rect_scale, rect_min
+var min_y, max_y
+
+function pointerdown(e) {   
+    const el = e.currentTarget
+    el.setPointerCapture(e.pointerId)
+    let y = e.clientY
+    const pos = y - rect_scale.bottom + rect_min.height / 2
+    const dist_min = Math.abs(min_y - pos)
+    const dist_max = Math.abs(max_y - pos)
+    var target = dist_min < dist_max ? min : max
+    function pointermove(e) {
+        const dy = e.clientY - y
+        y = e.clientY
+
+        if (target == min) {
+            update_min_y(dy)
+        }
+        if (target == max) {
+            update_max_y(dy)
+        }
+    }
+  
+    function pointerup(e) {
+        el.releasePointerCapture(e.pointerId)
+        el.removeEventListener('pointermove', pointermove)
+        el.removeEventListener('pointerup', pointerup)
+        el.removeEventListener('pointercancel', pointerup)
+    }
+  
+    el.addEventListener('pointermove', pointermove)
+    el.addEventListener('pointerup', pointerup)
+    el.addEventListener('pointercancel', pointerup)
+}
+
+var steps_count
+var step
+var min$
+var max$
+
+toggler.onpointerup = e => {
+    if (filter.hasAttribute('hidden')) {
+        filter.removeAttribute('hidden')
+    } else {
+        filter.setAttribute('hidden', '')
+        filter.onwheel = null
+        return
+    }
+    rect_scale = scale.getBoundingClientRect()
+    rect_min = min.getBoundingClientRect()
+    limit.min = 0
+    limit.max = 0 - (rect_scale.height - rect_min.height)
+    range = limit.max - limit.min
+    steps_count = (limit$.max - limit$.min) / step$
+    step = (limit.max - limit.min) / steps_count
+
+    min$ = +localStorage.getItem('min$')
+    max$ = +localStorage.getItem('max$')
+
+    min_y = min$ ? get_y_by_$(min$ / 1e6) : limit.min
+    max_y = max$ ? get_y_by_$(max$ / 1e6) : limit.max
+    
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $min_label.textContent = get_label(min_y)
+    $max_label.textContent = get_label(max_y)
+    min$ = $min_label.textContent * 1e6,
+    max$ = $max_label.textContent * 1e6,
+    apply_filter()
+
+    filter.addEventListener('pointerdown', pointerdown)
+
+    toggler.onwheel = onwheel
+    filter.onwheel = onwheel
+
+    function onwheel(e) {
+        e.preventDefault()
+        const DOWN = e.deltaY > 0
+        const UP   = e.deltaY < 0
+        if (!e.deltaY) return
+        const dy = DOWN ? -step : step
+        const pos = e.clientY - rect_scale.bottom + rect_min.height / 2
+        const dist_min = Math.abs(min_y - pos)
+        const dist_max = Math.abs(max_y - pos)
+        var target = null
+        if (dist_min < dist_max) {
+            if (DOWN) {
+                if (min_y == limit.min) {
+                    target = null
+                    // swith target max
+                    if (max_y == min_y - rect_min.height) {
+                        target = null // max near min
+                    } else {
+                        target = max
+                    }
+                } else {
+                    target = min
+                }
+            }
+            if (UP) {
+                if (min_y == max_y + rect_min.height) {
+                    target = null
+                    /*
+                    // switch target max
+                    if (max_y == limit.max) {
+                        target = null // max & min at top border
+                    } else {
+                        target = max
+                    }
+                    */
+                } else {
+                    target = min
+                }
+            }
+        } else {
+            if (DOWN) {
+                if (max_y == min_y - rect_min.height) {
+                    target = null
+                    /*
+                    // swith target min
+                    if (min_y == limit.min) {
+                        target = null // max & min at lower border
+                    } else {
+                        target = min
+                    }
+                    */
+                } else {
+                    target = max
+                }
+            }
+            if (UP) {
+                if (max_y == limit.max) {
+                    target = null
+                    //target min
+                    if (min_y == max_y + rect_min.height) {
+                        target = null // max & min at top border
+                    } else {
+                        target = min
+                    }
+                } else {
+                    target = max
+                }
+            }
+        }
+        if (target == min) {
+            update_min_y(dy)
+        } else if (target == max) {
+            update_max_y(dy)
+        }
+    }
+}
+
+update_min_y = dy => {
+    min_y += dy
+    if (min_y > limit.min) min_y = limit.min
+    if (min_y - rect_min.height < max_y) min_y = max_y + rect_min.height
+    min.style.transform = `translate3d(0, ${min_y}px, 0)`
+    $min_label.textContent = get_label(min_y)
+    min$ = $min_label.textContent * 1e6,
+    localStorage.setItem('min$', min$)
+    apply_filter()
+}
+
+update_max_y = dy => {
+    max_y += dy
+    if (max_y < limit.max) max_y = limit.max
+    if (max_y + rect_min.height > min_y) max_y = min_y - rect_min.height
+    max.style.transform = `translate3d(0, ${max_y}px, 0)`
+    $max_label.textContent = get_label(max_y)
+    max$ = $max_label.textContent * 1e6
+    localStorage.setItem('max$', max$)
+    apply_filter()
+}
+
+apply_filter = () => {
+    map.setFilter('price-text', [
+        'all',
+        ['>=', ['get', 'price'], min$],
+        ['<=', ['get', 'price'], max$]
+    ])
+    ads.forEach(ad =>
+        map.setFeatureState(
+            {
+                source: 'prices',
+                id: ad.id
+            },
+            {
+                mode: ad.price > max$ || ad.price < min$
+                    ? dup_map.has(ad.longitude + '-' + ad.latitude)
+                        ? [...dup_map.get(ad.longitude + '-' + ad.latitude)].some(id => {
+                            const ad = ads.find(_ => _.id == id)
+                            return ad.price <= max$ && ad.price >= min$
+                        })
+                            ? 'hidden'
+                            : 'filtered'
+                        : 'filtered'
+                    : 'normal'
+            }
+        )
+    )
+}
+
+const colors = {
+    light: {
+        selected: '#ff69b4',
+        other: '#888',
+        filtered: '#888',
+        normal: '#ff69b4'
+    },
+    dark: {
+        selected: '#ff69b4',
+        other: '#555',
+        filtered: '#555',
+        normal: '#ff69b4'
+    }
+}
+const color_theme = dark ? colors.dark : colors.light
+
+
+    const heart_ready = (src =>
+        Promise.all([
+            src.replace(
+                '<path',
+                `<path fill="none" stroke="${color_theme.selected}" stroke-width="4" stroke-linejoin="round" `
+            ),
+            src.replace(
+                '<path',
+                `<path fill="none" stroke="${color_theme.other}" stroke-width="4" stroke-linejoin="round" `
+            )
+        ].map(svg => new Promise((y, n) => {
+            const url = URL.createObjectURL(
+                new Blob([svg], { type: "image/svg+xml" })
+            )
+            const img = new Image()
+            img.onload = () => y(img)
+            img.onerror = e => n(e)
+            img.src = url
+        })))
+    )(`<svg xmlns="http://www.w3.org/2000/svg"
+         width="80" height="80"
+         version="1.1"
+         viewBox="0 0 80 80">
+      <path
+        d="M40 72
+           L12 43
+           C2 33 2 17 15 12
+           C24 8 34 12 40 22
+           C46 12 56 8 65 12
+           C78 17 78 33 68 43
+           Z"/>
+    </svg>`)
+    
+
     Promise.all([
         pmtiles_ready,
-        maplibre_ready,
-        window.wasm_ready
+        maplibre_ready.then(() => maplibregl.prewarm()),
+        window.wasm_ready,
+        heart_ready
     ])
-    .then(() => {
+    .then(([a0, a1, a2, [heart_filled, heart_outline]]) => {
         const protocol = new pmtiles.Protocol()
         maplibregl.addProtocol('pmtiles', protocol.tile)
         
@@ -394,10 +1043,10 @@
         window.map = new maplibregl.Map({
             container: 'map',
             style: dark ? styles.dark : styles.bright,
-            center: window.ad_current
+            center: window.current_page && current_page == PAGE.SINGLE
                 ? [ad_current.longitude, ad_current.latitude]
                 : get_center(),
-            zoom: window.ad_current ? 18 : get_zoom(),
+            zoom: window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
@@ -407,6 +1056,9 @@
     
         map.dragRotate.disable()
         map.touchZoomRotate.disableRotation()
+
+        map.addImage('heart-filled', heart_filled)
+        map.addImage('heart-outline', heart_outline)
 
         class LogoLayer {
             id = 'logo'
@@ -536,7 +1188,7 @@
                 initial_inner_size[0] != window.innerWidth ||
                 initial_inner_size[1] != window.innerHeight
             ) map.resize()
-
+            
             map.getSource('prices') || map.addSource('prices', {
                 type: 'geojson',
                 data: {
@@ -546,7 +1198,7 @@
                         type: 'Feature',
                         properties: {
                             price: ad.price, 
-                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm'
+                            price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
                         },
                         geometry: {
                             type: 'Point',
@@ -555,6 +1207,7 @@
                     }))
                 }
             })
+
             const w = window.innerWidth;
             const font_size =
             w < 500 ? 14 :
@@ -571,20 +1224,53 @@
                 1.8,
                 1
             ]
+
             map.addLayer({
                 id: 'price-circle',
                 type: 'circle',
                 source: 'prices',
+                layout: {
+                    visibility: 'none'
+                },
                 paint: {
                     'circle-radius': [
                         'interpolate',
                         ['linear'],
                         ['zoom'],
-                        1, ['*', 2, hover_scale],
-                        14, ['*', circle_radius, hover_scale]
+                        1, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', 4, hover_scale],
+                            'other', ['*', 2, hover_scale],
+                            'filtered', ['*', 2, hover_scale],
+                            ['*', 2, hover_scale]//normal
+                        ],
+                        14, [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', ['*', circle_radius + 5, hover_scale],
+                            'other', ['*', circle_radius, hover_scale],
+                            'filtered', ['*', circle_radius, hover_scale],
+                            ['*', circle_radius, hover_scale]//normal
+                        ]
                     ],
-                    'circle-color': '#ff69b4',   // hot pink
-                    'circle-opacity': 0.6
+                    'circle-color': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', color_theme.selected,
+                        'other', color_theme.other,
+                        'filtered', color_theme.filtered,
+                        color_theme.normal
+                    ],
+                    'circle-opacity': [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', 1,
+                        'other', 0.6,
+                        'filtered', 0.6,
+                        'hidden', 0.0,
+                        0.6//normal
+                    ]
                 }
             })
             map.addLayer({
@@ -593,6 +1279,7 @@
                 source: 'prices',
                 minzoom: 13,
                 layout: {
+                    'visibility': 'none',
                     'text-field': ['get', 'price_label'],
                     'text-size': font_size,
                     'text-font': ['Noto Sans Bold'],
@@ -604,11 +1291,153 @@
                     'text-color': dark ? '#ffffff' : '#000000',
                 }
             })
+
+            map.addLayer({
+                id: 'price-text-shared-likes',
+                type: 'symbol',
+                source: 'prices',
+                minzoom: 13,
+                layout: {
+                    'visibility': 'none',
+                    'text-field': ['get', 'price_label'],
+                    'text-size': font_size,
+                    'text-font': ['Noto Sans Bold'],
+                    'text-anchor': 'top',
+                    'text-offset': [0, 0.6],
+                    //'text-allow-overlap': true,
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-color': dark ? '#ffffff' : '#000000',
+                    'text-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        1,
+                        0
+                    ]
+                }
+            })
+            
+            
+            map.addLayer({
+                id: 'likes-filled',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-filled',
+                    'icon-size': 0.25,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            0,
+                            1
+                        ],
+                        0
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-filled-hovered',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-filled',
+                    'icon-size': 0.28,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ],
+                        0
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-outline',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-outline',
+                    'icon-size': 0.25,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        0,
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-outline-hovered',
+                type: 'symbol',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none',
+                    'icon-image': 'heart-outline',
+                    'icon-size': 0.28,
+                    'icon-allow-overlap': true,
+                    'icon-ignore-placement': true
+                },
+                paint: {
+                    'icon-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'liked'], false],
+                        0,
+                        [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ]
+                    ]
+                }
+            })
+            map.addLayer({
+                id: 'likes-hitbox',
+                type: 'circle',
+                source: 'prices',
+                layout: {
+                    'visibility': 'none'
+                },
+                paint: {
+                    'circle-radius': 30,
+                    'circle-color': '#00ffff',
+                    'circle-opacity': 0//0.2
+                }
+            })
+            
             if (map.getLayer('logo')) map.removeLayer('logo')
             map.addLayer(new LogoLayer())
-
+            
             var hovered_id = null
-            const mouseenter = e => {            
+            const mouseenter = e => {
                 if (hovered_id != null) {
                     map.setFeatureState(
                         { source: 'prices', id: hovered_id },
@@ -618,8 +1447,17 @@
                 
                 if (!e.features || !e.features.length) return
                 
-                hovered_id = e.features[0].id
-                
+                if (current_page == PAGE.SHARED) {
+                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
+                    if (hovered_feature) {
+                        hovered_id = hovered_feature.id
+                    } else {
+                        return
+                    }
+                } else {
+                    hovered_id = e.features[0].id
+                }
+
                 map.setFeatureState(
                     { source: 'prices', id: hovered_id },
                     { hover: true }
@@ -640,13 +1478,58 @@
             }
             map.on('mouseenter', 'price-circle', mouseenter)            
             map.on('mouseenter', 'price-text', mouseenter) 
+            map.on('mouseenter', 'likes-hitbox', mouseenter)            
             map.on('mouseleave', 'price-circle', mouseleave)
             map.on('mouseleave', 'price-text', mouseleave)
+            map.on('mouseleave', 'likes-hitbox', mouseleave)            
+
+            map.on('click', 'likes-hitbox', e => {
+                var id = e.features[0].id
+                if (current_page == PAGE.SHARED) {
+                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
+                    if (hovered_feature) {
+                        id = hovered_feature.id
+                    } else {
+                        return
+                    }
+                    const url = get_url(id)
+                    console.log('https://danang.kim/id/' + id)
+                    gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: hovered_feature.properties.price, page: current_page})
+                    window.open(url, '_blank')
+                    return
+                }
+                var liked
+                const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
+                if (likes.has(id)) {
+                    likes.delete(id)
+                    liked = false
+                } else {
+                    likes.add(id)
+                    liked = true
+                }                
+                map.setFeatureState(
+                    { source: 'prices', id },
+                    { liked }
+                )
+                const likes_string = [...likes].join(',')
+                localStorage.setItem('likes', likes_string)
+                $likes_count.textContent = likes.size || ''
+                const url = new URL(location)
+                url.searchParams.set('likes', likes_string)
+                history.replaceState({}, '', url)
+            })
             map.on('click', e => {
                 const features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
-                if (!features || !features.length) return
+                if (!features || !features.length) {
+                    if (current_page == PAGE.SINGLE) {
+                        current_page = PAGE.MAIN
+                        history.pushState({}, '', '/')
+                        router()
+                    }
+                    return
+                }
                 var i = 0
                 var i_min_price = i
                 var min_price = features[i_min_price].properties.price
@@ -659,12 +1542,15 @@
                 const id = features[i_min_price].id
                 const url = get_url(id)
                 
-                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price})
+                console.log('https://danang.kim/id/' + id)
+                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price, page: current_page})
                 window.open(url, '_blank')
             })
+            
+            router()
         })
         
-        map.once('load', () =>
+        map.once('load', () => {
             caches.open('pmtiles')
             .then(c =>
                 c.match('/danang.pmtiles')
@@ -673,9 +1559,17 @@
                     .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
                 )
             )
-        )
+        })
 
     })
 </script>
+<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'GT-TQL9TSPB')
+</script>
+            
 </body>
 </html>

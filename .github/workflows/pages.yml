@@ -53,14 +53,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
-      - name: Collect files
-        run: |
-          rsync -a --exclude='id/' . _site/
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: _site
+          path: .
 
       - name: Deploy
         id: deployment
