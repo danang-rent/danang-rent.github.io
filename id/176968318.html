@@ -260,13 +260,6 @@
             const expired_in_hours_and_min =  Math.floor((expired_in - expired_in_hours * 60 * 60 * 1000) / 1000 / 60)
             console.log(`Key ${KEY} will be expired in ${expired_in_hours}h ${expired_in_hours_and_min}m`)
         }
-        if (location.pathname.split('/')[1] == 'id') {
-            window.current_page = PAGE.SINGLE
-            var ad_id = location.pathname.split('/')[2]
-            var ad_current = ads.find(ad => ad.id == ad_id)
-            if (ad_current) window.ad_current = ad_current
-            else document.title = '[SOLD] ' + document.title
-        }
         window.limit$ = {min: Infinity, max: -Infinity}
         window.raw_danang_bounds = get_danang_bounds()
         const ad_size = get_ad_size()
@@ -299,6 +292,14 @@
             50
         )
         window.range$ = limit$.max - limit$.min
+        
+        if (location.pathname.split('/')[1] == 'id') {
+            window.current_page = PAGE.SINGLE
+            var ad_id = location.pathname.split('/')[2]
+            var ad_current = ads.find(ad => ad.id == ad_id)
+            if (ad_current) window.ad_current = ad_current
+            else document.title = '[SOLD] ' + document.title
+        }
     })
 
     const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
