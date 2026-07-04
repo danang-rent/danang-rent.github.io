@@ -97,6 +97,12 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/177175039</loc>
+		<lastmod>2026-07-04</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/174450807</loc>
 		<lastmod>2026-06-24</lastmod>
 		<changefreq>daily</changefreq>
@@ -583,6 +589,12 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/175870087</loc>
+		<lastmod>2026-07-04</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/177168822</loc>
 		<lastmod>2026-07-02</lastmod>
 		<changefreq>daily</changefreq>
@@ -721,12 +733,6 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/177175039</loc>
-		<lastmod>2026-07-04</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/176728349</loc>
 		<lastmod>2026-06-12</lastmod>
 		<changefreq>daily</changefreq>
@@ -741,12 +747,6 @@
 	<url>
 		<loc>https://danang.kim/id/176198633</loc>
 		<lastmod>2026-06-28</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/176210491</loc>
-		<lastmod>2026-06-05</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -897,6 +897,12 @@
 	<url>
 		<loc>https://danang.kim/id/176448777</loc>
 		<lastmod>2026-06-24</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/176453625</loc>
+		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -1161,12 +1167,6 @@
 	<url>
 		<loc>https://danang.kim/id/176614572</loc>
 		<lastmod>2026-06-07</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/176617097</loc>
-		<lastmod>2026-07-02</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -1447,6 +1447,12 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/176959586</loc>
+		<lastmod>2026-06-23</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/176667421</loc>
 		<lastmod>2026-06-12</lastmod>
 		<changefreq>daily</changefreq>
@@ -1669,12 +1675,6 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/176739398</loc>
-		<lastmod>2026-06-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/176963781</loc>
 		<lastmod>2026-06-23</lastmod>
 		<changefreq>daily</changefreq>
@@ -1826,7 +1826,7 @@
 	</url>
 	<url>
 		<loc>https://danang.kim/id/176790197</loc>
-		<lastmod>2026-07-03</lastmod>
+		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -2131,14 +2131,14 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/176982213</loc>
-		<lastmod>2026-06-24</lastmod>
+		<loc>https://danang.kim/id/176884572</loc>
+		<lastmod>2026-06-19</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/176884572</loc>
-		<lastmod>2026-06-19</lastmod>
+		<loc>https://danang.kim/id/176982213</loc>
+		<lastmod>2026-06-24</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -2671,8 +2671,8 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/176966548</loc>
-		<lastmod>2026-06-29</lastmod>
+		<loc>https://danang.kim/id/176943275</loc>
+		<lastmod>2026-06-22</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -2715,6 +2715,12 @@
 	<url>
 		<loc>https://danang.kim/id/176947470</loc>
 		<lastmod>2026-06-22</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/177080921</loc>
+		<lastmod>2026-06-30</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -3643,6 +3649,12 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/177067199</loc>
+		<lastmod>2026-07-04</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/177067634</loc>
 		<lastmod>2026-06-30</lastmod>
 		<changefreq>daily</changefreq>
@@ -3771,6 +3783,18 @@
 	<url>
 		<loc>https://danang.kim/id/177081658</loc>
 		<lastmod>2026-06-28</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/177081789</loc>
+		<lastmod>2026-06-28</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/177082069</loc>
+		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -4003,6 +4027,12 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/177111569</loc>
+		<lastmod>2026-06-30</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/177112064</loc>
 		<lastmod>2026-06-30</lastmod>
 		<changefreq>daily</changefreq>
@@ -4136,12 +4166,6 @@
 	</url>
 	<url>
 		<loc>https://danang.kim/id/177124874</loc>
-		<lastmod>2026-06-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/177125054</loc>
 		<lastmod>2026-06-30</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
@@ -4345,8 +4369,8 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/177144841</loc>
-		<lastmod>2026-07-01</lastmod>
+		<loc>https://danang.kim/id/177218626</loc>
+		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 	</url>
@@ -4495,12 +4519,6 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/177160235</loc>
-		<lastmod>2026-07-02</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/177160469</loc>
 		<lastmod>2026-07-02</lastmod>
 		<changefreq>daily</changefreq>
@@ -4519,7 +4537,7 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/177161611</loc>
+		<loc>https://danang.kim/id/177218111</loc>
 		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
@@ -4831,12 +4849,6 @@
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/177196414</loc>
-		<lastmod>2026-07-03</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/177197868</loc>
 		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
@@ -4922,6 +4934,12 @@
 	</url>
 	<url>
 		<loc>https://danang.kim/id/177216878</loc>
+		<lastmod>2026-07-04</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/177217924</loc>
 		<lastmod>2026-07-04</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
