@@ -333,7 +333,7 @@
         
         if (location.pathname.split('/')[1] == 'id') {
             window.current_page = PAGE.SINGLE
-            var ad_id = location.pathname.split('/')[2]
+            var ad_id = +document.querySelector('meta[name="ad:id"]').content
             var ad_current = ads.find(ad => ad.id == ad_id)
             if (ad_current) window.ad_current = ad_current
             else document.title = '[SOLD] ' + document.title
