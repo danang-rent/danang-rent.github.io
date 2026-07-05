@@ -60,6 +60,10 @@
           // assembly/index/get_likes_bounds() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_likes_bounds() >>> 0);
         },
+        get_likes() {
+          // assembly/index/get_likes() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_likes() >>> 0);
+        },
         get_center() {
           // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
           return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
@@ -253,11 +257,13 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '015b41745243c89f455712bfcf2d38eae718833afa3e0df616940e9d1a8216da'// contact spirin.vladimir@gmail.com
+        const KEY = 'f52d84f729f008d97ac9ede1bb5defb2ed238714a09c78ddaa6f43f7dc3e5d61'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
-            likes_search_params.join(','),
+            likes_search_params.length
+                ? likes_search_params.join(',')
+                : likes_local_storage.join(','),
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -307,6 +313,23 @@
             50
         )
         window.range$ = limit$.max - limit$.min
+        
+        var existed_likes
+        if (likes_search_params.length) {
+            existed_likes = get_likes()
+            if (likes_search_params.length != existed_likes.length) {
+                likes_search_params = existed_likes
+                const url = new URL(location)
+                url.searchParams.set('likes', existed_likes.join(','))
+                history.replaceState({}, '', url)
+            }
+        } else if (likes_local_storage.length) {
+            existed_likes = get_likes()
+            if (likes_local_storage.length != existed_likes.length) {
+                likes_local_storage = existed_likes
+                localStorage.setItem('likes', existed_likes.join(','))
+            }
+        }
         
         if (location.pathname.split('/')[1] == 'id') {
             window.current_page = PAGE.SINGLE
@@ -706,7 +729,7 @@ const router = () => {
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
-    filter.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    filter.setAttribute('hidden', '')
     
     const likes = likes_search_params.length
         ? likes_search_params

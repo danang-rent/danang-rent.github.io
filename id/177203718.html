@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa</title>
-    <meta property="og:url" content="https://danang.kim/id/176890686">
+    <title>043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC</title>
+    <meta property="og:url" content="https://danang.kim/id/177203718">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa" />
+    <meta property="og:title" content="043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa" />
+    <meta name="description" content="043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa">
+    <meta name="twitter:title" content="043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/176890686">
+    <link rel="canonical" href="https://danang.kim/id/177203718">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -59,6 +59,10 @@
         get_likes_bounds() {
           // assembly/index/get_likes_bounds() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_likes_bounds() >>> 0);
+        },
+        get_likes() {
+          // assembly/index/get_likes() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_likes() >>> 0);
         },
         get_center() {
           // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
@@ -253,11 +257,13 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '015b41745243c89f455712bfcf2d38eae718833afa3e0df616940e9d1a8216da'// contact spirin.vladimir@gmail.com
+        const KEY = 'f52d84f729f008d97ac9ede1bb5defb2ed238714a09c78ddaa6f43f7dc3e5d61'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
-            likes_search_params.join(','),
+            likes_search_params.length
+                ? likes_search_params.join(',')
+                : likes_local_storage.join(','),
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -308,6 +314,23 @@
         )
         window.range$ = limit$.max - limit$.min
         
+        var existed_likes
+        if (likes_search_params.length) {
+            existed_likes = get_likes()
+            if (likes_search_params.length != existed_likes.length) {
+                likes_search_params = existed_likes
+                const url = new URL(location)
+                url.searchParams.set('likes', existed_likes.join(','))
+                history.replaceState({}, '', url)
+            }
+        } else if (likes_local_storage.length) {
+            existed_likes = get_likes()
+            if (likes_local_storage.length != existed_likes.length) {
+                likes_local_storage = existed_likes
+                localStorage.setItem('likes', existed_likes.join(','))
+            }
+        }
+        
         if (location.pathname.split('/')[1] == 'id') {
             window.current_page = PAGE.SINGLE
             var ad_id = location.pathname.split('/')[2]
@@ -347,9 +370,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa",
-            "url":"https://danang.kim/id/176890686",
-			"price":"25000000",
+            "name":"043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC",
+            "url":"https://danang.kim/id/177203718",
+			"price":"15000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -567,19 +590,11 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>cho thuê nhà mặt tiền đinh công tráng gần chợ đống đa</h1><p>Dự án: 
-Thông tin chi tiết: 🔥 CHO THUÊ NHÀ MỚI 100% – ĐINH CÔNG TRÁNG, HẢI CHÂU 🔥
-
-💰 25 triệu/tháng (thương lượng)
-
-🏡 Nhà 4 tầng, diện tích sàn gần 240m²
-✅ 3PN + 1 phòng làm việc (có thể làm phòng ngủ)
-✅ Giếng trời, ban công, sân thượng rộng
-✅ Nhà mới hoàn toàn, vào sử dụng ngay
-✅ Phù hợp ở, văn phòng, homestay, căn hộ dịch vụ
-Liên hệ: ***
-
-📍 Trung tâm Hải Châu, gần chợ Đống Đa, sông Hàn, sân bay</p></article>
+<div id="map"></div><article><h1>043 CHO THUÊ CĂN HỘ TẦNG 5 FULL NỘI THẤT – BAO TRỌN CHI PHÍ ĐIỆN NƯỚC</h1><p>Dự án: 
+Thông tin chi tiết: 📐 Thông số: Diện tích rộng rãi 68m², căn hộ nằm ở tầng 5 thông thoáng.
+ 🛋️ Nội thất &amp; Tiện nghi: Đầy đủ nội thất chỉn chu. Trang bị đặc biệt có máy giặt và máy sấy riêng ngay trong căn hộ cực kỳ tiện lợi.
+ ✨ Đặc quyền hiếm có: Giá thuê đã bao gồm toàn bộ chi phí Điện - Nước - Wifi, khách thuê không lo phát sinh chi phí hàng tháng.
+ 💰 Giá thuê: 15 triệu / tháng (Trống sẵn dọn vào ở ngay).</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -714,7 +729,7 @@ const router = () => {
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
-    filter.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    filter.setAttribute('hidden', '')
     
     const likes = likes_search_params.length
         ? likes_search_params
