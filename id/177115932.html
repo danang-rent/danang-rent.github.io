@@ -33,13 +33,15 @@
       const adaptedImports = {
         env: Object.setPrototypeOf({
           abort(message, fileName, lineNumber, columnNumber) {
+            // ~lib/builtins/abort(~lib/string/String | null?, ~lib/string/String | null?, u32?, u32?) => void
             message = __liftString(message >>> 0);
             fileName = __liftString(fileName >>> 0);
             lineNumber = lineNumber >>> 0;
             columnNumber = columnNumber >>> 0;
             (() => {
+              // @external.js
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })()
+            })();
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -47,28 +49,40 @@
       const memory = exports.memory || imports.env.memory;
       const adaptedExports = Object.setPrototypeOf({
         get_url(id) {
+          // assembly/index/get_url(f64) => ~lib/string/String
           return __liftString(exports.get_url(id) >>> 0);
         },
         get_danang_bounds() {
+          // assembly/index/get_danang_bounds() => ~lib/staticarray/StaticArray<f32>
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
+        get_likes_bounds() {
+          // assembly/index/get_likes_bounds() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_likes_bounds() >>> 0);
+        },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
+          // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
         },
         get_key_created_at() {
+          // assembly/index/get_key_created_at() => u64
           return BigInt.asUintN(64, exports.get_key_created_at());
         },
-        init(_timestamp, _domain, _width, _height, _key) {
+        init(_timestamp, _domain, _likes, _width, _height, _key) {
+          // assembly/index/init(u64, ~lib/string/String, ~lib/string/String, u32, u32, ~lib/string/String) => bool
           _timestamp = _timestamp || 0n;
           _domain = __retain(__lowerString(_domain) || __notnull());
+          _likes = __retain(__lowerString(_likes) || __notnull());
           _key = __lowerString(_key) || __notnull();
           try {
-            return exports.init(_timestamp, _domain, _width, _height, _key) != 0;
+            return exports.init(_timestamp, _domain, _likes, _width, _height, _key) != 0;
           } finally {
             __release(_domain);
+            __release(_likes);
           }
         },
         get_ads() {
+          // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
       }, exports);
@@ -234,11 +248,16 @@
         return orig_fetch(url, opts)
     }
     
+    window.search_params = new URLSearchParams(location.search)
+    window.likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
+    window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
+
     window.wasm_ready.then(() => {
-        const KEY = '286ad5cf13f251221c27c0ec238fb716db50a92b9dd635ab8c805c1961dd15c9'// contact spirin.vladimir@gmail.com
+        const KEY = '015b41745243c89f455712bfcf2d38eae718833afa3e0df616940e9d1a8216da'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            'https://danang.kim',//location.href,
+            location.href,
+            likes_search_params.join(','),
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -653,9 +672,6 @@ const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
 const $likes_count = document.getElementById('likes_count')
-var search_params = new URLSearchParams(location.search)
-var likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
-var likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 var same_likes
 
 const router = () => {
@@ -717,6 +733,7 @@ const router = () => {
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    filter.toggleAttribute('hidden', current_page != PAGE.MAIN)
     
     const likes = likes_search_params.length
         ? likes_search_params
@@ -771,6 +788,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
+    filter.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
 }
 
 $close.onpointerup = e => {
@@ -1068,19 +1086,30 @@ const color_theme = dark ? colors.dark : colors.light
             window.innerHeight
         ]
 
-        window.map = new maplibregl.Map({
+        const map_args = {
             container: 'map',
             style: dark ? styles.dark : styles.bright,
-            center: window.current_page && current_page == PAGE.SINGLE
-                ? [ad_current.longitude, ad_current.latitude]
-                : get_center(),
-            zoom: window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
             ),
             attributionControl: false
-        })
+        }
+        if (likes_search_params.length) {
+            const likes_bounds = get_likes_bounds()
+            map_args.bounds = [
+                [likes_bounds[0], likes_bounds[1]],
+                [likes_bounds[2], likes_bounds[3]]
+            ]
+            map_args.fitBoundsOptions = {padding: 100}
+        } else {
+            map_args.center = window.current_page && current_page == PAGE.SINGLE
+                ? [ad_current.longitude, ad_current.latitude]
+                : get_center()
+            map_args.zoom = window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom()
+        }
+        
+        window.map = new maplibregl.Map(map_args)
     
         map.dragRotate.disable()
         map.touchZoomRotate.disableRotation()
