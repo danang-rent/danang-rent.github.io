@@ -778,7 +778,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
-    filter.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
+    filter.toggleAttribute('hidden', '')
 }
 
 $close.onpointerup = e => {
