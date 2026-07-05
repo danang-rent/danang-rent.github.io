@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân</title>
-    <meta property="og:url" content="https://danang.kim/id/177025748">
+    <title>💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU</title>
+    <meta property="og:url" content="https://danang.kim/id/177223421">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân" />
+    <meta property="og:title" content="💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân" />
+    <meta name="description" content="💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân">
+    <meta name="twitter:title" content="💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/177025748">
+    <link rel="canonical" href="https://danang.kim/id/177223421">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -33,13 +33,15 @@
       const adaptedImports = {
         env: Object.setPrototypeOf({
           abort(message, fileName, lineNumber, columnNumber) {
+            // ~lib/builtins/abort(~lib/string/String | null?, ~lib/string/String | null?, u32?, u32?) => void
             message = __liftString(message >>> 0);
             fileName = __liftString(fileName >>> 0);
             lineNumber = lineNumber >>> 0;
             columnNumber = columnNumber >>> 0;
             (() => {
+              // @external.js
               throw Error(`${message} in ${fileName}:${lineNumber}:${columnNumber}`);
-            })()
+            })();
           },
         }, Object.assign(Object.create(globalThis), imports.env || {})),
       };
@@ -47,28 +49,40 @@
       const memory = exports.memory || imports.env.memory;
       const adaptedExports = Object.setPrototypeOf({
         get_url(id) {
+          // assembly/index/get_url(f64) => ~lib/string/String
           return __liftString(exports.get_url(id) >>> 0);
         },
         get_danang_bounds() {
+          // assembly/index/get_danang_bounds() => ~lib/staticarray/StaticArray<f32>
           return __liftStaticArray(__getF32, 2, exports.get_danang_bounds() >>> 0);
         },
+        get_likes_bounds() {
+          // assembly/index/get_likes_bounds() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_likes_bounds() >>> 0);
+        },
         get_center() {
-          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0)
+          // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
+          return __liftStaticArray(__getF32, 2, exports.get_center() >>> 0);
         },
         get_key_created_at() {
+          // assembly/index/get_key_created_at() => u64
           return BigInt.asUintN(64, exports.get_key_created_at());
         },
-        init(_timestamp, _domain, _width, _height, _key) {
+        init(_timestamp, _domain, _likes, _width, _height, _key) {
+          // assembly/index/init(u64, ~lib/string/String, ~lib/string/String, u32, u32, ~lib/string/String) => bool
           _timestamp = _timestamp || 0n;
           _domain = __retain(__lowerString(_domain) || __notnull());
+          _likes = __retain(__lowerString(_likes) || __notnull());
           _key = __lowerString(_key) || __notnull();
           try {
-            return exports.init(_timestamp, _domain, _width, _height, _key) != 0;
+            return exports.init(_timestamp, _domain, _likes, _width, _height, _key) != 0;
           } finally {
             __release(_domain);
+            __release(_likes);
           }
         },
         get_ads() {
+          // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
       }, exports);
@@ -234,11 +248,16 @@
         return orig_fetch(url, opts)
     }
     
+    window.search_params = new URLSearchParams(location.search)
+    window.likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
+    window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
+
     window.wasm_ready.then(() => {
-        const KEY = '286ad5cf13f251221c27c0ec238fb716db50a92b9dd635ab8c805c1961dd15c9'// contact spirin.vladimir@gmail.com
+        const KEY = '015b41745243c89f455712bfcf2d38eae718833afa3e0df616940e9d1a8216da'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
-            'https://danang.kim',//location.href,
+            location.href,
+            likes_search_params.join(','),
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -328,9 +347,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân",
-            "url":"https://danang.kim/id/177025748",
-			"price":"25000000",
+            "name":"💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU",
+            "url":"https://danang.kim/id/177223421",
+			"price":"15000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -548,14 +567,14 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê nhà 3 tầng siêu đẹp mặt tiền Đường Hói Kiểng Khu Hoà Xuân</h1><p>Dự án: 
-Thông tin chi tiết: 🏡Cho thuê nhà đẹp 3 tầng - 3PN đường Hói Kiểng, Khu Nam Hoà Xuân, NHS
-- DT đất : 105m2 (5x21)
-- Nhà 3 tầng, 3 phòng ngủ, 2 phòng tắm, phòng khách, bếp, sân phơi, sân vườn rộng với cây xanh, ngập tràn ánh sáng tự nhiên. Đầy đủ nội thất máy rửa chén, tủ lạnh side-by-side, sofa, bếp đầy đủ tiện nghi, máy lạnh trong phòng ngủ, máy giặt, lò nướng...
-- Gần sông và biển, Khu vực yên tĩnh, không ngập lụt, không nấm mốc, wifi tốt...
-- Giá thuê : 25 triệu/tháng (có thể thương lượng)
-👉Liên hệ : Ms Hiền 
-BĐS NEWLANDS CHUYÊN NHÀ ĐẤT THỔ CƯ ĐÀ NẴNG</p></article>
+<div id="map"></div><article><h1>💥🏡CHO THUÊ NHÀ 2 TẦNG: ĐƯỜNG HÒA MINH - LIÊN CHIỂU</h1><p>💥🏡CHO THUÊ NHÀ 2 TẦNG: PHƯỜNG HÒA MINH - LIÊN CHIỂU - Đà Nẵng.
+
+*** Diện tích đất: 80m2
+*** Công Năng: Nhà 2 tầng mới, 3 phòng ngủ, 3 toilet, có phòng học máy lạnh, gara xe 
+*** Nội Thất: Full nội thất (Bao gồm điều hòa)
+*** Vị Trí: Sát biển, gần trường Đại học Bách Khoa, Đại học Sư Phạm, trường học, bệnh viện
+*** Cho Thuê: 15 triệu/ tháng
+*** có nhận khách nước ngoài 18 triệu/ tháng</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -629,9 +648,6 @@ const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
 const $likes_count = document.getElementById('likes_count')
-var search_params = new URLSearchParams(location.search)
-var likes_local_storage = (localStorage.getItem('likes') || '').split(',').map(Number).filter(Boolean)
-var likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 var same_likes
 
 const router = () => {
@@ -693,6 +709,7 @@ const router = () => {
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    filter.toggleAttribute('hidden', current_page != PAGE.MAIN)
     
     const likes = likes_search_params.length
         ? likes_search_params
@@ -747,6 +764,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
+    filter.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
 }
 
 $close.onpointerup = e => {
@@ -1044,19 +1062,30 @@ const color_theme = dark ? colors.dark : colors.light
             window.innerHeight
         ]
 
-        window.map = new maplibregl.Map({
+        const map_args = {
             container: 'map',
             style: dark ? styles.dark : styles.bright,
-            center: window.current_page && current_page == PAGE.SINGLE
-                ? [ad_current.longitude, ad_current.latitude]
-                : get_center(),
-            zoom: window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom(),
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
             ),
             attributionControl: false
-        })
+        }
+        if (likes_search_params.length) {
+            const likes_bounds = get_likes_bounds()
+            map_args.bounds = [
+                [likes_bounds[0], likes_bounds[1]],
+                [likes_bounds[2], likes_bounds[3]]
+            ]
+            map_args.fitBoundsOptions = {padding: 100}
+        } else {
+            map_args.center = window.current_page && current_page == PAGE.SINGLE
+                ? [ad_current.longitude, ad_current.latitude]
+                : get_center()
+            map_args.zoom = window.current_page && current_page == PAGE.SINGLE ? 15 : get_zoom()
+        }
+        
+        window.map = new maplibregl.Map(map_args)
     
         map.dragRotate.disable()
         map.touchZoomRotate.disableRotation()
