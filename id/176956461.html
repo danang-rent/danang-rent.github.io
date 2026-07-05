@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU</title>
-    <meta property="og:url" content="https://danang.kim/id/175828329">
+    <title>❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌</title>
+    <meta property="og:url" content="https://danang.kim/id/176956461">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU" />
+    <meta property="og:title" content="❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU" />
+    <meta name="description" content="❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU">
+    <meta name="twitter:title" content="❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/175828329">
+    <link rel="canonical" href="https://danang.kim/id/176956461">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -59,6 +59,10 @@
         get_likes_bounds() {
           // assembly/index/get_likes_bounds() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_likes_bounds() >>> 0);
+        },
+        get_likes() {
+          // assembly/index/get_likes() => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_likes() >>> 0);
         },
         get_center() {
           // assembly/index/get_center() => ~lib/staticarray/StaticArray<f32>
@@ -253,11 +257,13 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '015b41745243c89f455712bfcf2d38eae718833afa3e0df616940e9d1a8216da'// contact spirin.vladimir@gmail.com
+        const KEY = 'f52d84f729f008d97ac9ede1bb5defb2ed238714a09c78ddaa6f43f7dc3e5d61'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
-            likes_search_params.join(','),
+            likes_search_params.length
+                ? likes_search_params.join(',')
+                : likes_local_storage.join(','),
             window.innerWidth,
             window.innerHeight,
             KEY
@@ -308,6 +314,23 @@
         )
         window.range$ = limit$.max - limit$.min
         
+        var existed_likes
+        if (likes_search_params.length) {
+            existed_likes = get_likes()
+            if (likes_search_params.length != existed_likes.length) {
+                likes_search_params = existed_likes
+                const url = new URL(location)
+                url.searchParams.set('likes', existed_likes.join(','))
+                history.replaceState({}, '', url)
+            }
+        } else if (likes_local_storage.length) {
+            existed_likes = get_likes()
+            if (likes_local_storage.length != existed_likes.length) {
+                likes_local_storage = existed_likes
+                localStorage.setItem('likes', existed_likes.join(','))
+            }
+        }
+        
         if (location.pathname.split('/')[1] == 'id') {
             window.current_page = PAGE.SINGLE
             var ad_id = location.pathname.split('/')[2]
@@ -347,9 +370,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU",
-            "url":"https://danang.kim/id/175828329",
-			"price":"20000000",
+            "name":"❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌",
+            "url":"https://danang.kim/id/176956461",
+			"price":"35000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -567,15 +590,38 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>🇻🇳 CHO THUÊ NHÀ HÒA MINH – LIÊN CHIỂU</h1><p>Dự án: 
-Thông tin chi tiết: 🏡 Nhà 3 phòng ngủ  
-✨ Phù hợp gia đình ở lâu dài  
+<div id="map"></div><article><h1>❌CHO THUÊ NHÀ 3 TÂNG KHU NAM VIỆT Á ❌</h1><p>Dự án: 
+Thông tin chi tiết: CHO THUÊ NHÀ 3 TẦNG – TRẦN HOÀNH, NAM VIỆT Á , NGŨ HÀNH SƠN
+ ● DT: 62m2
+ ● 3PN – 4WC
+ ● Sân để xe, phòng khách, bếp, phòng thờ
+ ● Giếng trời thoáng mát
+ ● Các phòng ngủ đều đón gió tự nhiên
+ ● Có điều hòa phòng khách
+📍 Kiệt ô tô Trần Hoành, thông Nguyễn Đình Chiểu 📍 Khu Nam Việt Á, Ngũ Hành Sơn
+💰 35 triệu/tháng (HĐ 1 năm) 💰 40 triệu/tháng (HĐ 6 tháng) 💰 45 triệu/tháng (HĐ 3 tháng)
+_______
+3-STOREY HOUSE FOR RENT – TRAN HOANH, NAM VIET A, NGU HANH SON
 
-📍 Khu dân cư yên tĩnh, thuận tiện sinh hoạt  
+● Area: 62m2
 
-📅 Trống ngày 10/5  
+● 3 bedrooms - 4 bathrooms
 
-🇻🇳 Chỉ nhận khách Việt</p></article>
+● Garage, living room, kitchen, chapel
+
+● Cool sky well
+
+● The bedrooms are all naturally windy
+
+● There is air conditioning in the living room
+
+📍 Master of car Tran Hoanh, through Nguyen Dinh Chieu 📍 Nam Viet A Area, Ngu Hanh Son
+
+💰 35 million/month (1 year) 
+💰 40 million/month (6 months) 
+💰 45 million/month (3 months)
+
+_______</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -710,7 +756,7 @@ const router = () => {
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
-    filter.toggleAttribute('hidden', current_page != PAGE.MAIN)
+    filter.setAttribute('hidden', '')
     
     const likes = likes_search_params.length
         ? likes_search_params
