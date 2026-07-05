@@ -28,7 +28,7 @@ module.exports = (html, ad) => {
     )
     html = html.replace(
         '<title>Danang Rent Map</title>',
-        `<title>${subject}</title><meta name="ad:id" content="${name}">`
+        `<title>${subject}</title><meta name="ad:id" content="${ad.ad_id}">`
     )
     html = html.replace(
         '<meta property="og:title" content="Danang Rent Map" />',
