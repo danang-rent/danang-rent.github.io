@@ -257,7 +257,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '0d5e680597b1e9ab6f43bc6abc6c9ddab6d2abf3e8aa71920496e8147f0eadc4'// contact spirin.vladimir@gmail.com
+        const KEY = '748c8f4efe63c4510585bc7a238b71600597fc76a03062d6cd7dadaf22e800e7'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -783,7 +783,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
-    filter.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
+    filter.setAttribute('hidden', '')
 }
 
 $close.onpointerup = e => {
