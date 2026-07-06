@@ -208,21 +208,25 @@
     .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
 
 
-    var cache = null
-    
+    window.cache_pmtiles_exist_and_loading = null
+
     caches.open('pmtiles')
     .then(c =>
         c.match('/danang.pmtiles')
-        .then(_ =>
-            _?.arrayBuffer()
-            .then(_ => cache = new Uint8Array(_))
-        )
+        .then(_ => {
+            if (!_) return
+            cache_pmtiles_exist_and_loading = _.arrayBuffer()
+            .then(_ => new Uint8Array(_))
+        })
     )
     
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
-        if (cache && String(url).includes('.pmtiles')) {
+        if (
+            cache_pmtiles_exist_and_loading &&
+            String(url).includes('.pmtiles')
+        ) return cache_pmtiles_exist_and_loading.then(cache => {
             const range = opts.headers?.get?.('Range')
                 || opts.headers?.range
                 || opts.headers?.Range
@@ -247,7 +251,7 @@
                     })
                 )
             }
-        }
+        })
 
         return orig_fetch(url, opts)
     }
@@ -257,7 +261,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'ccae5362d41cc0ce64e0df5f9f53bd33871dff507b8d16fe8e07454570ce97d1'// contact spirin.vladimir@gmail.com
+        const KEY = '2cb92b3874d4d87edd3bddc312943b3a871a1be15fb02603f1e6e38f89ed3138'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1628,14 +1632,16 @@ const color_theme = dark ? colors.dark : colors.light
         })
         
         map.once('load', () => {
-            caches.open('pmtiles')
-            .then(c =>
-                c.match('/danang.pmtiles')
-                .then(_ =>
-                    _ || fetch('/danang.pmtiles', {cache: 'no-store'})
-                    .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
-                )
-            )
+            if (cache_pmtiles_exist_and_loading == null) {
+                fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
+                .then(_ => {
+                    if (_.ok && _.status == 200) {
+                        c.put('/danang.pmtiles', _.clone())
+                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                            .then(_ => new Uint8Array(_))
+                    }
+                })
+            }
         })
 
     })

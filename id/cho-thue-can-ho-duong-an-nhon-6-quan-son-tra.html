@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở</title><meta name="ad:id" content="176635497">
-    <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-truong-dinh-moi-sach-se-vao-o">
+    <title>Cho thuê căn hộ đường An nhơn 6, quận sơn trà </title><meta name="ad:id" content="177262443">
+    <meta property="og:url" content="https://danang.kim/id/cho-thue-can-ho-duong-an-nhon-6-quan-son-tra">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở" />
+    <meta property="og:title" content="Cho thuê căn hộ đường An nhơn 6, quận sơn trà " />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở" />
+    <meta name="description" content="Cho thuê căn hộ đường An nhơn 6, quận sơn trà " />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở">
+    <meta name="twitter:title" content="Cho thuê căn hộ đường An nhơn 6, quận sơn trà ">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-truong-dinh-moi-sach-se-vao-o">
+    <link rel="canonical" href="https://danang.kim/id/cho-thue-can-ho-duong-an-nhon-6-quan-son-tra">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -208,21 +208,25 @@
     .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
 
 
-    var cache = null
-    
+    window.cache_pmtiles_exist_and_loading = null
+
     caches.open('pmtiles')
     .then(c =>
         c.match('/danang.pmtiles')
-        .then(_ =>
-            _?.arrayBuffer()
-            .then(_ => cache = new Uint8Array(_))
-        )
+        .then(_ => {
+            if (!_) return
+            cache_pmtiles_exist_and_loading = _.arrayBuffer()
+            .then(_ => new Uint8Array(_))
+        })
     )
     
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
-        if (cache && String(url).includes('.pmtiles')) {
+        if (
+            cache_pmtiles_exist_and_loading &&
+            String(url).includes('.pmtiles')
+        ) return cache_pmtiles_exist_and_loading.then(cache => {
             const range = opts.headers?.get?.('Range')
                 || opts.headers?.range
                 || opts.headers?.Range
@@ -247,7 +251,7 @@
                     })
                 )
             }
-        }
+        })
 
         return orig_fetch(url, opts)
     }
@@ -257,7 +261,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'ccae5362d41cc0ce64e0df5f9f53bd33871dff507b8d16fe8e07454570ce97d1'// contact spirin.vladimir@gmail.com
+        const KEY = '2cb92b3874d4d87edd3bddc312943b3a871a1be15fb02603f1e6e38f89ed3138'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -370,9 +374,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở",
-            "url":"https://danang.kim/id/cho-thue-nha-truong-dinh-moi-sach-se-vao-o",
-			"price":"16500000",
+            "name":"Cho thuê căn hộ đường An nhơn 6, quận sơn trà ",
+            "url":"https://danang.kim/id/cho-thue-can-ho-duong-an-nhon-6-quan-son-tra",
+			"price":"4600000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -590,19 +594,12 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ NHÀ TRƯƠNG ĐỊNH MỚI SẠCH SẼ VÀO Ở</h1><p>💥💥CHO THUÊ NHÀ KIỆT 3M TRƯƠNG ĐỊNH ( SÁT ĐƯỜNG CHÍNH)
-GẦN CHỢ MÂN THÁI , BÃI TẮM MÂN THÁI CÁCH 200m
-GẦN CHỢ CHIỀU HẢI SẢN
-XUNG QUANH CĂN HỘ , TRƯỜNG HỌC 
-DTĐ: 71M NGANG 6m3
-🍀🍀CÔNG NĂNG: 3 PN , 2 WC , P THỜ, SÂN PHƠI
-SÂN ĐỂ XE
-ĐẦY ĐỦ NỘI THẤT CAO CẤP VÀO Ở
-PHÙ HỢP : Ở VÀ KD LƯU TRÚ 
-XUNG QUANH TOÀN NGƯỜI NƯỚC NGOÀI THUÊ
-GIÁ THUÊ: 16,5 TR TL 
-NHẬN KHÁCH NƯỚC NGOÀI
-☎️☎️LH XEM NHÀ, LVCC : ***( chính chủ)</p></article>
+<div id="map"></div><article><h1>Cho thuê căn hộ đường An nhơn 6, quận sơn trà </h1><p>cho thuê căn hộ đường An nhơn 6, quận sơn trà 
+_ dT 28m2, cửa sổ 
+_ full nội thất,bếp, giặt chung, tivi. máy hút mùi 
+_ khu vực yên tĩnh 
+_ gần nguyễn công trứ, biển mỹ khê 
+_ giá 4tr6</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -1612,14 +1609,16 @@ const color_theme = dark ? colors.dark : colors.light
         })
         
         map.once('load', () => {
-            caches.open('pmtiles')
-            .then(c =>
-                c.match('/danang.pmtiles')
-                .then(_ =>
-                    _ || fetch('/danang.pmtiles', {cache: 'no-store'})
-                    .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
-                )
-            )
+            if (cache_pmtiles_exist_and_loading == null) {
+                fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
+                .then(_ => {
+                    if (_.ok && _.status == 200) {
+                        c.put('/danang.pmtiles', _.clone())
+                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                            .then(_ => new Uint8Array(_))
+                    }
+                })
+            }
         })
 
     })
