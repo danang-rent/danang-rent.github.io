@@ -166,6 +166,7 @@
       return adaptedExports;
     }
 
+    window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
     window.wasm_ready = WebAssembly
@@ -180,7 +181,7 @@
     <script>
     const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
     const URL_MAPLIBRE = 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.js'
-
+    
     window.maplibre_ready = caches.open('maplibre')
     .then(c =>
         c.match(URL_MAPLIBRE)
@@ -261,7 +262,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '2cb92b3874d4d87edd3bddc312943b3a871a1be15fb02603f1e6e38f89ed3138'// contact spirin.vladimir@gmail.com
+        const KEY = 'eed316bf1f6fc279fcc1401d633a87da1825914693004c0c367c007ed50e1f4c'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1657,16 +1658,37 @@ const color_theme = dark ? colors.dark : colors.light
                     }
                 })
             }
+            
+            const GA = 'https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB'
+            
+            caches.open('ga')
+            .then(c =>
+                c.match(GA)
+                .then(r =>
+                    r || fetch(GA, {priority: 'low'})
+                    .then(r =>
+                        r.ok && c.put(GA, r.clone()).then(_ => r)
+                    )
+                )
+            )
+            .then(r => r.text())
+            .then(code => {
+                const script = document.createElement('script')
+                script.textContent = code
+                document.head.appendChild(script)
+                
+                window.dataLayer = window.dataLayer || []
+                window.gtag = function gtag(){dataLayer.push(arguments)}
+                gtag('js', new Date())
+                gtag('config', 'GT-TQL9TSPB')
+            })
         })
 
     })
 </script>
-<script src="https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB"></script>
+<script src=""></script>
 <script>
-window.dataLayer = window.dataLayer || []
-            function gtag(){dataLayer.push(arguments)}
-            gtag('js', new Date())
-            gtag('config', 'GT-TQL9TSPB')
+
 </script>
             
 </body>
