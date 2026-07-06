@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>KHAI TRƯƠNG CĂN HỘ MỚI</title><meta name="ad:id" content="176925210">
-    <meta property="og:url" content="https://danang.kim/id/khai-truong-can-ho-moi">
+    <title>Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét</title><meta name="ad:id" content="177262901">
+    <meta property="og:url" content="https://danang.kim/id/can-ho-moi-xay-o-3-4-nguoi-dau-cau-rong-cach-bien-700-met">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="KHAI TRƯƠNG CĂN HỘ MỚI" />
+    <meta property="og:title" content="Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="KHAI TRƯƠNG CĂN HỘ MỚI" />
+    <meta name="description" content="Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="KHAI TRƯƠNG CĂN HỘ MỚI">
+    <meta name="twitter:title" content="Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/khai-truong-can-ho-moi">
+    <link rel="canonical" href="https://danang.kim/id/can-ho-moi-xay-o-3-4-nguoi-dau-cau-rong-cach-bien-700-met">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -208,21 +208,25 @@
     .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
 
 
-    var cache = null
-    
+    window.cache_pmtiles_exist_and_loading = null
+
     caches.open('pmtiles')
     .then(c =>
         c.match('/danang.pmtiles')
-        .then(_ =>
-            _?.arrayBuffer()
-            .then(_ => cache = new Uint8Array(_))
-        )
+        .then(_ => {
+            if (!_) return
+            cache_pmtiles_exist_and_loading = _.arrayBuffer()
+            .then(_ => new Uint8Array(_))
+        })
     )
     
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
-        if (cache && String(url).includes('.pmtiles')) {
+        if (
+            cache_pmtiles_exist_and_loading &&
+            String(url).includes('.pmtiles')
+        ) return cache_pmtiles_exist_and_loading.then(cache => {
             const range = opts.headers?.get?.('Range')
                 || opts.headers?.range
                 || opts.headers?.Range
@@ -247,7 +251,7 @@
                     })
                 )
             }
-        }
+        })
 
         return orig_fetch(url, opts)
     }
@@ -257,7 +261,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'ccae5362d41cc0ce64e0df5f9f53bd33871dff507b8d16fe8e07454570ce97d1'// contact spirin.vladimir@gmail.com
+        const KEY = '2cb92b3874d4d87edd3bddc312943b3a871a1be15fb02603f1e6e38f89ed3138'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -370,9 +374,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"KHAI TRƯƠNG CĂN HỘ MỚI",
-            "url":"https://danang.kim/id/khai-truong-can-ho-moi",
-			"price":"5500000",
+            "name":"Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét",
+            "url":"https://danang.kim/id/can-ho-moi-xay-o-3-4-nguoi-dau-cau-rong-cach-bien-700-met",
+			"price":"7000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -590,14 +594,34 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>KHAI TRƯƠNG CĂN HỘ MỚI</h1><p>Dự án: 
-Thông tin chi tiết: Căn hộ mới tại Ngũ hành sơn
-Đầy đủ nội thất
-Dọn vào ở ngay
-Nhận được khách nước ngoài
-Gia đình nhỏ hoặc tối đa 2 người
-Cọc 1 thanh toán 1
-Phù hợp ở lâu dài</p></article>
+<div id="map"></div><article><h1>Căn hộ mới xây ở 3-4 người , đầu Cầu Rồng cách biển 700 mét</h1><p>Dự án: 
+Thông tin chi tiết: ⸻
+
+CHO THUÊ STUDIO FULL NỘI THẤT – GẦN CẦU RỒNG – HỢP ĐỒNG 3–6 THÁNG . View tầng 4 , 2 cửa sổ 
+
+📍 Địa chỉ: 79/10 An Trung Đông 7, Sơn Trà, Đà Nẵng.
+
+✨ Studio mới, sạch đẹp, phù hợp 3-4 ở.
+
+Tiện nghi đầy đủ:
+
+* 2 giường lớn.
+* Điều hòa.
+* Bếp nấu ăn, bồn rửa.
+* Tủ lạnh.
+* Máy giặt riêng.
+* Toilet riêng, máy nước nóng.
+* Wi-Fi tốc độ cao.
+* Khu vực an ninh, yên tĩnh.
+
+📍 Vị trí thuận tiện:
+
+* Cách cầu Rồng khoảng 500 m.
+* Cách biển Mỹ Khê khoảng 700 km.
+* Gần chợ, siêu thị, quán ăn, cà phê.
+
+📄 Hợp đồng: 3–6 tháng.
+👥 Tối đa 3 -4 người . ( ở tầng 4 không thang máy )</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -1607,14 +1631,16 @@ const color_theme = dark ? colors.dark : colors.light
         })
         
         map.once('load', () => {
-            caches.open('pmtiles')
-            .then(c =>
-                c.match('/danang.pmtiles')
-                .then(_ =>
-                    _ || fetch('/danang.pmtiles', {cache: 'no-store'})
-                    .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
-                )
-            )
+            if (cache_pmtiles_exist_and_loading == null) {
+                fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
+                .then(_ => {
+                    if (_.ok && _.status == 200) {
+                        c.put('/danang.pmtiles', _.clone())
+                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                            .then(_ => new Uint8Array(_))
+                    }
+                })
+            }
         })
 
     })
