@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU</title><meta name="ad:id" content="176922840">
-    <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-nguyen-can-duong-an-thuong-9-thue-tamg-1-thi-gia-18trieu">
+    <title>🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP</title><meta name="ad:id" content="175877469">
+    <meta property="og:url" content="https://danang.kim/id/nha-3-tang-duong-phan-thi-ne-full-noi-that-cao-cap">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU" />
+    <meta property="og:title" content="🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU" />
+    <meta name="description" content="🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU">
+    <meta name="twitter:title" content="🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-nguyen-can-duong-an-thuong-9-thue-tamg-1-thi-gia-18trieu">
+    <link rel="canonical" href="https://danang.kim/id/nha-3-tang-duong-phan-thi-ne-full-noi-that-cao-cap">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
@@ -208,21 +208,25 @@
     .then(_ => eval(_.replace('var pmtiles=', 'window.pmtiles=')))
 
 
-    var cache = null
-    
+    window.cache_pmtiles_exist_and_loading = null
+
     caches.open('pmtiles')
     .then(c =>
         c.match('/danang.pmtiles')
-        .then(_ =>
-            _?.arrayBuffer()
-            .then(_ => cache = new Uint8Array(_))
-        )
+        .then(_ => {
+            if (!_) return
+            cache_pmtiles_exist_and_loading = _.arrayBuffer()
+            .then(_ => new Uint8Array(_))
+        })
     )
     
     const orig_fetch = window.fetch
 
     window.fetch = (url, opts = {}) => {
-        if (cache && String(url).includes('.pmtiles')) {
+        if (
+            cache_pmtiles_exist_and_loading &&
+            String(url).includes('.pmtiles')
+        ) return cache_pmtiles_exist_and_loading.then(cache => {
             const range = opts.headers?.get?.('Range')
                 || opts.headers?.range
                 || opts.headers?.Range
@@ -247,7 +251,7 @@
                     })
                 )
             }
-        }
+        })
 
         return orig_fetch(url, opts)
     }
@@ -257,7 +261,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'ccae5362d41cc0ce64e0df5f9f53bd33871dff507b8d16fe8e07454570ce97d1'// contact spirin.vladimir@gmail.com
+        const KEY = '2cb92b3874d4d87edd3bddc312943b3a871a1be15fb02603f1e6e38f89ed3138'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -370,9 +374,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU",
-            "url":"https://danang.kim/id/cho-thue-nha-nguyen-can-duong-an-thuong-9-thue-tamg-1-thi-gia-18trieu",
-			"price":"32000000",
+            "name":"🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP",
+            "url":"https://danang.kim/id/nha-3-tang-duong-phan-thi-ne-full-noi-that-cao-cap",
+			"price":"20000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -590,16 +594,11 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ NHÀ NGUYÊN CĂN ĐƯỜNG AN THƯỢNG 9. THUÊ TẦMG 1 THÌ GIÁ 18TRIỆU</h1><p>Dự án: 
-Thông tin chi tiết: Cách biển chưa tới 1km, gần trung tâm TP 
-Tầng 1: phòng khách , 1 phòng ngủ, 1 nhà vệ sinh 
-Tầng 2: bếp, 2 Phòng ngủ , 1 nhà vệ sinh
-Tầng 2: 1 phòng thờ và 2 ban công lớn trước sau 
-DT: 75 m2 .
-Giá 32 triệu/ tháng 
-Cọc 2 tháng và thanh toán 6 tháng.
-Nếu thuê tầng 1 thì giá 18 triệu 
-Chủ cho thuê dài hạn và cải tạo</p></article>
+<div id="map"></div><article><h1>🇻🇳NHÀ 3 TẦNG ĐƯỜNG PHAN THỊ NỂ: FULL NỘI THẤT CAO CẤP</h1><p>Cho thuê nhà 3 tầng mặt tiền đường Phan Thị Nể, Hòa Minh, Liên Chiểu.
+• Diện tích: 105m2, đường 5m5, cách biển 200m.
+• Nhà 3 tầng mới, full nội thất cao cấp, 03 phòng ngủ, gara oto, san tượng BBQ....
+• Thiết kế cực thoáng, thông gió và lấy sáng tự nhiên.
+• Giá thuê: 20 triệu/tháng (chỉ nhận khách Việt)</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -1609,14 +1608,16 @@ const color_theme = dark ? colors.dark : colors.light
         })
         
         map.once('load', () => {
-            caches.open('pmtiles')
-            .then(c =>
-                c.match('/danang.pmtiles')
-                .then(_ =>
-                    _ || fetch('/danang.pmtiles', {cache: 'no-store'})
-                    .then(_ => _.ok && _.status == 200 && c.put('/danang.pmtiles', _.clone()))
-                )
-            )
+            if (cache_pmtiles_exist_and_loading == null) {
+                fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
+                .then(_ => {
+                    if (_.ok && _.status == 200) {
+                        c.put('/danang.pmtiles', _.clone())
+                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                            .then(_ => new Uint8Array(_))
+                    }
+                })
+            }
         })
 
     })
