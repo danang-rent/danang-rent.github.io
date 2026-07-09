@@ -1071,31 +1071,31 @@ const color_theme = dark ? colors.dark : colors.light
         ]
 
         const style = {
-          version: 8,
-          sources: {
-              danang: {
-                  type: 'vector',
-                  url: `pmtiles://${location.origin}/danang.pmtiles`
-              },
-              prices: {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: ads.map(ad => ({
-                          id: ad.id,
-                          type: 'Feature',
-                          properties: {
-                              price: ad.price,
-                              price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
-                          },
-                          geometry: {
-                              type: 'Point',
-                              coordinates: [ad.longitude, ad.latitude]
-                          }
-                      }))
-                  }
-              }
-          }
+            version: 8,
+            sources: {
+                danang: {
+                    type: 'vector',
+                    url: `pmtiles://${location.origin}/danang.pmtiles`
+                },
+                prices: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: ads.map(ad => ({
+                            id: ad.id,
+                            type: 'Feature',
+                            properties: {
+                                price: ad.price,
+                                price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [ad.longitude, ad.latitude]
+                            }
+                        }))
+                    }
+                }
+            }
         }
         styles.bright = {
             ...style,
