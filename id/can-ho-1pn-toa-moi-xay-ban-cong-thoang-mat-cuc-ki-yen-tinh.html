@@ -263,7 +263,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'a466b35b5a10d15bbdd55ef3c4075e3871d0800ea8234128bcbe3730f1dfff0d'// contact spirin.vladimir@gmail.com
+        const KEY = 'a4d6697fa789b413b698f3b853ad8ef713e54a9deec71b1d4d423faa7ab1d2fa'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1104,31 +1104,31 @@ const color_theme = dark ? colors.dark : colors.light
         ]
 
         const style = {
-          version: 8,
-          sources: {
-              danang: {
-                  type: 'vector',
-                  url: `pmtiles://${location.origin}/danang.pmtiles`
-              },
-              prices: {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: ads.map(ad => ({
-                          id: ad.id,
-                          type: 'Feature',
-                          properties: {
-                              price: ad.price,
-                              price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
-                          },
-                          geometry: {
-                              type: 'Point',
-                              coordinates: [ad.longitude, ad.latitude]
-                          }
-                      }))
-                  }
-              }
-          }
+            version: 8,
+            sources: {
+                danang: {
+                    type: 'vector',
+                    url: `pmtiles://${location.origin}/danang.pmtiles`
+                },
+                prices: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: ads.map(ad => ({
+                            id: ad.id,
+                            type: 'Feature',
+                            properties: {
+                                price: ad.price,
+                                price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [ad.longitude, ad.latitude]
+                            }
+                        }))
+                    }
+                }
+            }
         }
         styles.bright = {
             ...style,

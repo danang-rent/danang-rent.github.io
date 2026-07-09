@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>nhà cho thuê</title><meta name="ad:id" content="177070963">
+    <title>nha cho thue</title><meta name="ad:id" content="176698423">
     <meta property="og:url" content="https://danang.kim/id/nha-cho-thue">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="nhà cho thuê" />
+    <meta property="og:title" content="nha cho thue" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="nhà cho thuê" />
+    <meta name="description" content="nha cho thue" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="nhà cho thuê">
+    <meta name="twitter:title" content="nha cho thue">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
     <link rel="canonical" href="https://danang.kim/id/nha-cho-thue">
@@ -263,7 +263,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'a466b35b5a10d15bbdd55ef3c4075e3871d0800ea8234128bcbe3730f1dfff0d'// contact spirin.vladimir@gmail.com
+        const KEY = 'a4d6697fa789b413b698f3b853ad8ef713e54a9deec71b1d4d423faa7ab1d2fa'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -364,9 +364,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"nhà cho thuê",
+            "name":"nha cho thue",
             "url":"https://danang.kim/id/nha-cho-thue",
-			"price":"6000000",
+			"price":"4000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -584,8 +584,7 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>nhà cho thuê</h1><p>Dự án: 
-Thông tin chi tiết: Nhà ngang 5 dài 15m 3 tầng tiện nghi,được trang trí biển hiệu công ty,có thể ở lại,tiện nghi đầy đủ</p></article>
+<div id="map"></div><article><h1>nha cho thue</h1><p>nha trống cần cho ở gia  đinh liên  thai ***47</p></article>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -1074,31 +1073,31 @@ const color_theme = dark ? colors.dark : colors.light
         ]
 
         const style = {
-          version: 8,
-          sources: {
-              danang: {
-                  type: 'vector',
-                  url: `pmtiles://${location.origin}/danang.pmtiles`
-              },
-              prices: {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: ads.map(ad => ({
-                          id: ad.id,
-                          type: 'Feature',
-                          properties: {
-                              price: ad.price,
-                              price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
-                          },
-                          geometry: {
-                              type: 'Point',
-                              coordinates: [ad.longitude, ad.latitude]
-                          }
-                      }))
-                  }
-              }
-          }
+            version: 8,
+            sources: {
+                danang: {
+                    type: 'vector',
+                    url: `pmtiles://${location.origin}/danang.pmtiles`
+                },
+                prices: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: ads.map(ad => ({
+                            id: ad.id,
+                            type: 'Feature',
+                            properties: {
+                                price: ad.price,
+                                price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [ad.longitude, ad.latitude]
+                            }
+                        }))
+                    }
+                }
+            }
         }
         styles.bright = {
             ...style,
