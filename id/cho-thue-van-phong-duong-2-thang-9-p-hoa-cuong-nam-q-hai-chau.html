@@ -263,7 +263,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'a466b35b5a10d15bbdd55ef3c4075e3871d0800ea8234128bcbe3730f1dfff0d'// contact spirin.vladimir@gmail.com
+        const KEY = 'a4d6697fa789b413b698f3b853ad8ef713e54a9deec71b1d4d423faa7ab1d2fa'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -366,7 +366,7 @@
             "@type":"Offer",
             "name":"CHO THUÊ VĂN PHÒNG ĐƯỜNG 2 THÁNG 9, P. HÒA CƯỜNG NAM, Q. HẢI CHÂU",
             "url":"https://danang.kim/id/cho-thue-van-phong-duong-2-thang-9-p-hoa-cuong-nam-q-hai-chau",
-			"price":"6000000",
+			"price":"5000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -585,7 +585,7 @@
 </head>
 <body>
 <div id="map"></div><article><h1>CHO THUÊ VĂN PHÒNG ĐƯỜNG 2 THÁNG 9, P. HÒA CƯỜNG NAM, Q. HẢI CHÂU</h1><p>CHO THUÊ VĂN PHÒNG ĐƯỜNG ĐƯỜNG 2 THÁNG 9, P. HÒA CƯỜNG NAM, Q. HẢI CHÂU, TP. ĐÀ NẴNG
-1. Giá thuê: 6 Triệu  đồng/Tháng(có tl)
+1. Giá thuê: 5 Triệu  đồng/Tháng(có tl)
 2. Thông tin bất động sản
 - Diện tích: 80 m², 1 phòng ngủ, 1 wc
 - Đường rộng: 30 m, lề: 5 m
@@ -1081,31 +1081,31 @@ const color_theme = dark ? colors.dark : colors.light
         ]
 
         const style = {
-          version: 8,
-          sources: {
-              danang: {
-                  type: 'vector',
-                  url: `pmtiles://${location.origin}/danang.pmtiles`
-              },
-              prices: {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: ads.map(ad => ({
-                          id: ad.id,
-                          type: 'Feature',
-                          properties: {
-                              price: ad.price,
-                              price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
-                          },
-                          geometry: {
-                              type: 'Point',
-                              coordinates: [ad.longitude, ad.latitude]
-                          }
-                      }))
-                  }
-              }
-          }
+            version: 8,
+            sources: {
+                danang: {
+                    type: 'vector',
+                    url: `pmtiles://${location.origin}/danang.pmtiles`
+                },
+                prices: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: ads.map(ad => ({
+                            id: ad.id,
+                            type: 'Feature',
+                            properties: {
+                                price: ad.price,
+                                price_label: '₫' + Math.round(ad.price / 1e5) / 10 + 'm',
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [ad.longitude, ad.latitude]
+                            }
+                        }))
+                    }
+                }
+            }
         }
         styles.bright = {
             ...style,
