@@ -22,6 +22,7 @@
     <link rel="canonical" href="https://danang.kim/id/cho-nha-kho-xuong-duong-yen-the-bac-son-155m2">
     <link rel="manifest" href="/manifest.json">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
     <link rel="icon" media="(prefers-color-scheme: light)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23000' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" media="(prefers-color-scheme: dark)" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3e%3cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='%23fff' stroke-width='3' transform='rotate(24 16 16)'/%3e%3c/svg%3e" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -263,7 +264,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '70d98d831d9d0d006b05ca0d6a6387dbc100189976135f21675ee68dce601f12'// contact spirin.vladimir@gmail.com
+        const KEY = '8777be12d1245824cd19eb966a3dbb87d15d664af9381066a5aa6e0c635d8f26'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -346,17 +347,105 @@
         }
     })
 
-    const layers_dark = [{"id":"background","type":"background","paint":{"background-color":"rgb(12,12,12)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"paint":{"fill-antialias":false,"fill-color":"rgb(27 ,27 ,29)"}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"paint":{"line-color":"rgb(27 ,27 ,29)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"filter":["==","$type","Polygon"],"paint":{"fill-antialias":true,"fill-color":"rgb(10,10,10)","fill-outline-color":"rgb(27 ,27 ,29)"}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_path","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","filter":["all",["==","$type","LineString"],["==","class","path"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgb(27 ,27 ,29)","line-dasharray":[1.5,1.5],"line-opacity":0.9,"line-width":{"base":1.2,"stops":[[13,1],[20,10]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#181818","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgba(60,60,60,0.8)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 7%)","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"railway","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(35,35,35)","line-width":{"base":1.3,"stops":[[16,3],[20,7]]}}},{"id":"railway_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":13,"filter":["all",["==","$type","LineString"],["==","class","rail"],["!has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"rgb(12,12,12)","line-dasharray":[3,3],"line-width":{"base":1.3,"stops":[[16,2],[20,6]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"rgba(80, 78, 78, 1)","text-halo-blur":0,"text-halo-color":"rgba(0, 0, 0, 1)","text-halo-width":1,"text-translate":[0,0]}}]
-    const layers_bright = [{"id":"background","type":"background","paint":{"background-color":"rgb(242,243,240)"}},{"id":"park","type":"fill","source":"danang","source-layer":"park","filter":["==","$type","Polygon"],"paint":{"fill-color":"rgb(230, 233, 229)"}},{"id":"water","type":"fill","source":"danang","source-layer":"water","filter":["all",["==","$type","Polygon"],["!=","brunnel","tunnel"]],"paint":{"fill-antialias":true,"fill-color":"rgb(194, 200, 202)"}},{"id":"landcover_wood","type":"fill","source":"danang","source-layer":"landcover","minzoom":10,"filter":["all",["==","$type","Polygon"],["==","class","wood"]],"paint":{"fill-color":"rgb(220,224,220)","fill-opacity":{"base":1,"stops":[[8,0],[12,1]]}}},{"id":"waterway","type":"line","source":"danang","source-layer":"waterway","filter":["==","$type","LineString"],"paint":{"line-color":"hsl(195, 17%, 78%)"}},{"id":"building","type":"fill","source":"danang","source-layer":"building","minzoom":12,"paint":{"fill-antialias":true,"fill-color":"rgb(234, 234, 229)","fill-outline-color":"rgb(219, 219, 218)"}},{"id":"tunnel_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"tunnel_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgb(234,234,234)","line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"aeroway-taxiway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":12,"filter":["all",["in","class","taxiway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"aeroway-runway-casing","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,6],[17,55]]}}},{"id":"aeroway-runway","type":"line","metadata":{"mapbox:group":"1444849345966.4436"},"source":"danang","source-layer":"aeroway","minzoom":11,"filter":["all",["in","class","runway"],["==","$type","LineString"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"rgba(255, 255, 255, 1)","line-opacity":1,"line-width":{"base":1.5,"stops":[[11,4],[17,50]]}}},{"id":"highway_minor","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":8,"filter":["all",["==","$type","LineString"],["in","class","minor","service","track"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"hsl(0, 0%, 88%)","line-opacity":0.9,"line-width":{"base":1.55,"stops":[[13,1.8],[20,20]]}}},{"id":"highway_major_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[12,0],"line-width":{"base":1.3,"stops":[[10,3],[20,23]]}}},{"id":"highway_major_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":11,"filter":["all",["==","$type","LineString"],["in","class","primary","secondary","tertiary","trunk"]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":"#fff","line-width":{"base":1.3,"stops":[[10,2],[20,20]]}}},{"id":"highway_motorway_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,3],[20,40]]}}},{"id":"highway_motorway_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["!in","brunnel","bridge","tunnel"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"railway_service","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["all",["==","class","rail"],["has","service"]]],"layout":{"line-join":"round"},"paint":{"line-color":"#dddddd","line-width":3}},{"id":"railway_service_dashline","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":16,"filter":["all",["==","$type","LineString"],["==","class","rail"],["has","service"]],"layout":{"line-join":"round"},"paint":{"line-color":"#fafafa","line-dasharray":[3,3],"line-width":2}},{"id":"highway_motorway_bridge_casing","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"butt","line-join":"miter"},"paint":{"line-color":"rgb(213, 213, 213)","line-dasharray":[2,0],"line-opacity":1,"line-width":{"base":1.4,"stops":[[5.8,0],[6,5],[20,45]]}}},{"id":"highway_motorway_bridge_inner","type":"line","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation","minzoom":6,"filter":["all",["==","$type","LineString"],["all",["==","brunnel","bridge"],["==","class","motorway"]]],"layout":{"line-cap":"round","line-join":"round"},"paint":{"line-color":{"base":1,"stops":[[5.8,"hsla(0, 0%, 85%, 0.53)"],[6,"#fff"]]},"line-width":{"base":1.4,"stops":[[4,2],[6,1.3],[20,30]]}}},{"id":"highway_name_other","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["!=","class","motorway"],["==","$type","LineString"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{name:latin} {name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-max-angle":30,"text-pitch-alignment":"viewport","text-rotation-alignment":"map","text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"#bbb","text-halo-blur":1,"text-halo-color":"#fff","text-halo-width":2,"text-translate":[0,0]}},{"id":"highway_name_motorway","type":"symbol","metadata":{"mapbox:group":"b6371a3f2f5a9932464fa3867530a2e5"},"source":"danang","source-layer":"transportation_name","filter":["all",["==","$type","LineString"],["==","class","motorway"]],"layout":{"symbol-placement":"line","symbol-spacing":350,"text-field":"{ref}","text-font":["Metropolis Light","Noto Sans Regular"],"text-pitch-alignment":"viewport","text-rotation-alignment":"viewport","text-size":10},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"hsl(0, 0%, 100%)","text-halo-width":1,"text-translate":[0,2]}},{"id":"place_suburb","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":15,"filter":["all",["==","$type","Point"],["==","class","suburb"]],"layout":{"text-anchor":"center","text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"center","text-offset":[0.5,0],"text-size":10,"text-transform":"uppercase"},"paint":{"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}},{"id":"place_capital","type":"symbol","metadata":{"mapbox:group":"101da9f13b64a08fa4b6ac1168e89e5f"},"source":"danang","source-layer":"place","maxzoom":12,"filter":["all",["==","$type","Point"],["all",["==","capital",2],["==","class","city"]]],"layout":{"icon-image":{"base":1,"stops":[[0,"star-11"],[8,""]]},"icon-size":1,"text-anchor":{"base":1,"stops":[[0,"left"],[8,"center"]]},"text-field":"{name:latin}\\n{name:nonlatin}","text-font":["Metropolis Regular","Noto Sans Regular"],"text-justify":"left","text-offset":[0.5,0.2],"text-size":14,"text-transform":"uppercase"},"paint":{"icon-opacity":0.7,"text-color":"rgb(117, 129, 145)","text-halo-blur":1,"text-halo-color":"rgb(242,243,240)","text-halo-width":1}}]
+    
+    const colors = {
+        light: {
+            selected: '#ff69b4',
+            other: '#888',
+            filtered: '#888',
+            normal: '#ff69b4'
+        },
+        dark: {
+            selected: '#ff69b4',
+            other: '#555',
+            filtered: '#555',
+            normal: '#ff69b4'
+        }
+    }
+    
+    const theme = {
+        paint: {
+            'price-text-shared-likes': {
+                'text-color': ['#ffffff', '#000000']
+            },
+            'price-text': {
+                'text-color': ['#ffffff', '#000000']
+            },
+            'price-circle': {
+                'circle-color': [
+                    [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', '#ff69b4',
+                        'other', '#555',
+                        'filtered', '#555',
+                        '#ff69b4'
+                    ],
+                    [
+                        'match',
+                        ['feature-state', 'mode'],
+                        'selected', '#ff69b4',
+                        'other', '#888',
+                        'filtered', '#888',
+                        '#ff69b4'
+                    ]
+                ]
+            },
+            background: {
+                "background-color": ["rgb(12,12,12)", "rgb(242,243,240)"]
+            },
+            building: {
+                "fill-color": ["rgb(10,10,10)", "rgb(234, 234, 229)"],
+                "fill-outline-color": ["rgb(27 ,27 ,29)", "rgb(219, 219, 218)"]
+            },
+            highway_major_casing: {
+                "line-color": ["rgba(60,60,60,0.8)", "rgb(213, 213, 213)"]
+            },
+            highway_major_inner: {
+                "line-color": ["hsl(0, 0%, 7%)", "#fff"]
+            },
+            highway_minor: {
+                "line-color": ["#181818", "hsl(0, 0%, 88%)"]
+            },
+            highway_name_other: {
+                "text-color": ["rgba(80, 78, 78, 1)", "#bbb"],
+                "text-halo-blur": [0, 1],
+                "text-halo-color": ["rgba(0, 0, 0, 1)", "#fff"],
+                "text-halo-width": [1, 2]
+            },
+            railway: {
+                "line-color": ["rgb(35,35,35)", "#dddddd"]
+            },
+            railway_dashline: {
+                "line-color": ["rgb(12,12,12)", "#fafafa"]
+            },
+            railway_service: {
+                "line-color": ["rgb(35,35,35)", "#dddddd"]
+            },
+            railway_service_dashline: {
+                "line-color": ["rgb(12,12,12)", "#fafafa"]
+            },
+            water: {
+                "fill-antialias": [false, true],
+                "fill-color": ["rgb(27 ,27 ,29)", "rgb(194, 200, 202)"]
+            },
+            waterway: {
+                "line-color": ["rgb(27 ,27 ,29)", "hsl(195, 17%, 78%)"]
+            },
+        }
+    }
 
-    const styles = {}
     window.dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
     document.documentElement.toggleAttribute('dark', window.dark)
     if (window.matchMedia) {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
         mediaQuery.addEventListener('change', e => {
             document.documentElement.toggleAttribute('dark', window.dark = e.matches)
-            map.setStyle(window.dark ? styles.dark : styles.bright)
+            Object.keys(theme.paint).forEach(layer_id =>
+                Object.keys(theme.paint[layer_id]).forEach(property =>
+                    map.setPaintProperty(layer_id, property, theme.paint[layer_id][property][+!dark])
+                )
+            )
         })
     }
     </script>
@@ -581,6 +670,22 @@
             width: 100%;
             height: 100%;
         }
+        #logo {
+            position: absolute;
+            left: 2vh;
+            top: 2vh;
+            color: black;
+            width: 10vh;
+            height: 5vh;
+            pointer-events: none;
+        }
+        #logo svg {
+            width: clamp(140px, 20vmin, 300px);
+            height: auto;
+        }
+        html[dark] #logo {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -593,6 +698,41 @@
 
 #cho_thuê_nhà, #hải_châu #sơn_trà #ngũ_hành_sơn, #cẩm_lệ #thanh_khê #hòa_minh #an_thượng #nam_việt_á #nhà_cho_thuê #cho_thuê #nhà_đẹp #đà_nẵng 
 #hòa_cường #mặt_bằng #chính_chủ </p></article>
+<div id="logo" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg"
+        width="300"
+        height="90"
+        viewBox="0 10 300 90">
+        
+        <!-- icon -->
+        <g transform="translate(42 45)">
+            <g transform="rotate(24)">
+                <polygon
+                    points="0,-36 31.2,-18 31.2,18 0,36 -31.2,18 -31.2,-18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    stroke-linejoin="round"/>
+                </g>
+            </g>
+            <text x="90"
+            y="38"
+            font-family="Inter, Arial, sans-serif"
+            font-size="22"
+            font-weight="500"
+            fill="currentColor">
+            Danang Rent
+        </text>
+        <text x="90"
+            y="60"
+            font-family="Inter, Arial, sans-serif"
+            font-size="11"
+            letter-spacing="2"
+            fill="grey">
+            RENTAL PLATFORM
+        </text>    
+    </svg>
+</div>
 <div id="filter" hidden>
     <div id="scale"></div>
     <div id="min">
@@ -728,6 +868,7 @@ const router = () => {
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    logo.removeAttribute('hidden')
     
     const likes = likes_search_params.length
         ? likes_search_params
@@ -1014,32 +1155,16 @@ apply_filter = () => {
     )
 }
 
-const colors = {
-    light: {
-        selected: '#ff69b4',
-        other: '#888',
-        filtered: '#888',
-        normal: '#ff69b4'
-    },
-    dark: {
-        selected: '#ff69b4',
-        other: '#555',
-        filtered: '#555',
-        normal: '#ff69b4'
-    }
-}
-const color_theme = dark ? colors.dark : colors.light
-
 
     const heart_ready = (src =>
         Promise.all([
             src.replace(
                 '<path',
-                `<path fill="none" stroke="${color_theme.selected}" stroke-width="4" stroke-linejoin="round" `
+                `<path fill="none" stroke="${colors.dark.selected}" stroke-width="4" stroke-linejoin="round" `
             ),
             src.replace(
                 '<path',
-                `<path fill="none" stroke="${color_theme.other}" stroke-width="4" stroke-linejoin="round" `
+                `<path fill="none" stroke="${colors.dark.other}" stroke-width="4" stroke-linejoin="round" `
             )
         ].map(svg => new Promise((y, n) => {
             const url = URL.createObjectURL(
@@ -1080,6 +1205,21 @@ const color_theme = dark ? colors.dark : colors.light
             window.innerHeight
         ]
 
+        const circle_radius =
+        window.innerWidth < 500 ? 3 :
+        window.innerWidth < 1200 ? 4 :
+        5
+        const hover_scale = [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1.8,
+            1
+        ]
+        const font_size =
+        window.innerWidth < 500 ? 14 :
+        window.innerWidth < 1200 ? 16 :
+        20
+
         const style = {
             version: 8,
             sources: {
@@ -1105,24 +1245,607 @@ const color_theme = dark ? colors.dark : colors.light
                         }))
                     }
                 }
-            }
-        }
-        styles.bright = {
-            ...style,
+            },
             layers: [
-                ...layers_bright
-            ]
-        }
-        styles.dark = {
-            ...style,
-            layers: [
-                ...layers_dark
+                {
+                    "id": "background",
+                    "type": "background",
+                    "paint": {
+                        "background-color": theme.paint.background['background-color'][+!dark]
+                    }
+                },
+                {
+                    "id": "building",
+                    "type": "fill",
+                    "source": "danang",
+                    "source-layer": "building",
+                    "minzoom": 12,
+                    "filter": [
+                        "==",
+                        "$type",
+                        "Polygon"
+                    ],
+                    "paint": {
+                        "fill-antialias": true,
+                        "fill-color": theme.paint.building['fill-color'][+!dark],
+                        "fill-outline-color": theme.paint.building['fill-outline-color'][+!dark]
+                    }
+                },
+                {
+                    "id": "highway_major_casing",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 11,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "in",
+                            "class",
+                            "primary",
+                            "secondary",
+                            "tertiary",
+                            "trunk"
+                        ]
+                    ],
+                    "layout": {
+                        "line-cap": "butt",
+                        "line-join": "miter"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.highway_major_casing['line-color'][+!dark],
+                        "line-dasharray": [
+                            12,
+                            0
+                        ],
+                        "line-width": {
+                            "base": 1.3,
+                            "stops": [
+                                [
+                                    10,
+                                    3
+                                ],
+                                [
+                                    20,
+                                    23
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "highway_major_inner",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 11,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "in",
+                            "class",
+                            "primary",
+                            "secondary",
+                            "tertiary",
+                            "trunk"
+                        ]
+                    ],
+                    "layout": {
+                        "line-cap": "round",
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.highway_major_inner['line-color'][+!dark],
+                        "line-width": {
+                            "base": 1.3,
+                            "stops": [
+                                [
+                                    10,
+                                    2
+                                ],
+                                [
+                                    20,
+                                    20
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "highway_minor",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 8,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "in",
+                            "class",
+                            "minor",
+                            "service",
+                            "track"
+                        ]
+                    ],
+                    "layout": {
+                        "line-cap": "round",
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.highway_minor['line-color'][+!dark],
+                        "line-opacity": 0.9,
+                        "line-width": {
+                            "base": 1.55,
+                            "stops": [
+                                [
+                                    13,
+                                    1.8
+                                ],
+                                [
+                                    20,
+                                    20
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "highway_name_other",
+                    "type": "symbol",
+                    "source": "danang",
+                    "source-layer": "transportation_name",
+                    "filter": [
+                        "all",
+                        [
+                            "!=",
+                            "class",
+                            "motorway"
+                        ],
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ]
+                    ],
+                    "layout": {
+                        "symbol-placement": "line",
+                        "symbol-spacing": 350,
+                        "text-field": "{name:latin} {name:nonlatin}",
+                        "text-font": [
+                            "Metropolis Regular",
+                            "Noto Sans Regular"
+                        ],
+                        "text-max-angle": 30,
+                        "text-pitch-alignment": "viewport",
+                        "text-rotation-alignment": "map",
+                        "text-size": 10,
+                        "text-transform": "uppercase"
+                    },
+                    "paint": {
+                        "text-color": theme.paint.highway_name_other['text-color'][+!dark],
+                        "text-halo-blur": theme.paint.highway_name_other['text-halo-blur'][+!dark],
+                        "text-halo-color": theme.paint.highway_name_other['text-halo-color'][+!dark],
+                        "text-halo-width": theme.paint.highway_name_other['text-halo-width'][+!dark],
+                        "text-translate": [
+                            0,
+                            0
+                        ]
+                    }
+                },
+                {
+                    "id": "railway",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 13,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "==",
+                            "class",
+                            "rail"
+                        ],
+                        [
+                            "!has",
+                            "service"
+                        ]
+                    ],
+                    "layout": {
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.railway['line-color'][+!dark],
+                        "line-width": {
+                            "base": 1.3,
+                            "stops": [
+                                [
+                                    16,
+                                    3
+                                ],
+                                [
+                                    20,
+                                    7
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "railway_dashline",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 13,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "==",
+                            "class",
+                            "rail"
+                        ],
+                        [
+                            "!has",
+                            "service"
+                        ]
+                    ],
+                    "layout": {
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.railway_dashline['line-color'][+!dark],
+                        "line-dasharray": [
+                            3,
+                            3
+                        ],
+                        "line-width": {
+                            "base": 1.3,
+                            "stops": [
+                                [
+                                    16,
+                                    2
+                                ],
+                                [
+                                    20,
+                                    6
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "railway_service",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 13,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "all",
+                            [
+                                "==",
+                                "class",
+                                "rail"
+                            ],
+                            [
+                                "has",
+                                "service"
+                            ]
+                        ]
+                    ],
+                    "layout": {
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.railway_service['line-color'][+!dark],
+                        "line-width": 3
+                    }
+                },
+                {
+                    "id": "railway_service_dashline",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "transportation",
+                    "minzoom": 13,
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "LineString"
+                        ],
+                        [
+                            "==",
+                            "class",
+                            "rail"
+                        ],
+                        [
+                            "has",
+                            "service"
+                        ]
+                    ],
+                    "layout": {
+                        "line-join": "round"
+                    },
+                    "paint": {
+                        "line-color": theme.paint.railway_service_dashline['line-color'][+!dark],
+                        "line-dasharray": [
+                            3,
+                            3
+                        ],
+                        "line-width": 2
+                    }
+                },
+                {
+                    "id": "water",
+                    "type": "fill",
+                    "source": "danang",
+                    "source-layer": "water",
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "Polygon"
+                        ],
+                        [
+                            "!=",
+                            "brunnel",
+                            "tunnel"
+                        ]
+                    ],
+                    "paint": {
+                        "fill-antialias": theme.paint.water['fill-antialias'][+!dark],
+                        "fill-color": theme.paint.water['fill-color'][+!dark]
+                    }
+                },
+                {
+                    "id": "waterway",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "waterway",
+                    "filter": [
+                        "==",
+                        "$type",
+                        "LineString"
+                    ],
+                    "paint": {
+                        "line-color": theme.paint.waterway['line-color'][+!dark]
+                    }
+                },
+                {
+                    id: 'price-circle',
+                    type: 'circle',
+                    source: 'prices',
+                    layout: {
+                        visibility: 'none'
+                    },
+                    paint: {
+                        'circle-radius': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'],
+                            1, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', ['*', 4, hover_scale],
+                                'other', ['*', 2, hover_scale],
+                                'filtered', ['*', 2, hover_scale],
+                                ['*', 2, hover_scale]//normal
+                            ],
+                            14, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', ['*', circle_radius + 5, hover_scale],
+                                'other', ['*', circle_radius, hover_scale],
+                                'filtered', ['*', circle_radius, hover_scale],
+                                ['*', circle_radius, hover_scale]//normal
+                            ]
+                        ],
+                        'circle-color': theme.paint['price-circle']['circle-color'][+!dark],
+                        'circle-opacity': [
+                            'match',
+                            ['feature-state', 'mode'],
+                            'selected', 1,
+                            'other', 0.6,
+                            'filtered', 0.6,
+                            'hidden', 0.0,
+                            0.6//normal
+                        ]
+                    }
+                },
+                {
+                    id: 'price-text',
+                    type: 'symbol',
+                    source: 'prices',
+                    minzoom: 13,
+                    layout: {
+                        'visibility': 'none',
+                        'text-field': ['get', 'price_label'],
+                        'text-size': font_size,
+                        'text-font': ['Noto Sans Bold'],
+                        'text-anchor': 'top',
+                        'text-offset': [0, 0.5],
+                        'symbol-sort-key': ['get', 'price']
+                    },
+                    paint: {
+                        'text-color': theme.paint['price-text']['text-color'][+!dark]
+                    }
+                },
+                {
+                    id: 'price-text-shared-likes',
+                    type: 'symbol',
+                    source: 'prices',
+                    minzoom: 13,
+                    layout: {
+                        'visibility': 'none',
+                        'text-field': ['get', 'price_label'],
+                        'text-size': font_size,
+                        'text-font': ['Noto Sans Bold'],
+                        'text-anchor': 'top',
+                        'text-offset': [0, 0.6],
+                        //'text-allow-overlap': true,
+                        'text-ignore-placement': true
+                    },
+                    paint: {
+                        'text-color': theme.paint['price-text-shared-likes']['text-color'][+!dark],
+                        'text-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'liked'], false],
+                            1,
+                            0
+                        ]
+                    }
+                },
+                {
+                    id: 'likes-filled',
+                    type: 'symbol',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none',
+                        'icon-image': 'heart-filled',
+                        'icon-size': 0.25,
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true
+                    },
+                    paint: {
+                        'icon-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'liked'], false],
+                            [
+                                'case',
+                                ['boolean', ['feature-state', 'hover'], false],
+                                0,
+                                1
+                            ],
+                            0
+                        ]
+                    }
+                },
+                {
+                    id: 'likes-filled-hovered',
+                    type: 'symbol',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none',
+                        'icon-image': 'heart-filled',
+                        'icon-size': 0.28,
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true
+                    },
+                    paint: {
+                        'icon-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'liked'], false],
+                            [
+                                'case',
+                                ['boolean', ['feature-state', 'hover'], false],
+                                1,
+                                0
+                            ],
+                            0
+                        ]
+                    }
+                },
+                {
+                    id: 'likes-outline',
+                    type: 'symbol',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none',
+                        'icon-image': 'heart-outline',
+                        'icon-size': 0.25,
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true
+                    },
+                    paint: {
+                        'icon-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'liked'], false],
+                            0,
+                            [
+                                'case',
+                                ['boolean', ['feature-state', 'hover'], false],
+                                0,
+                                1
+                            ]
+                        ]
+                    }
+                },
+                {
+                    id: 'likes-outline-hovered',
+                    type: 'symbol',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none',
+                        'icon-image': 'heart-outline',
+                        'icon-size': 0.28,
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true
+                    },
+                    paint: {
+                        'icon-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'liked'], false],
+                            0,
+                            [
+                                'case',
+                                ['boolean', ['feature-state', 'hover'], false],
+                                1,
+                                0
+                            ]
+                        ]
+                    }
+                },
+                {
+                    id: 'likes-hitbox',
+                    type: 'circle',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none'
+                    },
+                    paint: {
+                        'circle-radius': 30,
+                        'circle-color': '#00ffff',
+                        'circle-opacity': 0//0.2
+                    }
+                }
             ]
         }
 
         const map_args = {
             container: 'map',
-            style: dark ? styles.dark : styles.bright,
+            style,
             maxBounds: new maplibregl.LngLatBounds(
                 [raw_danang_bounds[0], raw_danang_bounds[1]],
                 [raw_danang_bounds[2], raw_danang_bounds[3]]
@@ -1151,363 +1874,12 @@ const color_theme = dark ? colors.dark : colors.light
         map.addImage('heart-filled', heart_filled)
         map.addImage('heart-outline', heart_outline)
 
-        class LogoLayer {
-            id = 'logo'
-            type = 'custom'
-            renderingMode = '2d'
-
-            onAdd(map, gl) {
-                this.gl = gl;
-
-                const vs = `
-                attribute vec2 p;
-                attribute vec2 uv;
-                uniform vec2 viewport;
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    gl_Position = vec4(
-                        p.x / viewport.x * 2.0 - 1.0,
-                        1.0 - p.y / viewport.y * 2.0,
-                        0.0, 1.0
-                    );
-                }`;
-
-                const fs = `
-                precision mediump float;
-                uniform sampler2D tex;
-                varying vec2 vUv;
-                void main() {
-                    gl_FragColor = texture2D(tex, vUv);
-                }`;
-
-                const compile = (type, src) => {
-                    const s = gl.createShader(type);
-                    gl.shaderSource(s, src);
-                    gl.compileShader(s);
-                    return s;
-                };
-                this.prog = gl.createProgram();
-                gl.attachShader(this.prog, compile(gl.VERTEX_SHADER, vs));
-                gl.attachShader(this.prog, compile(gl.FRAGMENT_SHADER, fs));
-                gl.linkProgram(this.prog);
-
-                this.aPos      = gl.getAttribLocation (this.prog, 'p');
-                this.aUv       = gl.getAttribLocation (this.prog, 'uv');
-                this.uViewport = gl.getUniformLocation(this.prog, 'viewport');
-                this.uTex      = gl.getUniformLocation(this.prog, 'tex');
-
-                this._buildFromSVG(gl);
-            }
-
-            _buildFromSVG(gl) {
-                const dpr = window.devicePixelRatio || 1
-                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="122" viewBox="0 38 300 122"><g transform="translate(50,80)"><g transform="rotate(24)"><polygon points="0,-42 36.37,-21 36.37,21 0,42 -36.37,21 -36.37,-21" fill="none" stroke="${dark ? 'white' : 'black'}" stroke-width="5" stroke-linejoin="round" /></g></g><text x="118" y="74" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="500" fill="${dark ? 'white' : 'black'}" dominant-baseline="middle" >Danang Rent</text><text x="120" y="102" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="400" fill="rgba(${dark ? '255,255,255' : '0,0,0'},0.5)" letter-spacing="2" dominant-baseline="middle">RENTAL PLATFORM</text></svg>`
-
-                const svgW = 300, svgH = 122;
-                const canvasW = svgW * dpr, canvasH = svgH * dpr;
-
-                const canvas = document.createElement('canvas');
-                canvas.width  = canvasW;
-                canvas.height = canvasH;
-                const ctx = canvas.getContext('2d');
-                ctx.scale(dpr, dpr);
-
-                const img = new Image();
-                const blob = new Blob([svg], { type: 'image/svg+xml' });
-                const url  = URL.createObjectURL(blob);
-
-                img.onload = () => {
-                    ctx.fillStyle = dark ? '#1a1a2e' : '#ffffff';
-                    ctx.drawImage(img, 0, 0, svgW, svgH);
-                    URL.revokeObjectURL(url);
-                    this._uploadTexture(gl, canvas);
-                    this._buildQuad(gl, svgW, svgH);
-                    // trigger redraw so render() sees the texture
-                    this.gl._map?.triggerRepaint?.();
-                }
-                img.src = url
-            }
-
-            _uploadTexture(gl, canvas) {
-                if (this.tex) gl.deleteTexture(this.tex)
-                this.tex = gl.createTexture()
-                gl.bindTexture(gl.TEXTURE_2D, this.tex)
-                gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-            }
-
-            _buildQuad(gl, w, h) {
-                // position quad at (0,0) → (w,h) in screen px, interleaved [x,y,u,v]
-                const left = 20, top = 20;  // ← adjust these two values
-                const q = new Float32Array([
-                    left,   top,    0, 0,
-                    left+w, top,    1, 0,
-                    left,   top+h,  0, 1,
-                    left+w, top+h,  1, 1,
-                ])
-                if (!this.buf) this.buf = gl.createBuffer()
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
-                gl.bufferData(gl.ARRAY_BUFFER, q, gl.STATIC_DRAW)
-                this.ready = true
-            }
-
-            render(gl) {
-                if (!this.ready) return
-                gl.useProgram(this.prog)
-                gl.uniform2f(this.uViewport, gl.canvas.width, gl.canvas.height)
-                gl.enable(gl.BLEND)
-                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA) // ← not SRC_ALPHA, ONE
-                gl.activeTexture(gl.TEXTURE0)
-                gl.bindTexture(gl.TEXTURE_2D, this.tex)
-                gl.uniform1i(this.uTex, 0)
-                const stride = 4 * Float32Array.BYTES_PER_ELEMENT
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.buf)
-                gl.enableVertexAttribArray(this.aPos)
-                gl.vertexAttribPointer(this.aPos, 2, gl.FLOAT, false, stride, 0)
-                gl.enableVertexAttribArray(this.aUv)
-                gl.vertexAttribPointer(this.aUv,  2, gl.FLOAT, false, stride, 8)
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
-            }
-        }
-
         map.on('style.load', () => {
             if (
                 initial_inner_size[0] != window.innerWidth ||
                 initial_inner_size[1] != window.innerHeight
             ) map.resize()
 
-            const w = window.innerWidth;
-            const font_size =
-            w < 500 ? 14 :
-            w < 1200 ? 16 :
-            20
-
-            const circle_radius =
-            w < 500 ? 3 :
-            w < 1200 ? 4 :
-            5
-            const hover_scale = [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1.8,
-                1
-            ]
-
-            map.addLayer({
-                id: 'price-circle',
-                type: 'circle',
-                source: 'prices',
-                layout: {
-                    visibility: 'none'
-                },
-                paint: {
-                    'circle-radius': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        1, [
-                            'match',
-                            ['feature-state', 'mode'],
-                            'selected', ['*', 4, hover_scale],
-                            'other', ['*', 2, hover_scale],
-                            'filtered', ['*', 2, hover_scale],
-                            ['*', 2, hover_scale]//normal
-                        ],
-                        14, [
-                            'match',
-                            ['feature-state', 'mode'],
-                            'selected', ['*', circle_radius + 5, hover_scale],
-                            'other', ['*', circle_radius, hover_scale],
-                            'filtered', ['*', circle_radius, hover_scale],
-                            ['*', circle_radius, hover_scale]//normal
-                        ]
-                    ],
-                    'circle-color': [
-                        'match',
-                        ['feature-state', 'mode'],
-                        'selected', color_theme.selected,
-                        'other', color_theme.other,
-                        'filtered', color_theme.filtered,
-                        color_theme.normal
-                    ],
-                    'circle-opacity': [
-                        'match',
-                        ['feature-state', 'mode'],
-                        'selected', 1,
-                        'other', 0.6,
-                        'filtered', 0.6,
-                        'hidden', 0.0,
-                        0.6//normal
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'price-text',
-                type: 'symbol',
-                source: 'prices',
-                minzoom: 13,
-                layout: {
-                    'visibility': 'none',
-                    'text-field': ['get', 'price_label'],
-                    'text-size': font_size,
-                    'text-font': ['Noto Sans Bold'],
-                    'text-anchor': 'top',
-                    'text-offset': [0, 0.5],
-                    'symbol-sort-key': ['get', 'price']
-                },
-                paint: {
-                    'text-color': dark ? '#ffffff' : '#000000',
-                }
-            })
-
-            map.addLayer({
-                id: 'price-text-shared-likes',
-                type: 'symbol',
-                source: 'prices',
-                minzoom: 13,
-                layout: {
-                    'visibility': 'none',
-                    'text-field': ['get', 'price_label'],
-                    'text-size': font_size,
-                    'text-font': ['Noto Sans Bold'],
-                    'text-anchor': 'top',
-                    'text-offset': [0, 0.6],
-                    //'text-allow-overlap': true,
-                    'text-ignore-placement': true
-                },
-                paint: {
-                    'text-color': dark ? '#ffffff' : '#000000',
-                    'text-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'liked'], false],
-                        1,
-                        0
-                    ]
-                }
-            })
-            
-            
-            map.addLayer({
-                id: 'likes-filled',
-                type: 'symbol',
-                source: 'prices',
-                layout: {
-                    'visibility': 'none',
-                    'icon-image': 'heart-filled',
-                    'icon-size': 0.25,
-                    'icon-allow-overlap': true,
-                    'icon-ignore-placement': true
-                },
-                paint: {
-                    'icon-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'liked'], false],
-                        [
-                            'case',
-                            ['boolean', ['feature-state', 'hover'], false],
-                            0,
-                            1
-                        ],
-                        0
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'likes-filled-hovered',
-                type: 'symbol',
-                source: 'prices',
-                layout: {
-                    'visibility': 'none',
-                    'icon-image': 'heart-filled',
-                    'icon-size': 0.28,
-                    'icon-allow-overlap': true,
-                    'icon-ignore-placement': true
-                },
-                paint: {
-                    'icon-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'liked'], false],
-                        [
-                            'case',
-                            ['boolean', ['feature-state', 'hover'], false],
-                            1,
-                            0
-                        ],
-                        0
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'likes-outline',
-                type: 'symbol',
-                source: 'prices',
-                layout: {
-                    'visibility': 'none',
-                    'icon-image': 'heart-outline',
-                    'icon-size': 0.25,
-                    'icon-allow-overlap': true,
-                    'icon-ignore-placement': true
-                },
-                paint: {
-                    'icon-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'liked'], false],
-                        0,
-                        [
-                            'case',
-                            ['boolean', ['feature-state', 'hover'], false],
-                            0,
-                            1
-                        ]
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'likes-outline-hovered',
-                type: 'symbol',
-                source: 'prices',
-                layout: {
-                    'visibility': 'none',
-                    'icon-image': 'heart-outline',
-                    'icon-size': 0.28,
-                    'icon-allow-overlap': true,
-                    'icon-ignore-placement': true
-                },
-                paint: {
-                    'icon-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'liked'], false],
-                        0,
-                        [
-                            'case',
-                            ['boolean', ['feature-state', 'hover'], false],
-                            1,
-                            0
-                        ]
-                    ]
-                }
-            })
-            map.addLayer({
-                id: 'likes-hitbox',
-                type: 'circle',
-                source: 'prices',
-                layout: {
-                    'visibility': 'none'
-                },
-                paint: {
-                    'circle-radius': 30,
-                    'circle-color': '#00ffff',
-                    'circle-opacity': 0//0.2
-                }
-            })
-            
-            if (map.getLayer('logo')) map.removeLayer('logo')
-            map.addLayer(new LogoLayer())
-            
             var hovered_id = null
             const mouseenter = e => {
                 if (hovered_id != null) {
@@ -1660,11 +2032,6 @@ const color_theme = dark ? colors.dark : colors.light
         })
 
     })
-</script>
-<script src=""></script>
-<script>
-
-</script>
-            
+</script>    
 </body>
 </html>
