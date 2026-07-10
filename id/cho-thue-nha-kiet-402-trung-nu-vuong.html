@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Căn hộ mới đường Giang Văn Minh</title><meta name="ad:id" content="177161735">
-    <meta property="og:url" content="https://danang.kim/id/can-ho-moi-duong-giang-van-minh">
+    <title>cho thuê nhà kiệt 402 Trưng Nữ Vương</title><meta name="ad:id" content="177099302">
+    <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-kiet-402-trung-nu-vuong">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Căn hộ mới đường Giang Văn Minh" />
+    <meta property="og:title" content="cho thuê nhà kiệt 402 Trưng Nữ Vương" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Căn hộ mới đường Giang Văn Minh" />
+    <meta name="description" content="cho thuê nhà kiệt 402 Trưng Nữ Vương" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Căn hộ mới đường Giang Văn Minh">
+    <meta name="twitter:title" content="cho thuê nhà kiệt 402 Trưng Nữ Vương">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/can-ho-moi-duong-giang-van-minh">
+    <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-kiet-402-trung-nu-vuong">
     <link rel="manifest" href="/manifest.json">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
@@ -264,7 +264,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '8777be12d1245824cd19eb966a3dbb87d15d664af9381066a5aa6e0c635d8f26'// contact spirin.vladimir@gmail.com
+        const KEY = '23135c8038dd75beeb90423e7c6a3c8c71756989c3eaf0466f919f6575103d50'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -453,9 +453,9 @@
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"Căn hộ mới đường Giang Văn Minh",
-            "url":"https://danang.kim/id/can-ho-moi-duong-giang-van-minh",
-			"price":"6500000",
+            "name":"cho thuê nhà kiệt 402 Trưng Nữ Vương",
+            "url":"https://danang.kim/id/cho-thue-nha-kiet-402-trung-nu-vuong",
+			"price":"12000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -689,14 +689,15 @@
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Căn hộ mới đường Giang Văn Minh</h1><p>STUDIO FULL NỘI THẤT – GẦN SÂN BAY
-Địa chỉ 45 Giang Văn Minh, Đà Nẵng
-Full nội thất, dọn vào ở ngay
-Thiết kế hiện đại, sạch sẽ, tiện nghi
-Không gian thoáng mát, nhiều ánh sáng tự nhiên
-Khu vực trung tâm, thuận tiện sinh hoạt và di chuyển
-Gần chợ, siêu thị, quán cà phê và khu ăn uống
-Giá thuê chỉ: 6.500.000 VNĐ/tháng</p></article>
+<div id="map"></div><article><h1>cho thuê nhà kiệt 402 Trưng Nữ Vương</h1><p>💦 Cho thuê nhà kiệt oto Trưng Nữ Vương gần Chợ Mới
+
+👉 Diện tích: 75m2 - gác lửng
+👉 Công năng: 2pn 2wc. Nhà trống. P khách rộng
+👉 Kiệt oto 4m, thuận tiện vừa ở vừa kinh doanh: nail, dạy học, văn phòng,...
+
+💰 Giá thuê: 12tr/ tháng. Có thương lượng
+
+☎️ Liên hệ: Hào ncc</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1423,8 +1424,15 @@ apply_filter = () => {
                     ],
                     "layout": {
                         "symbol-placement": "line",
-                        "symbol-spacing": 350,
-                        "text-field": "{name:latin} {name:nonlatin}",
+                        "symbol-spacing": [
+                            "interpolate",
+                            ["linear"],
+                            ["zoom"],
+                            12, 350,
+                            16, 300,
+                            20, 250
+                        ],
+                        "text-field": ["slice", ["get", "name:latin"], 6],
                         "text-font": [
                             "Metropolis Regular",
                             "Noto Sans Regular"
@@ -1432,7 +1440,15 @@ apply_filter = () => {
                         "text-max-angle": 30,
                         "text-pitch-alignment": "viewport",
                         "text-rotation-alignment": "map",
-                        "text-size": 10,
+                        "text-size": [
+                            "interpolate",
+                            ["exponential", 1.5],
+                            ["zoom"],
+                            12, 10,
+                            16, 14,
+                            18, 18,
+                            20, 20
+                        ],
                         "text-transform": "uppercase"
                     },
                     "paint": {
@@ -1962,7 +1978,15 @@ apply_filter = () => {
                 history.replaceState({}, '', url)
             })
             map.on('click', e => {
-                const features = map.queryRenderedFeatures(e.point, {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['highway_name_other']
+                })
+
+                if (features.length) {
+                    console.log(features[0].properties)
+                    return
+                }
+                features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
                 if (!features || !features.length) {

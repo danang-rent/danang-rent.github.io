@@ -264,7 +264,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '8777be12d1245824cd19eb966a3dbb87d15d664af9381066a5aa6e0c635d8f26'// contact spirin.vladimir@gmail.com
+        const KEY = '23135c8038dd75beeb90423e7c6a3c8c71756989c3eaf0466f919f6575103d50'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1467,8 +1467,15 @@ apply_filter = () => {
                     ],
                     "layout": {
                         "symbol-placement": "line",
-                        "symbol-spacing": 350,
-                        "text-field": "{name:latin} {name:nonlatin}",
+                        "symbol-spacing": [
+                            "interpolate",
+                            ["linear"],
+                            ["zoom"],
+                            12, 350,
+                            16, 300,
+                            20, 250
+                        ],
+                        "text-field": ["slice", ["get", "name:latin"], 6],
                         "text-font": [
                             "Metropolis Regular",
                             "Noto Sans Regular"
@@ -1476,7 +1483,15 @@ apply_filter = () => {
                         "text-max-angle": 30,
                         "text-pitch-alignment": "viewport",
                         "text-rotation-alignment": "map",
-                        "text-size": 10,
+                        "text-size": [
+                            "interpolate",
+                            ["exponential", 1.5],
+                            ["zoom"],
+                            12, 10,
+                            16, 14,
+                            18, 18,
+                            20, 20
+                        ],
                         "text-transform": "uppercase"
                     },
                     "paint": {
@@ -2006,7 +2021,15 @@ apply_filter = () => {
                 history.replaceState({}, '', url)
             })
             map.on('click', e => {
-                const features = map.queryRenderedFeatures(e.point, {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['highway_name_other']
+                })
+
+                if (features.length) {
+                    console.log(features[0].properties)
+                    return
+                }
+                features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
                 if (!features || !features.length) {
