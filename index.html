@@ -676,6 +676,10 @@
             height: 5vh;
             pointer-events: none;
         }
+        #logo svg {
+            width: clamp(140px, 20vmin, 300px);
+            height: auto;
+        }
         html[dark] #logo {
             color: white;
         }
@@ -683,45 +687,40 @@
 </head>
 <body>
 <div id="map"></div>
-<div id="logo">
+<div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
-     width="300"
-     height="90"
-     viewBox="0 0 300 90">
-
-    <!-- icon -->
-    <g transform="translate(42 45)">
-        <g transform="rotate(24)">
-            <polygon
-                points="0,-36 31.2,-18 31.2,18 0,36 -31.2,18 -31.2,-18"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="4"
-                stroke-linejoin="round"/>
-        </g>
-    </g>
-
-    <!-- title -->
-    <text x="90"
-          y="38"
-          font-family="Inter, Arial, sans-serif"
-          font-size="22"
-          font-weight="500"
-          fill="currentColor">
-        Danang Rent
-    </text>
-
-    <!-- subtitle -->
-    <text x="90"
-          y="60"
-          font-family="Inter, Arial, sans-serif"
-          font-size="11"
-          letter-spacing="2"
-          fill="grey">
-        RENTAL PLATFORM
-    </text>
-
-</svg>
+        width="300"
+        height="90"
+        viewBox="0 10 300 90">
+        
+        <!-- icon -->
+        <g transform="translate(42 45)">
+            <g transform="rotate(24)">
+                <polygon
+                    points="0,-36 31.2,-18 31.2,18 0,36 -31.2,18 -31.2,-18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                    stroke-linejoin="round"/>
+                </g>
+            </g>
+            <text x="90"
+            y="38"
+            font-family="Inter, Arial, sans-serif"
+            font-size="22"
+            font-weight="500"
+            fill="currentColor">
+            Danang Rent
+        </text>
+        <text x="90"
+            y="60"
+            font-family="Inter, Arial, sans-serif"
+            font-size="11"
+            letter-spacing="2"
+            fill="grey">
+            RENTAL PLATFORM
+        </text>    
+    </svg>
 </div>
 <div id="filter" hidden>
     <div id="scale"></div>
@@ -858,6 +857,7 @@ const router = () => {
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    logo.removeAttribute('hidden')
     
     const likes = likes_search_params.length
         ? likes_search_params
