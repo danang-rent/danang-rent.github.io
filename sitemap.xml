@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-trung-tam-da-nang</loc>
+		<lastmod>2026-07-11</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177374769</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-duong-dai-an-3-gia-10tr-thang</loc>
+		<lastmod>2026-07-11</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177374644</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-2-tang-mat-tien-duong-le-quat-hoa-quy-ngu-hanh-son</loc>
 		<lastmod>2026-07-11</lastmod>
 		<changefreq>daily</changefreq>
@@ -320,13 +334,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>169928491</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/thue-nha-nguyen-can</loc>
-		<lastmod>2026-07-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177362812</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-tach-bep-khu-vuc-dan-cu-yen-tinh</loc>
@@ -4298,6 +4305,13 @@
 		<dk:id>177113703</dk:id>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-2-tang-full-noi-that-duong-nguyen-huu-hao</loc>
+		<lastmod>2026-06-30</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177113238</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/bo-quan-14-studio-trong-san</loc>
 		<lastmod>2026-06-30</lastmod>
 		<changefreq>daily</changefreq>
@@ -5096,25 +5110,11 @@
 		<dk:id>177003285</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/can-ho-lapaz-38-nguyen-chi-thanh-2-phong-ngu-93m2-gia-12-trieu</loc>
-		<lastmod>2026-06-27</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177043557</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-lo-dat-duong-chuong-duong-gan-cau-tran-thi-ly-100m2</loc>
 		<lastmod>2026-06-27</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176259501</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/biet-thu-mini-duong-nguyen-huu-hao-nam-viet-a-da-nang</loc>
-		<lastmod>2026-06-26</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177043279</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-3-tang-5pn-bui-binh-yen-lh-o796-646-636</loc>
