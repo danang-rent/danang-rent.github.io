@@ -1225,13 +1225,6 @@
 		<dk:id>177326666</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-gac-lung-mt-nai-tu-an-hai-bac-dien-tich-60m-nha-co-2</loc>
-		<lastmod>2026-07-09</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>175981458</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/van-phong-tang-3-80m2-cho-thue-5-trieu-thang-ngay-helio</loc>
 		<lastmod>2026-07-09</lastmod>
 		<changefreq>daily</changefreq>
@@ -5467,13 +5460,6 @@
 		<dk:id>176907453</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/chinh-chu-cho-thue-nha-2-tang-vu-trong-phung-p-hoa-cuong-bac</loc>
-		<lastmod>2026-06-20</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176903340</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-mat-bang-tren-duong-dt602-xa-ba-na</loc>
 		<lastmod>2026-06-20</lastmod>
 		<changefreq>daily</changefreq>
@@ -5829,5 +5815,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176786701</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/chinh-chu-cho-thue-nha-2-tang-mat-tien-vu-trong-phung-hoa-cuong-bac</loc>
+		<lastmod>2026-06-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176785029</dk:id>
 	</url>
 </urlset>
