@@ -264,7 +264,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'f1de1f4fadacd6e4fe56a1f544e7bcbf3f87d17309b62a982ee9f100269093bf'// contact spirin.vladimir@gmail.com
+        const KEY = '4b1dc761ae99fccf2960ed815de5fb73dd871167e805e35613ca715b50a09bf3'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1269,6 +1269,43 @@ apply_filter = () => {
                     }
                 },
                 {
+                    "id": "water",
+                    "type": "fill",
+                    "source": "danang",
+                    "source-layer": "water",
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "Polygon"
+                        ],
+                        [
+                            "!=",
+                            "brunnel",
+                            "tunnel"
+                        ]
+                    ],
+                    "paint": {
+                        "fill-antialias": theme.paint.water['fill-antialias'][+!dark],
+                        "fill-color": theme.paint.water['fill-color'][+!dark]
+                    }
+                },
+                {
+                    "id": "waterway",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "waterway",
+                    "filter": [
+                        "==",
+                        "$type",
+                        "LineString"
+                    ],
+                    "paint": {
+                        "line-color": theme.paint.waterway['line-color'][+!dark]
+                    }
+                },
+                {
                     "id": "building",
                     "type": "fill",
                     "source": "danang",
@@ -1443,10 +1480,18 @@ apply_filter = () => {
                             ["linear"],
                             ["zoom"],
                             12, 350,
-                            16, 300,
-                            20, 250
+                            20, 420
                         ],
-                        "text-field": ["slice", ["get", "name:latin"], 6],
+                        "text-field": [
+                            "case",
+                            [
+                                "==",
+                                    ["index-of", "Đường ", ["get", "name:latin"]],
+                                    0
+                            ],
+                                ["slice", ["get", "name:latin"], 6],
+                                ["get", "name:latin"]
+                        ],
                         "text-font": [
                             "Metropolis Regular",
                             "Noto Sans Regular"
@@ -1455,13 +1500,15 @@ apply_filter = () => {
                         "text-pitch-alignment": "viewport",
                         "text-rotation-alignment": "map",
                         "text-size": [
-                            "interpolate",
-                            ["exponential", 1.5],
+                            "step",
                             ["zoom"],
-                            12, 10,
-                            16, 14,
-                            18, 18,
-                            20, 20
+                            10,
+                            15, 10,
+                            16, 11,
+                            17, 12,
+                            18, 13,
+                            19, 15,
+                            20, 17,
                         ],
                         "text-transform": "uppercase"
                     },
@@ -1633,43 +1680,6 @@ apply_filter = () => {
                             3
                         ],
                         "line-width": 2
-                    }
-                },
-                {
-                    "id": "water",
-                    "type": "fill",
-                    "source": "danang",
-                    "source-layer": "water",
-                    "filter": [
-                        "all",
-                        [
-                            "==",
-                            "$type",
-                            "Polygon"
-                        ],
-                        [
-                            "!=",
-                            "brunnel",
-                            "tunnel"
-                        ]
-                    ],
-                    "paint": {
-                        "fill-antialias": theme.paint.water['fill-antialias'][+!dark],
-                        "fill-color": theme.paint.water['fill-color'][+!dark]
-                    }
-                },
-                {
-                    "id": "waterway",
-                    "type": "line",
-                    "source": "danang",
-                    "source-layer": "waterway",
-                    "filter": [
-                        "==",
-                        "$type",
-                        "LineString"
-                    ],
-                    "paint": {
-                        "line-color": theme.paint.waterway['line-color'][+!dark]
                     }
                 },
                 {
@@ -1992,14 +2002,6 @@ apply_filter = () => {
                 history.replaceState({}, '', url)
             })
             map.on('click', e => {
-                var features = map.queryRenderedFeatures(e.point, {
-                    layers: ['highway_name_other']
-                })
-
-                if (features.length) {
-                    console.log(features[0].properties)
-                    return
-                }
                 features = map.queryRenderedFeatures(e.point, {
                     layers: ['price-circle', 'price-text']
                 })
