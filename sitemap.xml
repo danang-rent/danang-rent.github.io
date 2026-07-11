@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-2-tang-mat-tien-duong-le-quat-hoa-quy-ngu-hanh-son</loc>
+		<lastmod>2026-07-11</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177374605</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-vuon-hoi-kieng-8-nam-hoa-xuan-1pn-1wc-san-vuon</loc>
+		<lastmod>2026-07-11</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177373762</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-dt-25m2-tien</loc>
 		<lastmod>2026-07-11</lastmod>
 		<changefreq>daily</changefreq>
@@ -453,13 +467,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177350496</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/nha-cho-thue-dai-han</loc>
-		<lastmod>2026-07-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177314303</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/phong-full-noi-that-xinh-xan-vi-tri-thuan-loi</loc>
@@ -2660,13 +2667,6 @@
 		<dk:id>177237358</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/phong-tro-trung-tam-thanh-khe-gia-re</loc>
-		<lastmod>2026-07-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177237277</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-mat-bang-nguyen-huu-thong-khu-bien-pham-van-dong</loc>
 		<lastmod>2026-07-05</lastmod>
 		<changefreq>daily</changefreq>
@@ -4809,13 +4809,6 @@
 		<dk:id>177072544</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-500-m2-dat-2-mat-tien-nam-hoa-xuan</loc>
-		<lastmod>2026-06-28</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>175225863</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-lo-dat-nai-nam-6-477m2-ngang-18m-ngay-lotte-69-tang</loc>
 		<lastmod>2026-06-28</lastmod>
 		<changefreq>daily</changefreq>
@@ -5808,5 +5801,19 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176796044</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/phong-tro-gia-re-thanh-khe-da-nang</loc>
+		<lastmod>2026-06-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176791393</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/chinh-chu-cho-thue-nha-4-tang-kiet-o-to-k77-le-do-thanh-khe</loc>
+		<lastmod>2026-06-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176786933</dk:id>
 	</url>
 </urlset>
