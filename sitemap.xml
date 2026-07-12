@@ -1428,13 +1428,6 @@
 		<dk:id>177357165</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-2-tang-duong-huy-can-4pn-gan-dh-ngoai-ngu</loc>
-		<lastmod>2026-07-10</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176014050</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-san-vuon-duong-dam-sen</loc>
 		<lastmod>2026-07-10</lastmod>
 		<changefreq>daily</changefreq>
@@ -11968,5 +11961,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176728946</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-3-tang-hoa-minh</loc>
+		<lastmod>2026-06-12</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176727416</dk:id>
 	</url>
 </urlset>
