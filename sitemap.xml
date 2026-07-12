@@ -728,13 +728,6 @@
 		<dk:id>177371034</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nguyen-toa-can-ho-an-hai-dong-1-son-tra-da-nang</loc>
-		<lastmod>2026-07-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176030985</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-duong-thach-lam-quan-son-tra-ban-cong-view-pho</loc>
 		<lastmod>2026-07-11</lastmod>
 		<changefreq>daily</changefreq>
@@ -11968,5 +11961,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176727416</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-phong-tro-28-11-duy-tan-hoa-cuong</loc>
+		<lastmod>2026-06-12</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176620558</dk:id>
 	</url>
 </urlset>
