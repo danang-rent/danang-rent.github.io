@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-12</lastmod>
+		<lastmod>2026-07-13</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -33,13 +33,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177394320</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-toa-moi-duong-phu-xuan-1-lien-chieu-da-nang</loc>
-		<lastmod>2026-07-12</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177392173</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-tach-bep-gan-mm-supercenter</loc>
