@@ -816,6 +816,7 @@ const router = () => {
         map.setLayoutProperty('price-circle', 'visibility', 'none')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'none')
         map.setLayoutProperty('price-text', 'visibility', 'none')
+        map.setLayoutProperty('price-hitbox', 'visibility', 'none')
         if (same_likes) {
             current_page = PAGE.EDIT
             map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
@@ -832,6 +833,7 @@ const router = () => {
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'visible')
         map.setLayoutProperty('price-text', 'visibility', 'visible')
+        map.setLayoutProperty('price-hitbox', 'visibility', 'visible')
         map.setLayoutProperty('price-text-shared-likes', 'visibility', 'none')
         if (!window.current_page) current_page = PAGE.MAIN
     }
@@ -886,6 +888,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'visible')
         map.setLayoutProperty('price-text', 'visibility', 'visible')
+        map.setLayoutProperty('price-hitbox', 'visibility', 'visible')
     } else {
         url.searchParams.set('likes', likes_local_storage.join(','))
         history.replaceState({}, '', url)
@@ -898,6 +901,7 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-circle', 'visibility', 'none')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'none')
         map.setLayoutProperty('price-text', 'visibility', 'none')
+        map.setLayoutProperty('price-hitbox', 'visibility', 'none')
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1778,6 +1782,18 @@ apply_filter = () => {
                     }
                 },
                 {
+                    id: 'price-hitbox',
+                    type: 'circle',
+                    source: 'prices',
+                    layout: {
+                        'visibility': 'none'
+                    },
+                    paint: {
+                        'circle-radius': 30,
+                        'circle-opacity': 0
+                    }
+                },
+                {
                     id: 'likes-filled',
                     type: 'symbol',
                     source: 'prices',
@@ -1886,8 +1902,7 @@ apply_filter = () => {
                     },
                     paint: {
                         'circle-radius': 30,
-                        'circle-color': '#00ffff',
-                        'circle-opacity': 0//0.2
+                        'circle-opacity': 0
                     }
                 }
             ]
@@ -1930,54 +1945,79 @@ apply_filter = () => {
                 initial_inner_size[1] != window.innerHeight
             ) map.resize()
 
-            var hovered_id = null
-            const mouseenter = e => {
-                if (hovered_id != null) {
+            var hovered_price_id = null
+            var hovered_likes_id = null
+
+            map.on('mousemove', 'price-hitbox', e => {
+                const id = e.features[0].id
+                if (id == hovered_price_id) return
+                if (hovered_price_id != null) {
                     map.setFeatureState(
-                        { source: 'prices', id: hovered_id },
+                        { source: 'prices', id: hovered_price_id },
                         { hover: false }
                     )
                 }
-                
-                if (!e.features || !e.features.length) return
-                
-                if (current_page == PAGE.SHARED) {
-                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
-                    if (hovered_feature) {
-                        hovered_id = hovered_feature.id
-                    } else {
-                        return
-                    }
-                } else {
-                    hovered_id = e.features[0].id
-                }
+
+                hovered_price_id = id
 
                 map.setFeatureState(
-                    { source: 'prices', id: hovered_id },
+                    { source: 'prices', id: hovered_price_id },
                     { hover: true }
                 )
                 
                 map.getCanvas().style.cursor = 'pointer'
-            }
-            const mouseleave = () => {
-                if (hovered_id != null) {
+            })
+            map.on('mouseleave', 'price-hitbox', e => {
+                if (hovered_price_id != null) {
                     map.setFeatureState(
-                        { source: 'prices', id: hovered_id },
+                        { source: 'prices', id: hovered_price_id },
                         { hover: false }
                     )
                 }
                 
-                hovered_id = null
+                hovered_price_id = null
                 map.getCanvas().style.cursor = ''
-            }
-            map.on('mouseenter', 'price-circle', mouseenter)            
-            map.on('mouseenter', 'price-circle-filtered', mouseenter)
-            map.on('mouseenter', 'price-text', mouseenter) 
-            map.on('mouseenter', 'likes-hitbox', mouseenter)            
-            map.on('mouseleave', 'price-circle', mouseleave)
-            map.on('mouseleave', 'price-circle-filtered', mouseleave)
-            map.on('mouseleave', 'price-text', mouseleave)
-            map.on('mouseleave', 'likes-hitbox', mouseleave)            
+            })
+            map.on('mousemove', 'likes-hitbox', e => {
+                var id
+                if (current_page == PAGE.SHARED) {
+                    var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
+                    if (hovered_feature) {
+                        id = hovered_feature.id
+                    } else {
+                        return
+                    }
+                } else {
+                    id = e.features[0].id
+                }
+
+                if (id != hovered_likes_id) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_likes_id },
+                        { hover: false }
+                    )
+                }
+                
+                hovered_likes_id = id
+
+                map.setFeatureState(
+                    { source: 'prices', id: hovered_likes_id },
+                    { hover: true }
+                )
+                
+                map.getCanvas().style.cursor = 'pointer'
+            })
+            map.on('mouseleave', 'likes-hitbox', e => {
+                if (hovered_likes_id != null) {
+                    map.setFeatureState(
+                        { source: 'prices', id: hovered_likes_id },
+                        { hover: false }
+                    )
+                }
+                
+                hovered_likes_id = null
+                map.getCanvas().style.cursor = ''
+            })
 
             map.on('click', 'likes-hitbox', e => {
                 var id = e.features[0].id
@@ -2014,9 +2054,16 @@ apply_filter = () => {
                 url.searchParams.set('likes', likes_string)
                 history.replaceState({}, '', url)
             })
+            map.on('click', 'price-hitbox', e => {
+                const id = e.features[0].id
+                const price = e.features[0].properties.price
+                const url = get_url(id)
+                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
+                window.open(url, '_blank')
+            })
             map.on('click', e => {
                 features = map.queryRenderedFeatures(e.point, {
-                    layers: ['price-circle', 'price-circle-filtered', 'price-text']
+                    layers: ['price-hitbox']
                 })
                 if (!features || !features.length) {
                     if (current_page == PAGE.SINGLE) {
@@ -2026,21 +2073,6 @@ apply_filter = () => {
                     }
                     return
                 }
-                var i = 0
-                var i_min_price = i
-                var min_price = features[i_min_price].properties.price
-                for (i = 1; i < features.length; i++) {
-                    if (features[i].properties.price < min_price) {
-                        min_price = features[i].properties.price
-                        i_min_price = i
-                    }    
-                }
-                const id = features[i_min_price].id
-                const url = get_url(id)
-                
-                console.log('https://danang.kim/id/' + id)
-                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price: min_price, page: current_page})
-                window.open(url, '_blank')
             })
             
             router()
