@@ -264,7 +264,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'cd13f371bd71f45869710ea9cee387c1c15d5c82a81b55ec63331c73136e81d9'// contact spirin.vladimir@gmail.com
+        const KEY = '55f1b48f85b883d8b83971ffd938e71fa58350c83517b2f223a5c9e886484a84'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -350,16 +350,16 @@
     
     const colors = {
         light: {
-            selected: '#ff69b4',
+            selected: 'rgb(250, 104, 25)',//rgb(250, 104, 25)
             other: '#888',
             filtered: '#888',
-            normal: '#ff69b4'
+            normal: 'rgb(250, 104, 25)'
         },
         dark: {
-            selected: '#ff69b4',
+            selected: 'rgb(250, 104, 25)',
             other: '#555',
             filtered: '#555',
-            normal: '#ff69b4'
+            normal: 'rgb(250, 104, 25)'
         }
     }
     
@@ -376,18 +376,18 @@
                     [
                         'match',
                         ['feature-state', 'mode'],
-                        'selected', '#ff69b4',
+                        'selected', 'rgb(250, 104, 25)',
                         'other', '#555',
                         'filtered', '#555',
-                        '#ff69b4'
+                        'rgb(250, 104, 25)'
                     ],
                     [
                         'match',
                         ['feature-state', 'mode'],
-                        'selected', '#ff69b4',
+                        'selected', 'rgb(250, 104, 25)',
                         'other', '#888',
                         'filtered', '#888',
-                        '#ff69b4'
+                        'rgb(250, 104, 25)'
                     ]
                 ]
             },
@@ -1227,6 +1227,7 @@ apply_filter = () => {
             1.8,
             1
         ]
+        
         const font_size =
         window.innerWidth < 500 ? 14 :
         window.innerWidth < 1200 ? 16 :
@@ -1709,16 +1710,41 @@ apply_filter = () => {
                                 ['*', circle_radius, hover_scale]//normal
                             ]
                         ],
-                        'circle-color': theme.paint['price-circle']['circle-color'][+!dark],
-                        'circle-opacity': [
-                            'match',
-                            ['feature-state', 'mode'],
-                            'selected', 1,
-                            'other', 0.6,
-                            'filtered', 0.6,
-                            'hidden', 0.0,
-                            0.6//normal
+                        'circle-color': [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            'rgb(255, 212, 0)',
+                            theme.paint['price-circle']['circle-color'][+!dark]
+                        ],
+                        'circle-opacity': 
+                        [
+                            "step",
+                            ["zoom"],
+                            [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0.6,
+                                'filtered', 0.6,
+                                'hidden', 0.0,
+                                1//normal
+                            ],
+                            14, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0.6,
+                                'filtered', 0.6,
+                                'hidden', 0.0,
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.6
+                                ]//normal
+                            ]
                         ]
+                        
                     }
                 },
                 {
