@@ -10038,27 +10038,6 @@
 		<dk:id>177108763</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/8trieu-cho-thue-nha-2-5tang-ha-huy-tap-kiet-7m-3pn-noi-that-co-ban</loc>
-		<lastmod>2026-06-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177108293</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/10trieu-thue-ngay-nha-mat-tien-gac-lung-chau-thuong-van-gan-tieu-la</loc>
-		<lastmod>2026-06-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177108257</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/6-5trieu-cho-thue-nha-gac-lung-truong-dinh-2pn-noi-that-co-ban-day-du</loc>
-		<lastmod>2026-06-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177108243</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/can-ho-2-pn-gan-cac-truong-dai-hoc-dong-a-kien-truc</loc>
 		<lastmod>2026-06-29</lastmod>
 		<changefreq>daily</changefreq>
@@ -11877,5 +11856,19 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176786701</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/chinh-chu-cho-thue-nha-4-tang-mat-tien-le-duan-p-thach-thang</loc>
+		<lastmod>2026-06-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176785305</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/nha-tro-co-thang-may-day-du-dieu-hoa-may-nuoc-nong</loc>
+		<lastmod>2026-06-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176784858</dk:id>
 	</url>
 </urlset>
