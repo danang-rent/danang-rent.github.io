@@ -2083,9 +2083,12 @@ apply_filter = () => {
                 fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
                 .then(_ => {
                     if (_.ok && _.status == 200) {
-                        c.put('/danang.pmtiles', _.clone())
-                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                        caches.open('pmtiles')
+                        .then(c => c.put('/danang.pmtiles', _.clone()))
+                        .then(() =>
+                            cache_pmtiles_exist_and_loading = _.arrayBuffer()
                             .then(_ => new Uint8Array(_))
+                        )
                     }
                 })
             }
