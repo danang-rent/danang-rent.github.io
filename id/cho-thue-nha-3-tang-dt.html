@@ -268,7 +268,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'e7b308c92fb68a3d483be2b2d304c87ed1e3c8bfacd1b61f5d0878867a0d4c12'// contact spirin.vladimir@gmail.com
+        const KEY = '0511a1196ab587fd4577e1cd40487b1cc7f43412a7374b27fcae15395b41d437'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -2099,9 +2099,12 @@ apply_filter = () => {
                 fetch('/danang.pmtiles', {cache: 'no-store', priority: 'low'})
                 .then(_ => {
                     if (_.ok && _.status == 200) {
-                        c.put('/danang.pmtiles', _.clone())
-                        cache_pmtiles_exist_and_loading = _.arrayBuffer()
+                        caches.open('pmtiles')
+                        .then(c => c.put('/danang.pmtiles', _.clone()))
+                        .then(() =>
+                            cache_pmtiles_exist_and_loading = _.arrayBuffer()
                             .then(_ => new Uint8Array(_))
+                        )
                     }
                 })
             }
