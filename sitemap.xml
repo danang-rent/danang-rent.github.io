@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-14</lastmod>
+		<lastmod>2026-07-15</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-cho-thue-mat-bang-khu-an-thuong-ngu-hanh-son</loc>
+		<lastmod>2026-07-14</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177441528</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-khu-an-thuong-10-11-ngu-hanh-son</loc>
@@ -10029,13 +10036,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177109750</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-dat-mat-tien-hoa-xuan</loc>
-		<lastmod>2026-06-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177108763</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-2-pn-gan-cac-truong-dai-hoc-dong-a-kien-truc</loc>
