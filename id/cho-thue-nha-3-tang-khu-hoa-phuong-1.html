@@ -281,7 +281,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'cd2aa68b5c54cffa15c01f680a9b1487c1f1799e50450fb10570ee49269ec954'// contact spirin.vladimir@gmail.com
+        const KEY = 'e9b0842ac395c96ada0d58a500248bb7156f824c7b6c212a1629e4cbd9565cb7'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -2176,6 +2176,7 @@ apply_filter = () => {
         })
 
     })
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
 </script>    
 </body>
 </html>
