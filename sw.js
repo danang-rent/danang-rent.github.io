@@ -1,6 +1,4 @@
-var load_index_html
-
-self.addEventListener('fetch', load_index_html = event => {
+self.addEventListener('fetch', event => {
     if (event.request.mode !== 'navigate')
         return
 
@@ -15,8 +13,6 @@ self.addEventListener('fetch', load_index_html = event => {
             })
             .catch(() => caches.match('/'))
     )
-
-    self.removeEventListener('fetch', load_index_html)
 })
 
 self.addEventListener('install', event => {
