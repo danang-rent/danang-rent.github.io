@@ -171,14 +171,31 @@
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    window.wasm_ready = WebAssembly
-      .compileStreaming(fetch("/danang.kim.wasm"))
-      .then(module => instantiate(module, {}))
-      .then(exports => {
-          window.get_zoom = exports.get_zoom
-          window.get_ad_size = exports.get_ad_size
-          Object.assign(window, exports)
-      })
+    const VER_WASM = 1
+    const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
+
+    window.wasm_ready = caches.open('danang.kim.wasm')
+    .then(cache =>
+        cache.keys()
+        .then(keys => keys[0])
+        .then(r =>
+            r?.url.endsWith(`?v=${VER_WASM}`)
+                ? cache.match(r)
+                : Promise.resolve(r && cache.delete(r))
+                .then(() => fetch(URL_WASM))
+                .then(response => {
+                    cache.put(URL_WASM, response.clone())
+                    return response
+                })
+        )
+    )
+    .then(WebAssembly.compileStreaming)
+    .then(module => instantiate(module, {}))
+    .then(exports => {
+        window.get_zoom = exports.get_zoom
+        window.get_ad_size = exports.get_ad_size
+        Object.assign(window, exports)
+    })
     </script>
     <script>
     const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
@@ -264,7 +281,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '407ebc862c55d6c782ac13e17148714eff9c97b11257b2d98522714f87b713e3'// contact spirin.vladimir@gmail.com
+        const KEY = 'cd2aa68b5c54cffa15c01f680a9b1487c1f1799e50450fb10570ee49269ec954'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -676,7 +693,7 @@
 👉 Diện tích 40 m2;  
 👉 Đầy đủ nội thất
 Xung quanh khu vực tiện ích đầy đủ, gần phòng tập Gym, sân chơi thể thao, chợ, vinmart , ngân hàng, trường học.
-✅  Giá thuê  12000.000 đồng, cọc 1 tháng thanh toán 3
+✅  Giá thuê  12000.000 đồng, 
      - Điện 4,2k/1kwh 
      - Nước 100k/người
 KHÁCH CẦN TÌM CĂN HỘ YÊN TĨNH, THOÁNG MÁT, VIEW ĐẸP, THÂN THIỆN

@@ -171,14 +171,31 @@
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    window.wasm_ready = WebAssembly
-      .compileStreaming(fetch("/danang.kim.wasm"))
-      .then(module => instantiate(module, {}))
-      .then(exports => {
-          window.get_zoom = exports.get_zoom
-          window.get_ad_size = exports.get_ad_size
-          Object.assign(window, exports)
-      })
+    const VER_WASM = 1
+    const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
+
+    window.wasm_ready = caches.open('danang.kim.wasm')
+    .then(cache =>
+        cache.keys()
+        .then(keys => keys[0])
+        .then(r =>
+            r?.url.endsWith(`?v=${VER_WASM}`)
+                ? cache.match(r)
+                : Promise.resolve(r && cache.delete(r))
+                .then(() => fetch(URL_WASM))
+                .then(response => {
+                    cache.put(URL_WASM, response.clone())
+                    return response
+                })
+        )
+    )
+    .then(WebAssembly.compileStreaming)
+    .then(module => instantiate(module, {}))
+    .then(exports => {
+        window.get_zoom = exports.get_zoom
+        window.get_ad_size = exports.get_ad_size
+        Object.assign(window, exports)
+    })
     </script>
     <script>
     const URL_PMTILES = 'https://cdn.jsdelivr.net/npm/pmtiles@4.4.1/dist/pmtiles.min.js'
@@ -264,7 +281,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '407ebc862c55d6c782ac13e17148714eff9c97b11257b2d98522714f87b713e3'// contact spirin.vladimir@gmail.com
+        const KEY = 'cd2aa68b5c54cffa15c01f680a9b1487c1f1799e50450fb10570ee49269ec954'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -678,8 +695,7 @@ Cho thuê nhà 2 tầng đường Nguyễn Xí, Hòa Minh, Liên Chiểu, Đà N
 + Nhà 2 tầng, 4 phòng ngủ, 2 wc, có pn dưới. Nội thất cơ bản.
 + Gần Hồ Quý Ly, đường rộng, trục đường thông dài, phù hợp vừa ở vừa kinh doanh, làm văn phòng công ty.
 Giá thuê: 11 triệu/tháng, cọc 1 tháng, thanh toán 6 tháng/lần, hợp đồng lâu dài.
-LH em để xem nhà và làm việc chính chủ: *** (Ngọc Linh)
-</p></article>
+LH em để xem nhà</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
