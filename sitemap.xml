@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-16</lastmod>
+		<lastmod>2026-07-17</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-toa-moi-khue-my-dong-7</loc>
+		<lastmod>2026-07-16</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177420117</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-studio-full-noi-that-canh-dh-fpt-ngu-hanh-son</loc>
+		<lastmod>2026-07-16</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176350683</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-doan-quy-phi-chi-tu-5-5-trieu-thang</loc>
+		<lastmod>2026-07-16</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177474249</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-1-phong-ngu-panoma-1-view-song-han-e351</loc>
+		<lastmod>2026-07-16</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177009461</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-moi-3-tang-tai-hoa-xuan</loc>
@@ -2539,13 +2567,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177392173</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/studio-apartment-for-rent-fully-furnished-brand-new-350m-from-fpt</loc>
-		<lastmod>2026-07-14</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177391473</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/chinh-chu-cho-thue-dat-trong-100m-hoa-xuan-vi-tri-mat-tien</loc>
@@ -9658,13 +9679,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177124276</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-3-tang-le-anh-xuan-gan-truong-skyline</loc>
-		<lastmod>2026-07-01</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177155803</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-khu-vuc-lien-chieu</loc>
