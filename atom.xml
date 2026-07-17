@@ -4,10 +4,20 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-07-17T16:31:19.824Z</updated>
+		<updated>2026-07-17T18:22:02.764Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/cho-thue-khoat-tien-yen-the-bac-son</id>
+			<title>Cho thuê khoặt tiền Yên Thế - Bắc Sơn </title>
+			<link href="https://danang.kim/id/cho-thue-khoat-tien-yen-the-bac-son"/>
+			<updated>2026-07-17T14:02:41.000Z</updated>
+			<published>2026-07-17T14:02:41.000Z</published>
+			<summary>Cho thuê kho mặt tiền Yên Thế- Bắc Sơn
+DT: 130m2 + gác lững
+Giá: 9tr/th</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/cho-thue-nha-mat-tien-cao-xuan-huy-hai-chau</id>
 			<title>CHO THUÊ NHÀ MẶT TIỀN CAO XUÂN HUY - HẢI CHÂU</title>
@@ -2462,22 +2472,5 @@ Căn hộ có ban công thông thoáng
 Diện tích :40 m2
 Nội thất mới 100%
 Liên hệ : *** để lv cảm ơn</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/can-ho-1-phong-ngu-cho-thue-dia-chi-nguyen-huy-tu</id>
-			<title>🏡 Căn Hộ 1 Phòng Ngủ Cho Thuê 📍 Địa chỉ: Nguyễn Huy Tự</title>
-			<link href="https://danang.kim/id/can-ho-1-phong-ngu-cho-thue-dia-chi-nguyen-huy-tu"/>
-			<updated>2026-07-17T01:29:38.000Z</updated>
-			<published>2026-07-17T01:29:38.000Z</published>
-			<summary>🏡 Căn Hộ 1 Phòng Ngủ Cho Thuê
-📍 Địa chỉ: Nguyễn Huy Tự
-✨ Tiện ích:
-• Tòa nhà mới
-• Full nội thất
-• Trống sẵn
-💰 Giá thuê:
-• 5 – 5.5 triệu/tháng
-📞 Liên hệ:
-• Zalo/WhatsApp: +84 934 687 831 | Telegram: @Duocphan12</summary>
 		</entry>
 </feed>
