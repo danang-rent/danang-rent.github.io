@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-17</lastmod>
+		<lastmod>2026-07-18</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -1043,13 +1043,6 @@
 		<dk:id>177490389</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-trung-tam-thanh-pho</loc>
-		<lastmod>2026-07-17</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177458668</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-cao-cap-day-du-noi-that-hoa-xuan-sat-le-quang-chi</loc>
 		<lastmod>2026-07-17</lastmod>
 		<changefreq>daily</changefreq>
@@ -1181,13 +1174,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177487936</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-the-ponte-view-cau-rong</loc>
-		<lastmod>2026-07-17</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177454875</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-studio-khue-my</loc>
@@ -3925,13 +3911,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176377578</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-duong-tran-phuoc-thanh-p-khue-trung-q-cam-le</loc>
-		<lastmod>2026-07-13</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177023377</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-tro-tai-384-7d-duong-dien-bien-phu-thanh-khe-da-nang</loc>
