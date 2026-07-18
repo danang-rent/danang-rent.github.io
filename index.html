@@ -2133,6 +2133,28 @@ apply_filter = () => {
                 gtag('js', new Date())
                 gtag('config', 'GT-TQL9TSPB')
             })
+
+            if ('modelContext' in navigator) {
+                navigator.modelContext.registerTool({
+                    name: "getSiteInfo",
+                    description: "Returns information about danang.kim and its purpose.",
+                    inputSchema: {
+                        type: "object",
+                        properties: {}
+                    },
+                    execute: () => ({
+                        name: "danang.kim",
+                        description: "Interactive rental map for Da Nang, Vietnam.",
+                        features: [
+                            "Search apartments",
+                            "Offline PWA",
+                            "Map-based browsing",
+                            "Price filtering",
+                            "Direct links to listings"
+                        ]
+                    })
+                })
+            }
         })
 
     })
