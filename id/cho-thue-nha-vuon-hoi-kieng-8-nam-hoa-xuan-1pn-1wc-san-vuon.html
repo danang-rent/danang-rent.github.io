@@ -285,7 +285,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '3c97f6e2aaa9f17c880b4334487a10b6d93d6a81aed91f8bf7fd4ac72885e004'// contact spirin.vladimir@gmail.com
+        const KEY = 'b2f9929ed5f420bbe78463f444fedf87e172152bc465bf157b76b461fc528681'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -2178,31 +2178,98 @@ apply_filter = () => {
                 gtag('config', 'GT-TQL9TSPB')
             })
 
-            if ('modelContext' in navigator) {
-                navigator.modelContext.registerTool({
-                    name: "getSiteInfo",
-                    description: "Returns information about danang.kim and its purpose.",
-                    inputSchema: {
-                        type: "object",
-                        properties: {}
+            const exposedTo = [
+                'https://alexandria.team',
+                'https://claude.ai',
+                'https://chatgpt.com',
+                'https://gemini.google.com',
+                'https://copilot.microsoft.com',
+                'https://webmcp.cool',
+                'https://webmcp.com',
+                'https://isainative.dev',
+                'https://persona-chat.dev',
+                'https://poe.com',
+                'https://stacktr.ee'
+            ]
+            let og_png
+            document.modelContext?.registerTool({
+                name: 'get_site_info',
+                description: 'Returns information about danang.kim and its purpose.',
+                inputSchema: {
+                    type: "object",
+                    properties: {}
+                },
+                outputSchema: {
+                    type: 'object',
+                    properties: {
+                        URL: { type: 'string' },
+                        PWA: { type: 'boolean' },
+                        offline: { type: 'boolean' },
+                        listings_count: { type: 'number' }
                     },
-                    execute: () => ({
-                        name: "danang.kim",
-                        description: "Interactive rental map for Da Nang, Vietnam.",
-                        features: [
-                            "Search apartments",
-                            "Offline PWA",
-                            "Map-based browsing",
-                            "Price filtering",
-                            "Direct links to listings"
-                        ]
-                    })
-                })
-            }
+                    required: ['URL', 'PWA', 'offline', 'listings_count']
+                },
+                execute: async () => {
+                    gtag('event', 'webmcp', {tool: 'get_site_info'})
+                    return {
+                        content: [
+                            {
+                                type: 'text',
+                                text: `Interactive Danang Map with rental property listings: ${ads.length}`
+                            },
+                            {
+                                type: 'image',
+                                data: (og_png ??= new Uint8Array(await (await fetch('/og.png')).arrayBuffer())),
+                                mimeType: 'image/png'
+                            }
+                        ],
+                        structuredContent: {
+                            URL: 'https://danang.kim',
+                            PWA: true,
+                            offline: true,
+                            listings_count: ads.length
+                        }
+                    }
+                }
+            }, {exposedTo})
+
+            document.modelContext?.registerTool({
+                name: 'filter_listings_by_price',
+                description: 'Filter listings by price at VND currency.',
+                inputSchema: {
+                    type: 'object',
+                    properties: {
+                        from: { type: 'number' },
+                        to: { type: 'number' }
+                    },
+                    required: ['from', 'to']
+                },
+                outputSchema: {
+                    type: 'array',
+                    items: {
+                      type: 'string',
+                      format: 'uri'
+                    }
+                },
+                execute: ({from, to}) => {
+                    gtag('event', 'webmcp', {tool: 'filter_listings_by_price', from, to})
+                    return {
+                        structuredContent: ads
+                            .filter(ad => ad.price >= from && ad.price < to)
+                            .map(ad => get_url(ad.id))
+                    }
+                }
+            }, {exposedTo})
+
         })
 
     })
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
-</script>    
+</script>
+<script
+  async
+  src="https://cdn.conscriba.com/v1.js"
+  data-site-key="cmrrejfsm000h67im7rgey8mc"
+></script>
 </body>
 </html>
