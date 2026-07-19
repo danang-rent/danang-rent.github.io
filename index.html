@@ -2165,25 +2165,28 @@ apply_filter = () => {
                     },
                     required: ['URL', 'PWA', 'offline', 'listings_count']
                 },
-                execute: async () => ({
-                    content: [
-                        {
-                            type: 'text',
-                            text: `Interactive Danang Map with rental property listings: ${ads.length}`
-                        },
-                        {
-                            type: 'image',
-                            data: (og_png ??= new Uint8Array(await (await fetch('/og.png')).arrayBuffer())),
-                            mimeType: 'image/png'
+                execute: async () => {
+                    gtag('event', 'webmcp', {tool: 'get_site_info'})
+                    return {
+                        content: [
+                            {
+                                type: 'text',
+                                text: `Interactive Danang Map with rental property listings: ${ads.length}`
+                            },
+                            {
+                                type: 'image',
+                                data: (og_png ??= new Uint8Array(await (await fetch('/og.png')).arrayBuffer())),
+                                mimeType: 'image/png'
+                            }
+                        ],
+                        structuredContent: {
+                            URL: 'https://danang.kim',
+                            PWA: true,
+                            offline: true,
+                            listings_count: ads.length
                         }
-                    ],
-                    structuredContent: {
-                        URL: 'https://danang.kim',
-                        PWA: true,
-                        offline: true,
-                        listings_count: ads.length
                     }
-                })
+                }
             }, {exposedTo})
 
             document.modelContext?.registerTool({
@@ -2204,11 +2207,14 @@ apply_filter = () => {
                       format: 'uri'
                     }
                 },
-                execute: ({from, to}) => ({
-                    structuredContent: ads
-                        .filter(ad => ad.price >= from && ad.price < to)
-                        .map(ad => get_url(ad.id))
-                })
+                execute: ({from, to}) => {
+                    gtag('event', 'webmcp', {tool: 'filter_listings_by_price', from, to})
+                    return {
+                        structuredContent: ads
+                            .filter(ad => ad.price >= from && ad.price < to)
+                            .map(ad => get_url(ad.id))
+                    }
+                }
             }, {exposedTo})
 
         })
