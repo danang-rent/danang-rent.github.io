@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-18</lastmod>
+		<lastmod>2026-07-19</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -9597,13 +9597,6 @@
 		<dk:id>176630025</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/038cho-thue-can-ho-1pn-dang-cap-55m-full-noi-that-cao-cap-vao-o-ngay</loc>
-		<lastmod>2026-07-04</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177197665</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1-pn-trung-tam-tp-canh-san-bay-nguyen-van-linh</loc>
 		<lastmod>2026-07-03</lastmod>
 		<changefreq>daily</changefreq>
@@ -11611,5 +11604,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176830147</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-panoma-1-1pn-view-thanh-pho-full-noi-that-vao-o-ngay</loc>
+		<lastmod>2026-06-17</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176829703</dk:id>
 	</url>
 </urlset>
