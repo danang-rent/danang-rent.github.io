@@ -281,7 +281,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '9c0c012c8e640b363039c15c4a87134f9214ad5d2b510ac79d8702a7acf8dc8d'// contact spirin.vladimir@gmail.com
+        const KEY = 'ecd8b55ecb6adb71cc0b09013b548edd71a4279ae76eb1aac12908dfca9b37a7'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -563,7 +563,7 @@
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #icon, #icon-heart, #icon-close, #scale, #min, #max {
+        #filter, #toggler, #close, #heart, #icon, #icon-heart, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -583,6 +583,13 @@
         }
         #close {
             top: 0vh;
+            right: 0vh;
+            width: 10vh;
+            height: 7vh;
+            touch-action: manipulation;
+        }
+        #track {
+            top: 7vh;
             right: 0vh;
             width: 10vh;
             height: 7vh;
@@ -620,6 +627,17 @@
         #icon-close {
             display: block;
             top: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke-width: 1;
+            stroke: var(--filter-color);
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-track {
+            display: block;
+            top: 0vh;
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -767,6 +785,21 @@ Thông tin chi tiết: Cho thuê mặt bằng Hoàng Diệu . Đoạn 2 chiều 
         <line x1="20" y1="4" x2="4" y2="20"/>
     </svg>
 </div>
+<div id="track">
+    <svg id="icon-track" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+        <circle cx="12" cy="12" r="6" fill="none"/>
+        <!-- center dot -->
+        <circle cx="12" cy="12" r="3" fill="none"/>
+        <!-- top -->
+        <line x1="12" y1="2"  x2="12" y2="5"/>
+        <!-- bottom -->
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <!-- left -->
+        <line x1="2"  y1="12" x2="5"  y2="12"/>
+        <!-- right -->
+        <line x1="19" y1="12" x2="22" y2="12"/>
+    </svg>
+</div>
 <div id="heart" hidden>
     <svg id="icon-heart" xmlns="http://www.w3.org/2000/svg"
      viewBox="0 0 80 80">
@@ -800,6 +833,7 @@ const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
+const $track = document.getElementById('track')
 const $likes_count = document.getElementById('likes_count')
 var same_likes
 
@@ -895,6 +929,108 @@ const router = () => {
 }
 
 addEventListener('popstate', router)
+
+
+let watch_id = null
+
+
+function user_animate() {
+    const t = performance.now() * 0.005
+    map.setPaintProperty(
+        'user-pulse',
+        'circle-radius',
+         4 + (2 + 1.5 * Math.sin(t))
+    )
+    map.setPaintProperty(
+        'user-pulse',
+        'circle-opacity',
+        0.3 * (1 + Math.cos(t))
+    )
+}
+
+$track.onpointerup = e => {
+    if (!navigator.geolocation) return
+    if (watch_id != null) {
+        navigator.geolocation.clearWatch(watch_id)
+        watch_id = null
+        if (map.getLayer('user')) map.removeLayer('user')
+        if (map.getLayer('user-pulse')) map.removeLayer('user-pulse')
+        if (map.getSource('user')) map.removeSource('user')
+        map.off('render', user_animate)
+        $track.querySelectorAll('circle')[1].setAttribute('fill', 'none')
+        return
+    }
+    
+
+    let first_position = true
+    let user_location
+
+    watch_id = navigator.geolocation.watchPosition(
+        position => {
+            const { latitude, longitude } = position.coords;
+
+            if (first_position) {
+                first_position = false
+                
+                user_location = {
+                    type: 'FeatureCollection',
+                    features: [{
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [longitude, latitude]
+                        },
+                        properties: {}
+                    }]
+                }
+                
+                map.addSource('user', {
+                    type: 'geojson',
+                    data: user_location
+                });
+                
+                map.addLayer({
+                    id: 'user',
+                    type: 'circle',
+                    source: 'user',
+                    paint: {
+                        'circle-radius': 4,
+                        'circle-color': '#3b82f6',
+                    }
+                })
+                map.addLayer({
+                    id: 'user-pulse',
+                    type: 'circle',
+                    source: 'user',
+                    paint: {
+                        'circle-radius': 4,
+                        'circle-color': '#3b82f6',
+                        'circle-opacity': 0.3
+                    }
+                })
+
+                $track.querySelectorAll('circle')[1].setAttribute('fill', '#3b82f6')
+
+                map.flyTo({
+                    center: [longitude, latitude],
+                    zoom: 16
+                })
+                map.on('render', user_animate)
+            } else {
+                user_location.features[0].geometry.coordinates = [longitude, latitude]
+                map.getSource('user').setData(user_location)
+            }
+        },
+        error => {
+            console.log(error.code, error.message)
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: Infinity,
+            maximumAge: 0
+        }
+    )
+}
 
 $heart.onpointerup = e => {
     const url = new URL(location)
