@@ -281,7 +281,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'ecd8b55ecb6adb71cc0b09013b548edd71a4279ae76eb1aac12908dfca9b37a7'// contact spirin.vladimir@gmail.com
+        const KEY = '1c961c7eef85f898a2e33dee3ee45e4ffb87b1548fcb88567f91a171eeb2acfb'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -366,17 +366,17 @@
 
     
     const colors = {
-        light: {
-            selected: 'rgb(250, 104, 25)',//rgb(250, 104, 25)
+        light: {//hot pink 
+            selected: '#ff69b4',//#ff69b4
             other: '#888',
             filtered: '#888',
-            normal: 'rgb(250, 104, 25)'
+            normal: '#ff69b4'
         },
         dark: {
-            selected: 'rgb(250, 104, 25)',
+            selected: '#ff69b4',
             other: '#555',
             filtered: '#555',
-            normal: 'rgb(250, 104, 25)'
+            normal: '#ff69b4'
         }
     }
     
@@ -601,6 +601,8 @@
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
         #icon {
             display: block;
@@ -848,6 +850,7 @@ const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
 const $track = document.getElementById('track')
+const $track_circle_inner = $track.querySelectorAll('circle')[1]
 const $likes_count = document.getElementById('likes_count')
 var same_likes
 
@@ -945,7 +948,6 @@ const router = () => {
 addEventListener('popstate', router)
 
 
-let watch_id = null
 
 
 function user_animate() {
@@ -961,9 +963,31 @@ function user_animate() {
         0.3 * (1 + Math.cos(t))
     )
 }
+let waiting_tracking_animation_id = null;
+const start_waiting_tracking = () => {
+    const t = performance.now() / 1000;
+    const period = 1.6 // seconds
+    const phase = (t % period) / period
+    const ease = 0.5 - 0.5 * Math.cos(phase * 2 * Math.PI)
+    
+    const r = 3 + 6 * ease // 3..9
+    $track_circle_inner.setAttribute('r', r)
+
+    waiting_tracking_animation_id = requestAnimationFrame(start_waiting_tracking)
+}
+const stop_waiting_tracking = () => {
+    cancelAnimationFrame(waiting_tracking_animation_id)
+    waiting_tracking_animation_id = null
+    $track_circle_inner.setAttribute('r', 3)
+}
+
+let watch_id = null
+let track_detecting = false
 
 $track.onpointerup = e => {
     if (!navigator.geolocation) return
+    if (track_detecting == true) return
+
     if (watch_id != null) {
         navigator.geolocation.clearWatch(watch_id)
         watch_id = null
@@ -971,21 +995,38 @@ $track.onpointerup = e => {
         if (map.getLayer('user-pulse')) map.removeLayer('user-pulse')
         if (map.getSource('user')) map.removeSource('user')
         map.off('render', user_animate)
-        $track.querySelectorAll('circle')[1].setAttribute('fill', 'none')
+        $track_circle_inner.setAttribute('fill', 'none')
         return
     }
     
-
     let first_position = true
     let user_location
 
+    track_detecting = true
+    $track_circle_inner.setAttribute('fill', '#3b82f6')
+    start_waiting_tracking()
+    
     watch_id = navigator.geolocation.watchPosition(
         position => {
-            const { latitude, longitude } = position.coords;
+            const { latitude, longitude } = position.coords
+            if (
+                latitude < raw_danang_bounds[1] ||
+                latitude > raw_danang_bounds[3] ||
+                longitude < raw_danang_bounds[0] ||
+                longitude > raw_danang_bounds[2]
+            ) {
+                navigator.geolocation.clearWatch(watch_id)
+                $track.style.display = 'none'
+                if (map.getLayer('user')) map.removeLayer('user')
+                if (map.getLayer('user-pulse')) map.removeLayer('user-pulse')
+                if (map.getSource('user')) map.removeSource('user')
+                map.off('render', user_animate)
+            }
 
             if (first_position) {
                 first_position = false
-                
+                track_detecting = false
+
                 user_location = {
                     type: 'FeatureCollection',
                     features: [{
@@ -1023,11 +1064,11 @@ $track.onpointerup = e => {
                     }
                 })
 
-                $track.querySelectorAll('circle')[1].setAttribute('fill', '#3b82f6')
+                stop_waiting_tracking()
 
                 map.flyTo({
                     center: [longitude, latitude],
-                    zoom: 16
+                    zoom: 16.5
                 })
                 map.on('render', user_animate)
             } else {
@@ -1037,6 +1078,9 @@ $track.onpointerup = e => {
         },
         error => {
             console.log(error.code, error.message)
+            track_detecting = false
+            stop_waiting_tracking()
+            $track_circle_inner.setAttribute('fill', 'none')
         },
         {
             enableHighAccuracy: true,
@@ -1877,8 +1921,8 @@ apply_filter = () => {
                         'circle-color': [
                             'case',
                             ['boolean', ['feature-state', 'hover'], false],
-                            'rgb(255, 212, 0)',
-                            'rgb(250, 104, 25)'
+                            '#ff69b4',
+                            '#ff69b4'
                         ],
                         'circle-opacity': 
                         [
@@ -1891,7 +1935,40 @@ apply_filter = () => {
                                 'other', 0,
                                 'filtered', 0,
                                 'hidden', 0,
-                                1//normal
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.2
+                                ]//normal
+                            ],
+                            12, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0,
+                                'filtered', 0,
+                                'hidden', 0,
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.3
+                                ]//normal
+                            ],
+                            13, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0,
+                                'filtered', 0,
+                                'hidden', 0,
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.4
+                                ]//normal
                             ],
                             14, [
                                 'match',
@@ -1905,6 +1982,34 @@ apply_filter = () => {
                                     ['boolean', ['feature-state', 'hover'], false],
                                     1,
                                     0.6
+                                ]//normal
+                            ],
+                            15, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0,
+                                'filtered', 0,
+                                'hidden', 0,
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.8
+                                ]//normal
+                            ],
+                            16, [
+                                'match',
+                                ['feature-state', 'mode'],
+                                'selected', 1,
+                                'other', 0,
+                                'filtered', 0,
+                                'hidden', 0,
+                                [
+                                    'case',
+                                    ['boolean', ['feature-state', 'hover'], false],
+                                    1,
+                                    0.9
                                 ]//normal
                             ]
                         ]
