@@ -990,7 +990,20 @@ $track.onpointerup = e => {
     
     watch_id = navigator.geolocation.watchPosition(
         position => {
-            const { latitude, longitude } = position.coords;
+            const { latitude, longitude } = position.coords
+            if (
+                latitude < raw_danang_bounds[1] ||
+                latitude > raw_danang_bounds[3] ||
+                longitude < raw_danang_bounds[0] ||
+                longitude > raw_danang_bounds[2]
+            ) {
+                navigator.geolocation.clearWatch(watch_id)
+                $track.style.display = 'none'
+                if (map.getLayer('user')) map.removeLayer('user')
+                if (map.getLayer('user-pulse')) map.removeLayer('user-pulse')
+                if (map.getSource('user')) map.removeSource('user')
+                map.off('render', user_animate)
+            }
 
             if (first_position) {
                 first_position = false
@@ -1037,7 +1050,7 @@ $track.onpointerup = e => {
 
                 map.flyTo({
                     center: [longitude, latitude],
-                    zoom: 17
+                    zoom: 16.5
                 })
                 map.on('render', user_animate)
             } else {
