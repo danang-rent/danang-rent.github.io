@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-20</lastmod>
+		<lastmod>2026-07-21</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-gan-go-da-nang</loc>
+		<lastmod>2026-07-20</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177571853</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/studio-trong-san-nguyen-xuan-khoat-son-tra</loc>
+		<lastmod>2026-07-20</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177571736</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-dat-mt-nguyen-phuoc-lan-5x20-10tr-thang</loc>
@@ -10547,13 +10561,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177218111</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/tro-tai-k94-nguyen-cong-tru</loc>
-		<lastmod>2026-07-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177243601</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/phong-tro-trung-tam-sat-sieu-thi-go-cho-con</loc>
