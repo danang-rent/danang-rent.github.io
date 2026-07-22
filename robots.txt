@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Sitemap: https://danang.kim/sitemap.xml
