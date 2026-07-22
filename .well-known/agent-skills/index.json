@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schemas/agent-skills-index.json",
+  "skills": [
+    {
+      "name": "danang-rental-listings",
+      "type": "skill",
+      "description": "Search, filter, and explore rental property listings in Da Nang, Vietnam.",
+      "url": "https://danang.kim/.well-known/agent-skills/danang-rental-listings/SKILL.md",
+      "sha256": "ef9d546abc14a0cde147298650cbf48e8331b344d460b288aa264dfc03abd120"
+    }
+  ]
+}
