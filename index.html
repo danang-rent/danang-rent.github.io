@@ -1002,6 +1002,7 @@ $track.onpointerup = e => {
                 if (map.getLayer('user-pulse')) map.removeLayer('user-pulse')
                 if (map.getSource('user')) map.removeSource('user')
                 map.off('render', user_animate)
+                return
             }
 
             if (first_position) {
