@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-22</lastmod>
+		<lastmod>2026-07-23</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -1379,13 +1379,6 @@
 		<dk:id>177268519</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-mt-tttp-co-cho-de-xe-o-to</loc>
-		<lastmod>2026-07-22</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177598447</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-van-phong-mat-bang-kinh-doanh-dep</loc>
 		<lastmod>2026-07-22</lastmod>
 		<changefreq>daily</changefreq>
@@ -1405,13 +1398,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177598297</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-toa-nha-4-tang-gan-goc-nga-4-le-thanh-nghi</loc>
-		<lastmod>2026-07-22</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177598250</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/mat-bang-goc-160m-vi-tri-dep-gia-chi-16tr</loc>
@@ -1489,13 +1475,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177040378</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-phong-tro-khu-vuc-khue-trung</loc>
-		<lastmod>2026-07-22</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177573848</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-mbkd-nguyen-can-rong-180m-mt-duong-nui-thanh-ngang-7-7m</loc>
@@ -11088,13 +11067,6 @@
 		<dk:id>177290617</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/nha-nguyen-can-san-vuon-cach-bien-500m-sieu-yen-tinh-cuc-chill</loc>
-		<lastmod>2026-07-08</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177287779</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/chinh-chu-cho-thue-mat-bang-vi-tri-dep-tai-da-nang</loc>
 		<lastmod>2026-07-07</lastmod>
 		<changefreq>daily</changefreq>
@@ -12143,19 +12115,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177113105</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/chinh-chu-cho-thue-mat-bang</loc>
-		<lastmod>2026-06-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177112015</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-mat-bang-1-5-tang-duong-ong-ich-khiem-50tr</loc>
-		<lastmod>2026-06-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177111975</dk:id>
 	</url>
 </urlset>
