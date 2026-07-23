@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-phong-studio</loc>
+		<lastmod>2026-07-23</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177433488</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/can-ho-1-phong-ngu-ngu-hanh-son-gan-khu-fpt</loc>
 		<lastmod>2026-07-23</lastmod>
 		<changefreq>daily</changefreq>
@@ -1939,13 +1946,6 @@
 		<dk:id>177612133</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-3-tang-full-noi-that-hai-chau</loc>
-		<lastmod>2026-07-22</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177276800</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/mat-tien-nguyen-van-linh-ngay-cau-rong</loc>
 		<lastmod>2026-07-22</lastmod>
 		<changefreq>daily</changefreq>
@@ -3603,13 +3603,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176521354</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/nha-mat-tien-cao-xuan-duc-chinh-chu</loc>
-		<lastmod>2026-07-21</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177574214</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-moi-100-ha-tong-huan-tho-quang-son-tra</loc>
@@ -10367,13 +10360,6 @@
 		<dk:id>177336777</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-mat-tien-the-lu-an-hai-bac</loc>
-		<lastmod>2026-07-10</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177312135</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-2-phong-ngu-gia-tot-hai-chau-da-nang</loc>
 		<lastmod>2026-07-10</lastmod>
 		<changefreq>daily</changefreq>
@@ -11044,13 +11030,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177282992</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-dep-kiet-nguyen-tat-thanh</loc>
-		<lastmod>2026-07-08</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177311838</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/nha-cho-thue-mat-tien-the-lu-4-pn-4-wc-day-du-noi-that</loc>
