@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "kim.danang",
+      "sha256_cert_fingerprints": [
+        "F5:D4:4E:37:9C:5B:92:C9:84:E4:2A:A6:3A:0E:62:BA:05:7F:C0:76:B5:D5:F5:DB:7B:12:A1:A2:4A:6F:82:8A"
+      ]
+    }
+  }
+]
