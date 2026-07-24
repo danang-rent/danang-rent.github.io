@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-2-mat-tien-4-phong-ngu-rong-thoang</loc>
+		<lastmod>2026-07-24</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176776740</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-full-noi-that-duong-con-dau-19</loc>
 		<lastmod>2026-07-24</lastmod>
 		<changefreq>daily</changefreq>
@@ -1468,13 +1475,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177429761</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-phong-studio</loc>
-		<lastmod>2026-07-23</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177433488</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/trong-san-can-ho-1pn-chung-cu-monarchy-full-noi-that</loc>
@@ -4513,6 +4513,13 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176521354</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/nha-mat-tien-cao-xuan-duc-chinh-chu</loc>
+		<lastmod>2026-07-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177574214</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-moi-100-ha-tong-huan-tho-quang-son-tra</loc>
@@ -11130,13 +11137,6 @@
 		<dk:id>177300800</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-bien-co-cua-so-view-bien-gan-fpt</loc>
-		<lastmod>2026-07-09</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177335998</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/mat-tien-78-ly-tu-trong-trung-tam-da-nang</loc>
 		<lastmod>2026-07-09</lastmod>
 		<changefreq>daily</changefreq>
@@ -12115,5 +12115,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177161892</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-5-tang-6-phong-phan-boi-chau-o796-646-636</loc>
+		<lastmod>2026-07-02</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177161873</dk:id>
 	</url>
 </urlset>
