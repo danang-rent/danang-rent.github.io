@@ -11,7 +11,7 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="NHÀ MẶT TIỀN HOÀNG DIỆU 150 M2 ĐOẠN 2 CHIỀU" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -426,7 +426,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '31761817388d58390a0209487d1137a7a19e5a28431727c91588d8cc277341bd'// contact spirin.vladimir@gmail.com
+        const KEY = '68b0f4a379c7af28394edf67eb0f94f87f1721b499217fa9ad471c1dca3f918d'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -619,6 +619,9 @@ Prices are expressed in Vietnamese dong (VND).
             --text-color-inverse: black;
             --filter-color: white;
         }
+        :root {
+            --status-bar-height: env(safe-area-inset-top, 0px);
+        }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
         html, body, #map { height: 100%; }
@@ -712,7 +715,7 @@ Prices are expressed in Vietnamese dong (VND).
             position: absolute;
         }
         #filter {
-            bottom: 7vh;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh);
             right: 0vh;
             width: 10vh;
             height: 48vh;
@@ -720,28 +723,28 @@ Prices are expressed in Vietnamese dong (VND).
             font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
         }
         #toggler {
-            bottom: 0vh;
+            bottom: env(safe-area-inset-bottom, 0px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #close {
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #track {
-            top: 7vh;
+            top: calc(env(safe-area-inset-top, 20px) + 7vh);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #heart {
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
@@ -763,7 +766,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-heart {
             display: block;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -773,7 +776,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-close {
             display: block;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -784,7 +787,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-track {
             display: block;
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -838,7 +841,7 @@ Prices are expressed in Vietnamese dong (VND).
         #logo {
             position: absolute;
             left: 2vh;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             color: black;
             width: 10vh;
             height: 5vh;
