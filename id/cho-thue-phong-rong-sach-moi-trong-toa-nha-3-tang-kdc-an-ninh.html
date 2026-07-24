@@ -48,6 +48,7 @@
     let og_png
     document.modelContext?.registerTool({
         name: 'get_site_info',
+        title: 'Get danang.kim site information',
         description: 'Returns information about danang.kim and its purpose.',
         inputSchema: {
             type: "object",
@@ -59,9 +60,24 @@
                 URL: { type: 'string' },
                 PWA: { type: 'boolean' },
                 offline: { type: 'boolean' },
-                listings_count: { type: 'number' }
+                listings_count: { type: 'number' },
+                services: { type: 'array', items: { type: 'string' } },
+                currency: { type: 'string' },
+                price_period: { type: 'string' }
             },
-            required: ['URL', 'PWA', 'offline', 'listings_count']
+            required: [
+                'URL',
+                'PWA',
+                'offline',
+                'purpose',
+                'services',
+                'listings_count',
+                'currency',
+                'price_period'
+            ]
+        },
+        annotations: {
+            readOnlyHint: true
         },
         execute: async () => {
             gtag('event', 'webmcp', {tool: 'get_site_info'})
@@ -69,7 +85,17 @@
                 content: [
                     {
                         type: 'text',
-                        text: `Interactive Danang Map with rental property listings: ${ads.length}`
+                        text: `
+Danang.kim is an interactive rental-property map for Da Nang, Vietnam.
+
+Purpose:
+- Help users discover rental properties in Da Nang.
+- Display rental listings on an interactive map.
+- Allow listings to be filtered by monthly rental price.
+
+The site currently contains ${ads.length} rental listings.
+Prices are expressed in Vietnamese dong (VND).
+`
                     },
                     {
                         type: 'image',
@@ -81,7 +107,15 @@
                     URL: 'https://danang.kim',
                     PWA: true,
                     offline: true,
-                    listings_count: ads.length
+                    purpose: 'Interactive map for discovering rental properties in Da Nang, Vietnam.',
+                    services: [
+                        'Browse rental property listings',
+                        'Filter listings by monthly rental price',
+                        'View listings on an interactive map'
+                    ],
+                    listings_count: ads.length,
+                    currency: 'VND',
+                    price_period: 'monthly'
                 }
             }
         }
@@ -89,28 +123,54 @@
 
     document.modelContext?.registerTool({
         name: 'filter_listings_by_price',
-        description: 'Filter listings by price at VND currency.',
+        title: 'Find rentals by monthly price',
+        description: 'Find rental property listings in Danang whose monthly rent is from the specified minimum price (inclusive) up to, but not including, the specified maximum price. Prices are in Vietnamese dong (VND). Use this tool when the user asks to find rentals within a price range.',
         inputSchema: {
             type: 'object',
             properties: {
-                from: { type: 'number' },
-                to: { type: 'number' }
+                from: {
+                    type: 'number',
+                    minimum: 0,
+                    description: 'Minimum monthly rental price in Vietnamese dong (VND), inclusive.'
+                },
+                to: {
+                    type: 'number',
+                    minimum: 0,
+                    description: 'Maximum monthly rental price in Vietnamese dong (VND), exclusive.'
+                }
             },
-            required: ['from', 'to']
+            required: ['from', 'to'],
+            additionalProperties: false
         },
         outputSchema: {
             type: 'array',
             items: {
-              type: 'string',
-              format: 'uri'
+                type: 'object',
+                properties: { 
+                    url: {
+                        type: 'string',
+                        format: 'uri'
+                    },
+                    price: {
+                        type: 'number'
+                    }
+                },
+                required: ['url', 'price'],
+                additionalProperties: false
             }
+        },
+        annotations: {
+            readOnlyHint: true
         },
         execute: ({from, to}) => {
             gtag('event', 'webmcp', {tool: 'filter_listings_by_price', from, to})
             return {
                 structuredContent: ads
                     .filter(ad => ad.price >= from && ad.price < to)
-                    .map(ad => get_url(ad.id))
+                    .map(ad => ({
+                        url: get_url(ad.id),
+                        price: ad.price
+                    }))
             }
         }
     }, {exposedTo})
@@ -366,7 +426,7 @@
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '7a9608b1d025afdb04067c72dc0da7487a1676c08866fdcea7e79aefdab7128a'// contact spirin.vladimir@gmail.com
+        const KEY = 'bde81f3fdad5b136acff20d85884ec87195cb94a5d8533fc24e1e6232b9a88c6'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -540,7 +600,7 @@
             "@type":"Offer",
             "name":"cho thuê phòng rộng sạch mới trong toà nhà 3 tầng, KDC an ninh",
             "url":"https://danang.kim/id/cho-thue-phong-rong-sach-moi-trong-toa-nha-3-tang-kdc-an-ninh",
-			"price":"3500000",
+			"price":"3000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -795,7 +855,7 @@
 </head>
 <body>
 <div id="map"></div><article><h1>cho thuê phòng rộng sạch mới trong toà nhà 3 tầng, KDC an ninh</h1><p>Dự án: 
-Thông tin chi tiết: Cho thuê phòng trọ tại 09/17 Trần Huấn, Khuê Trung, Cẩm Lệ ( Gần ĐH Đông Á, ĐH kiến trúc chưa tới 1km). Phòng rộng 30m2 không gác lửng như hình. Đầy đủ tiện nghi ( điều hoà, nước nóng lạnh, máy giặt..) giá : 3,5trđ / tháng, tiền điện 3,5k/chữ. Xem phòng là thuê ngay. LH: ***</p></article>
+Thông tin chi tiết: Cho thuê phòng trọ tại 09/17 Trần Huấn, Khuê Trung, Cẩm Lệ ( Gần ĐH Đông Á, ĐH kiến trúc chưa tới 1km). Phòng rộng 30m2 không gác lửng như hình. Đầy đủ tiện nghi ( điều hoà, nước nóng lạnh, máy giặt..) giá : 3trđ / tháng, tiền điện 3,5k/chữ. Xem phòng là thuê ngay. LH: ***</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
