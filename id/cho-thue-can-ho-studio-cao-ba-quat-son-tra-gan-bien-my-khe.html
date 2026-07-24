@@ -13,8 +13,7 @@
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Cho thuê căn hộ studio Cao Bá Quát - Sơn Trà - Gần biển Mỹ Khê" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="transparent">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Cho thuê căn hộ studio Cao Bá Quát - Sơn Trà - Gần biển Mỹ Khê">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
@@ -426,7 +425,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '68b0f4a379c7af28394edf67eb0f94f87f1721b499217fa9ad471c1dca3f918d'// contact spirin.vladimir@gmail.com
+        const KEY = '8143230c8f6ed789ed1a36a5c1e9cdaf487a1f2db6b5b00d7403a355c520e338'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -624,7 +623,16 @@ Prices are expressed in Vietnamese dong (VND).
         }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
-        html, body, #map { height: 100%; }
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #map {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
         article {
             position: absolute;
             left: 20px;
