@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>nhà cho thuê</title><meta name="ad:id" content="177248852">
-    <meta property="og:url" content="https://danang.kim/id/nha-cho-thue">
+    <title>Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn</title><meta name="ad:id" content="177550268">
+    <meta property="og:url" content="https://danang.kim/id/can-ho-studio-full-noi-that-mat-tien-fpt-ngu-hanh-son">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="nhà cho thuê" />
+    <meta property="og:title" content="Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="nhà cho thuê" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="nhà cho thuê">
+    <meta name="twitter:title" content="Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/nha-cho-thue">
+    <link rel="canonical" href="https://danang.kim/id/can-ho-studio-full-noi-that-mat-tien-fpt-ngu-hanh-son">
     <link rel="manifest" href="/manifest.json">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
@@ -426,7 +426,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '31761817388d58390a0209487d1137a7a19e5a28431727c91588d8cc277341bd'// contact spirin.vladimir@gmail.com
+        const KEY = '68b0f4a379c7af28394edf67eb0f94f87f1721b499217fa9ad471c1dca3f918d'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -598,9 +598,9 @@ Prices are expressed in Vietnamese dong (VND).
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"nhà cho thuê",
-            "url":"https://danang.kim/id/nha-cho-thue",
-			"price":"20000000",
+            "name":"Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn",
+            "url":"https://danang.kim/id/can-ho-studio-full-noi-that-mat-tien-fpt-ngu-hanh-son",
+			"price":"5500000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -618,6 +618,9 @@ Prices are expressed in Vietnamese dong (VND).
             --text-color: white;
             --text-color-inverse: black;
             --filter-color: white;
+        }
+        :root {
+            --status-bar-height: env(safe-area-inset-top, 0px);
         }
         body { margin: 0; padding: 0; background: rgb(242,243,240); position: relative;width: 100%;}
         html[dark] body { margin: 0; padding: 0; background: rgb(12,12,12);}
@@ -712,7 +715,7 @@ Prices are expressed in Vietnamese dong (VND).
             position: absolute;
         }
         #filter {
-            bottom: 7vh;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh);
             right: 0vh;
             width: 10vh;
             height: 48vh;
@@ -720,28 +723,28 @@ Prices are expressed in Vietnamese dong (VND).
             font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
         }
         #toggler {
-            bottom: 0vh;
+            bottom: env(safe-area-inset-bottom, 0px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #close {
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #track {
-            top: 7vh;
+            top: calc(env(safe-area-inset-top, 20px) + 7vh);
             right: 0vh;
             width: 10vh;
             height: 7vh;
             touch-action: manipulation;
         }
         #heart {
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 0vh;
             width: 10vh;
             height: 7vh;
@@ -763,7 +766,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-heart {
             display: block;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -773,7 +776,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-close {
             display: block;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -784,7 +787,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #icon-track {
             display: block;
-            top: 0vh;
+            top: env(safe-area-inset-top, 20px);
             right: 2vh;
             width: 3vh;
             height: 3vh;
@@ -838,7 +841,7 @@ Prices are expressed in Vietnamese dong (VND).
         #logo {
             position: absolute;
             left: 2vh;
-            top: 2vh;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
             color: black;
             width: 10vh;
             height: 5vh;
@@ -854,11 +857,14 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>nhà cho thuê</h1><p>Dự án: 
-Thông tin chi tiết: - Cho thuê nhà 3 tầng đường 7,5m Hồ Trung Lượng - Hòa Xuân - Đà Nẵng.
-- Hướng Tây Nam , công năng đầy đủ , 5 phòng ngủ - nội thất đầy đủ ..
-- Giá thuê nhanh 20 triệu - thiện chí bớt ít 
-- Liên hệ : ☎☎ *** zalo ( chính chủ cho thuê)</p></article>
+<div id="map"></div><article><h1>Căn hộ Studio full nội thất mặt tiền FPT - Ngũ Hành Sơn</h1><p>🏡CĂN HỘ STUDIO MẶT TIỀN FULL NỘI THẤT GIẶT RIÊNG KHU FPT - NGŨ HÀNH SƠN
+📌Địa chỉ: B2.120 L3 Khu FPT - P101
+💰 Giá: 5,5 triệu/tháng ( nhận khách nước Ngoài)
+Cạnh ĐH FPT, gần ĐH Việt Hàn, gần FPT Complex, gần biển...  – đi đâu cũng tiện.
+🛋 Nội thất đầy đủ, có ban công ( có dụng cụ bếp ăn uống )
+🧺 Máy giặt riêng 🕒 Giờ giấc tự do – an ninh♻️ Khoá smart bảo mật
+⚡ Điện: 4k/kWh 💧 Nước: 100k/người
+☎️LH *** hoặc Zalo(Toàn)</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
