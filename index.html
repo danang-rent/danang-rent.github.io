@@ -939,7 +939,7 @@ Prices are expressed in Vietnamese dong (VND).
         <line x1="20" y1="4" x2="4" y2="20"/>
     </svg>
 </div>
-<div id="track">
+<div id="track" hidden>
     <svg id="icon-track" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
         <circle cx="12" cy="12" r="6" fill="none"/>
         <!-- center dot -->
@@ -1136,7 +1136,7 @@ function stop_tracking() {
     $track_circle_inner.setAttribute('fill', 'none')
 }
 
-function start_tracking() {
+function start_tracking({ fly, auto_start }) {
     if (track_detecting || watch_id != null) return
 
     let first_position = true
@@ -1149,7 +1149,18 @@ function start_tracking() {
     watch_id = navigator.geolocation.watchPosition(
         position => {
             const { latitude, longitude } = position.coords
-
+            if (
+                latitude < raw_danang_bounds[1] ||
+                latitude > raw_danang_bounds[3] ||
+                longitude < raw_danang_bounds[0] ||
+                longitude > raw_danang_bounds[2]
+            ) {
+                $track.setAttribute('hidden', null)
+                stop_tracking()
+                return
+            } else {
+                $track.removeAttribute('hidden')
+            }
             if (first_position) {
                 first_position = false
                 track_detecting = false
@@ -1193,7 +1204,7 @@ function start_tracking() {
                     }
                 })
 
-                map.flyTo({
+                if (fly) map.flyTo({
                     center: [longitude, latitude],
                     zoom: 16.5
                 })
@@ -1226,7 +1237,7 @@ $track.onpointerup = () => {
         return
     }
     localStorage.asked_track = 'yes'
-    start_tracking()
+    start_tracking({fly: true})
 }
 
 $heart.onpointerup = e => {
@@ -2355,22 +2366,6 @@ apply_filter = () => {
         map.addImage('heart-filled', heart_filled)
         map.addImage('heart-outline', heart_outline)
 
-        navigator.geolocation && navigator.permissions?.query({ name: 'geolocation' })
-        .then(geo_permission => {
-            window.geo_permission = geo_permission
-            if (geo_permission.state == 'granted' && localStorage.asked_track == 'yes') {
-                start_tracking()
-            }
-            geo_permission.onchange = () => {
-                if (geo_permission.state == 'granted' && localStorage.asked_track == 'yes') {
-                    start_tracking()
-                }
-                if (geo_permission.state == 'denied') {
-                    stop_tracking()
-                }
-            }
-        })
-
         map.on('style.load', () => {
             if (
                 initial_inner_size[0] != window.innerWidth ||
@@ -2504,6 +2499,24 @@ apply_filter = () => {
                         router()
                     }
                     return
+                }
+            })
+            
+            navigator.geolocation && navigator.permissions?.query({ name: 'geolocation' })
+            .then(geo_permission => {
+                window.geo_permission = geo_permission
+                if (geo_permission.state == 'granted' && localStorage.asked_track == 'yes') {
+                    start_tracking({fly: false, auto_start: true})
+                } else {
+                    $track.removeAttribute('hidden')
+                }
+                geo_permission.onchange = () => {
+                    if (geo_permission.state == 'granted' && localStorage.asked_track == 'yes') {
+                        start_tracking({fly: true})
+                    }
+                    if (geo_permission.state == 'denied') {
+                        stop_tracking()
+                    }
                 }
             })
             
