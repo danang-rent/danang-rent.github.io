@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-25</lastmod>
+		<lastmod>2026-07-26</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -11032,25 +11032,11 @@
 		<dk:id>177357034</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-fpt-plaza-3-2pn-gia-16tr</loc>
-		<lastmod>2026-07-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177355778</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/can-ho-1-phong-ngu-moi-100-luu-huu-phuoc-da-nang</loc>
 		<lastmod>2026-07-11</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177328532</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-biet-thu-san-vuon-duong-do-nhuan-4-phong-ngu-4wc</loc>
-		<lastmod>2026-07-10</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177355252</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/phong-tro-gac-lung-428-ton-dan</loc>
