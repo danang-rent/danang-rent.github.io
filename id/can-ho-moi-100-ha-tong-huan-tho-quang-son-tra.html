@@ -425,7 +425,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '1a479f0ae11757622aa0e2ccc415c87cf129b62d2213d22aa7f8c2391791806c'// contact spirin.vladimir@gmail.com
+        const KEY = 'd218b926ec992afa3b10c706fcdaa5158f7166523107c216138c8a28c3d5b9db'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -2237,7 +2237,8 @@ apply_filter = () => {
                     },
                     paint: {
                         'circle-radius': 30,
-                        'circle-opacity': 0
+                        'circle-opacity': 0// DEBUG 0.2,
+                        //'circle-color': '#124f92',
                     }
                 },
                 {
@@ -2502,6 +2503,10 @@ apply_filter = () => {
                 history.replaceState({}, '', url)
             })
             map.on('click', 'price-hitbox', e => {
+                const click_priority = {normal: 1, filtered: 0}
+                e.features.sort((a, b) =>
+                    click_priority[b.state.mode] - click_priority[a.state.mode]
+                )
                 const id = e.features[0].id
                 const price = e.features[0].properties.price
                 const url = get_url(id)
