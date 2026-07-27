@@ -2217,7 +2217,8 @@ apply_filter = () => {
                     },
                     paint: {
                         'circle-radius': 30,
-                        'circle-opacity': 0
+                        'circle-opacity': 0// DEBUG 0.2,
+                        //'circle-color': '#124f92',
                     }
                 },
                 {
@@ -2482,6 +2483,10 @@ apply_filter = () => {
                 history.replaceState({}, '', url)
             })
             map.on('click', 'price-hitbox', e => {
+                const click_priority = {normal: 1, filtered: 0}
+                e.features.sort((a, b) =>
+                    click_priority[b.state.mode] - click_priority[a.state.mode]
+                )
                 const id = e.features[0].id
                 const price = e.features[0].properties.price
                 const url = get_url(id)
