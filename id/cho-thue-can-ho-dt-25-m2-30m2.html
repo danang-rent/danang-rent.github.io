@@ -429,7 +429,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '10e9064a651e6ab45dcfa8c6cfa91135d87e1f133d72a44834169f8d4e77a075'// contact spirin.vladimir@gmail.com
+        const KEY = 'cb308a61052c4456ef7b52b2b3587118df5060c800707e3862fc57da6b791218'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1087,6 +1087,8 @@ const router = () => {
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
     logo.removeAttribute('hidden')
     
     const likes = likes_search_params.length
@@ -1302,6 +1304,8 @@ $heart.onpointerup = e => {
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
 }
 
 $close.onpointerup = e => {
@@ -2456,6 +2460,10 @@ apply_filter = throttle(apply_filter, 90)
             var hovered_likes_id = null
 
             map.on('mousemove', 'price-hitbox', e => {
+                const click_priority = {normal: 1, filtered: 0}
+                e.features.sort((a, b) =>
+                    click_priority[b.state.mode] - click_priority[a.state.mode]
+                )
                 const id = e.features[0].id
                 if (id == hovered_price_id) return
                 if (hovered_price_id != null) {
