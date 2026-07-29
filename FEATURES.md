@@ -39,7 +39,7 @@
 37. Optimised touch interaction on mobile devices. [#5, #29]
 38. Improved responsive layout behaviour. [#4]
 39. Deployed a dedicated Photon geocoding server for Danang (http://193.233.126.81:2322/api?q=). Eliminated dependence on third-party geocoding providers.
-40. Solved overlapping property markers (up to 131 at identical coordinates) by distributing them around the building using an expanding circular layout. [#1, #15, #31, #41, #42, #62]
+40. Solved overlapping property markers (up to 131 at identical coordinates) by distributing them around the building using an expanding circular layout. [#1, #15, #31, #41, #42]
 41. Customised the Android splash screen.
 42. Generated AI/GEO-friendly property pages with structured, crawlable content. [#18, #33]
 43. Improved SEO by including the rental title in each property URL. [#18, #19, #33]
@@ -48,3 +48,4 @@
 46. Filtered out non-residential properties from the rental map. [#3]
 47. Supported demo mode with a limited public dataset when no access key is available. [#6]
 48. GitHub action retry build in case fail. [#40]
+49. Hit-box layer for handle user interaction [#62]
