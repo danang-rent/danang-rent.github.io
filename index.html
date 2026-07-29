@@ -943,7 +943,7 @@ Prices are expressed in Vietnamese dong (VND).
     <svg hidden id="icon-dong" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
         <circle cx="12" cy="12" r="11" fill="none"/>
         <text x="12" y="12" dy=".06em"
-        font-size="160%"
+        font-size="clamp(100%, 4vw, 160%)"
         stroke="currentColor"
         stroke-width="0"
         dominant-baseline="central"
@@ -1497,6 +1497,47 @@ update_max_y = dy => {
     apply_filter()
 }
 
+function throttle(func, wait, options) {
+  var timeout, context, args, result;
+  var previous = 0;
+  if (!options) options = {};
+
+  var later = function() {
+    previous = options.leading === false ? 0 : now();
+    timeout = null;
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+
+  var throttled = function() {
+    var _now = Date.now();
+    if (!previous && options.leading === false) previous = _now;
+    var remaining = wait - (_now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = _now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+
+  throttled.cancel = function() {
+    clearTimeout(timeout);
+    previous = 0;
+    timeout = context = args = null;
+  };
+
+  return throttled;
+}
+
 apply_filter = () => {
     map.setFilter('price-text', [
         'all',
@@ -1525,6 +1566,7 @@ apply_filter = () => {
     )
 }
 
+apply_filter = throttle(apply_filter, 90)
 
     const heart_ready = (src =>
         Promise.all([
