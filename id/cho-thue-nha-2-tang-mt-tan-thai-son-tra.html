@@ -429,7 +429,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'f11ad75b7504f710d8eb0fdd36ab4a358d7ab1435ca06b335f74acaeac22df87'// contact spirin.vladimir@gmail.com
+        const KEY = '0bce731c9307f40f0f4c7cea7f3adc53587accdf16b22841c2c2b0f233426fd8'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -1020,6 +1020,9 @@ const $heart = document.getElementById('heart')
 const $track = document.getElementById('track')
 const $track_circle_inner = $track.querySelectorAll('circle')[1]
 const $likes_count = document.getElementById('likes_count')
+const $icon_filter = document.getElementById('icon-filter')
+const $icon_dong = document.getElementById('icon-dong')
+
 var same_likes
 
 const router = () => {
@@ -1050,9 +1053,7 @@ const router = () => {
         
     if (search_params.has('likes')) {
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
-        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', same_likes ? 'visible' : 'none')
-        map.setLayoutProperty('likes-outline-hovered', 'visibility', same_likes ? 'visible' : 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
         map.setLayoutProperty('price-circle', 'visibility', 'none')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'none')
@@ -1067,9 +1068,7 @@ const router = () => {
         }
     } else {
         map.setLayoutProperty('likes-filled', 'visibility', 'none')
-        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-outline', 'visibility', 'none')
-        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'visible')
@@ -1279,9 +1278,7 @@ $heart.onpointerup = e => {
         history.replaceState({}, '', url)
         current_page = PAGE.MAIN
         map.setLayoutProperty('likes-filled', 'visibility', 'none')
-        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-outline', 'visibility', 'none')
-        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'none')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'none')
         map.setLayoutProperty('price-circle', 'visibility', 'visible')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'visible')
@@ -1292,9 +1289,7 @@ $heart.onpointerup = e => {
         history.replaceState({}, '', url)
         current_page = PAGE.EDIT
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
-        map.setLayoutProperty('likes-filled-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', 'visible')
-        map.setLayoutProperty('likes-outline-hovered', 'visibility', 'visible')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
         map.setLayoutProperty('price-circle', 'visibility', 'none')
         map.setLayoutProperty('price-circle-filtered', 'visibility', 'none')
@@ -1373,8 +1368,6 @@ var steps_count
 var step
 var min$
 var max$
-var $icon_filter = document.getElementById('icon-filter')
-var $icon_dong = document.getElementById('icon-dong')
 
 toggler.onpointerup = e => {
     if (filter.hasAttribute('hidden')) {
@@ -1589,11 +1582,11 @@ apply_filter = throttle(apply_filter, 90)
         Promise.all([
             src.replace(
                 '<path',
-                `<path fill="none" stroke="${colors.dark.selected}" stroke-width="4" stroke-linejoin="round" `
+                `<path fill="black" stroke-width="4" stroke-linejoin="round" `
             ),
             src.replace(
                 '<path',
-                `<path fill="none" stroke="${colors.dark.other}" stroke-width="4" stroke-linejoin="round" `
+                `<path fill="none" stroke="black" stroke-width="4" stroke-linejoin="round" `
             )
         ].map(svg => new Promise((y, n) => {
             const url = URL.createObjectURL(
@@ -2150,12 +2143,7 @@ apply_filter = throttle(apply_filter, 90)
                                 ['*', circle_radius, hover_scale]//normal
                             ]
                         ],
-                        'circle-color': [
-                            'case',
-                            ['boolean', ['feature-state', 'hover'], false],
-                            '#ff69b4',
-                            '#ff69b4'
-                        ],
+                        'circle-color': '#ff69b4',
                         'circle-opacity': 
                         [
                             "step",
@@ -2304,56 +2292,6 @@ apply_filter = throttle(apply_filter, 90)
                     }
                 },
                 {
-                    id: 'likes-filled',
-                    type: 'symbol',
-                    source: 'prices',
-                    layout: {
-                        'visibility': 'none',
-                        'icon-image': 'heart-filled',
-                        'icon-size': 0.25,
-                        'icon-allow-overlap': true,
-                        'icon-ignore-placement': true
-                    },
-                    paint: {
-                        'icon-opacity': [
-                            'case',
-                            ['boolean', ['feature-state', 'liked'], false],
-                            [
-                                'case',
-                                ['boolean', ['feature-state', 'hover'], false],
-                                0,
-                                1
-                            ],
-                            0
-                        ]
-                    }
-                },
-                {
-                    id: 'likes-filled-hovered',
-                    type: 'symbol',
-                    source: 'prices',
-                    layout: {
-                        'visibility': 'none',
-                        'icon-image': 'heart-filled',
-                        'icon-size': 0.28,
-                        'icon-allow-overlap': true,
-                        'icon-ignore-placement': true
-                    },
-                    paint: {
-                        'icon-opacity': [
-                            'case',
-                            ['boolean', ['feature-state', 'liked'], false],
-                            [
-                                'case',
-                                ['boolean', ['feature-state', 'hover'], false],
-                                1,
-                                0
-                            ],
-                            0
-                        ]
-                    }
-                },
-                {
                     id: 'likes-outline',
                     type: 'symbol',
                     source: 'prices',
@@ -2369,23 +2307,24 @@ apply_filter = throttle(apply_filter, 90)
                             'case',
                             ['boolean', ['feature-state', 'liked'], false],
                             0,
-                            [
-                                'case',
-                                ['boolean', ['feature-state', 'hover'], false],
-                                0,
-                                1
-                            ]
+                            1
+                        ],
+                        'icon-color': [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            '#ff69b4',
+                            '#888'
                         ]
                     }
                 },
                 {
-                    id: 'likes-outline-hovered',
+                    id: 'likes-filled',
                     type: 'symbol',
                     source: 'prices',
                     layout: {
                         'visibility': 'none',
-                        'icon-image': 'heart-outline',
-                        'icon-size': 0.28,
+                        'icon-image': 'heart-filled',
+                        'icon-size': 0.25,
                         'icon-allow-overlap': true,
                         'icon-ignore-placement': true
                     },
@@ -2393,14 +2332,10 @@ apply_filter = throttle(apply_filter, 90)
                         'icon-opacity': [
                             'case',
                             ['boolean', ['feature-state', 'liked'], false],
-                            0,
-                            [
-                                'case',
-                                ['boolean', ['feature-state', 'hover'], false],
-                                1,
-                                0
-                            ]
-                        ]
+                            1,
+                            0
+                        ],
+                        'icon-color': '#ff69b4',//hot-pink
                     }
                 },
                 {
@@ -2446,8 +2381,8 @@ apply_filter = throttle(apply_filter, 90)
         map.dragRotate.disable()
         map.touchZoomRotate.disableRotation()
 
-        map.addImage('heart-filled', heart_filled)
-        map.addImage('heart-outline', heart_outline)
+        map.addImage('heart-filled', heart_filled, {sdf: true})
+        map.addImage('heart-outline', heart_outline, {sdf: true})
 
         map.on('style.load', () => {
             if (
@@ -2502,10 +2437,13 @@ apply_filter = throttle(apply_filter, 90)
                         return
                     }
                 } else {
-                    id = e.features[0].id
+                    var id = (
+                        e.features.find(_ => _.state.liked) ||
+                        e.features[0]
+                    ).id
                 }
 
-                if (id != hovered_likes_id) {
+                if (hovered_likes_id != null && id != hovered_likes_id) {
                     map.setFeatureState(
                         { source: 'prices', id: hovered_likes_id },
                         { hover: false }
@@ -2534,7 +2472,10 @@ apply_filter = throttle(apply_filter, 90)
             })
 
             map.on('click', 'likes-hitbox', e => {
-                var id = e.features[0].id
+                var id = (
+                    e.features.find(_ => _.state.liked) ||
+                    e.features[0]
+                ).id
                 if (current_page == PAGE.SHARED) {
                     var hovered_feature = e.features.find(_ => likes_search_params.includes(_.id))
                     if (hovered_feature) {
