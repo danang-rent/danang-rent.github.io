@@ -1073,6 +1073,8 @@ const router = () => {
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
     logo.removeAttribute('hidden')
     
     const likes = likes_search_params.length
@@ -1288,6 +1290,8 @@ $heart.onpointerup = e => {
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
 }
 
 $close.onpointerup = e => {
