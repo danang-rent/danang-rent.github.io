@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHO THUÊ PHÒNG</title><meta name="ad:id" content="177578718">
+    <title>cho thuê phòng</title><meta name="ad:id" content="177433488">
     <meta property="og:url" content="https://danang.kim/id/cho-thue-phong">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CHO THUÊ PHÒNG" />
+    <meta property="og:title" content="cho thuê phòng" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="CHO THUÊ PHÒNG" />
+    <meta name="description" content="cho thuê phòng" />
     <meta name="theme-color" content="transparent">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CHO THUÊ PHÒNG">
+    <meta name="twitter:title" content="cho thuê phòng">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
     <link rel="canonical" href="https://danang.kim/id/cho-thue-phong">
@@ -425,7 +425,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '10e9064a651e6ab45dcfa8c6cfa91135d87e1f133d72a44834169f8d4e77a075'// contact spirin.vladimir@gmail.com
+        const KEY = 'f11ad75b7504f710d8eb0fdd36ab4a358d7ab1435ca06b335f74acaeac22df87'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -597,9 +597,9 @@ Prices are expressed in Vietnamese dong (VND).
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"CHO THUÊ PHÒNG",
+            "name":"cho thuê phòng",
             "url":"https://danang.kim/id/cho-thue-phong",
-			"price":"12500000",
+			"price":"5000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -878,8 +878,13 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ PHÒNG</h1><p>Dự án: 
-Thông tin chi tiết: Cho thuê phòng gồm 1 phòng ngủ, 1 khách - có sẵn nội thất cơ bản</p></article>
+<div id="map"></div><article><h1>cho thuê phòng</h1><p>Dự án: 
+Thông tin chi tiết: Phòng trung tâm tp,gần trung tâm hành chính
+Gần chợ Đông Đa
+Gần hotel Novotel
+Gần đại học Duy Tân cơ sở Quang Trung,và spkt
+Đầy đủ tiện nghi,
+Ko nhận người nước nhoài và xe điện</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1076,6 +1081,8 @@ const router = () => {
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
     logo.removeAttribute('hidden')
     
     const likes = likes_search_params.length
@@ -1291,6 +1298,8 @@ $heart.onpointerup = e => {
     }
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
+    $icon_filter.removeAttribute('hidden')
+    $icon_dong.setAttribute('hidden', '')
 }
 
 $close.onpointerup = e => {
@@ -2445,6 +2454,10 @@ apply_filter = throttle(apply_filter, 90)
             var hovered_likes_id = null
 
             map.on('mousemove', 'price-hitbox', e => {
+                const click_priority = {normal: 1, filtered: 0}
+                e.features.sort((a, b) =>
+                    click_priority[b.state.mode] - click_priority[a.state.mode]
+                )
                 const id = e.features[0].id
                 if (id == hovered_price_id) return
                 if (hovered_price_id != null) {
