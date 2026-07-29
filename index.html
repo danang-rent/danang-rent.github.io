@@ -2446,6 +2446,10 @@ apply_filter = throttle(apply_filter, 90)
             var hovered_likes_id = null
 
             map.on('mousemove', 'price-hitbox', e => {
+                const click_priority = {normal: 1, filtered: 0}
+                e.features.sort((a, b) =>
+                    click_priority[b.state.mode] - click_priority[a.state.mode]
+                )
                 const id = e.features[0].id
                 if (id == hovered_price_id) return
                 if (hovered_price_id != null) {
