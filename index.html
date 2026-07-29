@@ -717,7 +717,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #icon, #icon-heart, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #filter, #toggler, #close, #heart, #icon-filter, #icon-dong, #icon-heart, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -758,7 +758,19 @@ Prices are expressed in Vietnamese dong (VND).
             user-select: none;
             -webkit-user-select: none;
         }
-        #icon {
+        #icon-filter {
+            display: block;
+            bottom: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-dong {
             display: block;
             bottom: 2vh;
             right: 2vh;
@@ -902,35 +914,40 @@ Prices are expressed in Vietnamese dong (VND).
 </div>
 <div id="filter" hidden>
     <div id="scale"></div>
-    <div id="min">
-        <span class="label"></span>
-        <svg viewBox="0 0 100 100">
-            <text x="50" y="50"
-                  font-size="70"
-                  dominant-baseline="central"
-                  text-anchor="middle">₫</text>
-        </svg>
-    </div>
     <div id="max">
         <span class="label"></span>
-        <svg viewBox="0 0 100 100">
-            <text x="50" y="50"
-                  font-size="70"
-                  dominant-baseline="central"
-                  text-anchor="middle">₫</text>
+        <svg viewBox="0 0 24 24">
+            <line stroke="currentColor" stroke-width="2.5" stroke-linecap="round" x1="12" y1="16" x2="8" y2="9"/>
+            <line stroke="currentColor" stroke-width="2.5" stroke-linecap="round" x1="12" y1="16" x2="16" y2="9"/>
+        </svg>
+    </div>
+    <div id="min">
+        <span class="label"></span>
+        <svg viewBox="0 0 24 24">
+            <line stroke="currentColor" stroke-width="2.5" stroke-linecap="round" x1="12" y1="8"  x2="8" y2="15"/>
+            <line stroke="currentColor" stroke-width="2.5" stroke-linecap="round" x1="12" y1="8"  x2="16" y2="15"/>
         </svg>
     </div>
 </div>
 <div id="toggler" hidden>
-      <svg id="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-      <line x1="4" y1="6"  x2="20" y2="6"/>
-      <circle cx="10" cy="6" r="2.2"/>
+    <svg id="icon-filter" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+        <line x1="4" y1="6"  x2="20" y2="6"/>
+        <circle cx="10" cy="6" r="2.2"/>
 
-      <line x1="4" y1="12" x2="20" y2="12"/>
-      <circle cx="14" cy="12" r="2.2"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <circle cx="14" cy="12" r="2.2"/>
 
-      <line x1="4" y1="18" x2="20" y2="18"/>
-      <circle cx="8" cy="18" r="2.2"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+        <circle cx="8" cy="18" r="2.2"/>
+    </svg>
+    <svg hidden id="icon-dong" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+        <circle cx="12" cy="12" r="11" fill="none"/>
+        <text x="12" y="12" dy=".06em"
+        font-size="23"
+        stroke="currentColor"
+        stroke-width="0.1"
+        dominant-baseline="central"
+        text-anchor="middle">₫</text>
     </svg>
 </div>
 <div id="close" hidden>
@@ -1339,12 +1356,18 @@ var steps_count
 var step
 var min$
 var max$
+var $icon_filter = document.getElementById('icon-filter')
+var $icon_dong = document.getElementById('icon-dong')
 
 toggler.onpointerup = e => {
     if (filter.hasAttribute('hidden')) {
         filter.removeAttribute('hidden')
+        $icon_dong.removeAttribute('hidden')
+        $icon_filter.setAttribute('hidden', '')
     } else {
         filter.setAttribute('hidden', '')
+        $icon_dong.setAttribute('hidden', '')
+        $icon_filter.removeAttribute('hidden')
         filter.onwheel = null
         return
     }
