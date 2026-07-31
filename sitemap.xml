@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-07-30</lastmod>
+		<lastmod>2026-07-31</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-duplex-dong-khoa-7-da-nang</loc>
+		<lastmod>2026-07-30</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177797436</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-duplex-dong-khoa-7-da-nang-full-noi-that</loc>
+		<lastmod>2026-07-30</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177797433</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-full-noi-that-gan-nguyen-phuoc-lan-da-nang</loc>
@@ -1482,13 +1496,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177774408</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-phong-mat-tien-vo-nguyen-giap</loc>
-		<lastmod>2026-07-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177768605</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nguyen-can-6tr2-xin-loi-ko-lam-dv</loc>
@@ -6377,13 +6384,6 @@
 		<dk:id>177636039</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/can-ho-f-home-2-phong-ngu-2-wc</loc>
-		<lastmod>2026-07-23</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>175753392</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-sat-bach-khoa-va-cao-dang-kinh-te-ke-hoach</loc>
 		<lastmod>2026-07-23</lastmod>
 		<changefreq>daily</changefreq>
@@ -9443,13 +9443,6 @@
 		<dk:id>177556014</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-day-du-noi-that-hoa-cuong-da-nang</loc>
-		<lastmod>2026-07-20</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176528407</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/nha-2pn-2wc-khu-hoa-cuong-hai-chau</loc>
 		<lastmod>2026-07-20</lastmod>
 		<changefreq>daily</changefreq>
@@ -12304,12 +12297,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177368931</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-3-tang-khu-vuc-vinhome-hai-van-bay</loc>
-		<lastmod>2026-07-12</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177396435</dk:id>
 	</url>
 </urlset>
