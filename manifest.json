@@ -2,7 +2,21 @@
   "name": "Danang Rent Map",
   "short_name": "Danang Rent",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
+  "start_url": "/",
+  "protocol_handlers": [
+    {
+      "protocol": "web+danangkim",
+      "url": "/"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://danang.kim/manifest.json",
+      "id": "danang-kim"
+    }
+  ],
   "background_color": "#ffffff",
   "theme_color": "transparent",
   "icons": [
