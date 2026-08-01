@@ -1360,7 +1360,7 @@ function markInstallSuccess($icon_install) {
 }
 
 if (localStorage.getItem('installed') == 'yes') {
-    $icon_open_app.onpointerup = () => window.location.href = 'web+danangkim://'
+    $icon_open_app.onpointerup = () => window.location.href = 'web+danangkim:open'
     $logo.style.cursor = 'pointer'
     $logo.onpointerup = () => {
         $icon_open_app.toggleAttribute('hidden')
