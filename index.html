@@ -876,6 +876,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 30vh;
             height: 9vh;
             color: var(--filter-color);
+            pointer-events: none;
             user-select: none;
             -webkit-user-select: none;
         }
@@ -884,7 +885,6 @@ Prices are expressed in Vietnamese dong (VND).
             height: auto;
             pointer-events: none;
         }
-        #icon-open-app,
         #icon-install-apk,
         #icon-install-ios {
             display: block;
@@ -896,19 +896,13 @@ Prices are expressed in Vietnamese dong (VND).
             vector-effect: non-scaling-stroke;
             cursor: pointer;
             transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
-            user-select: none;
-            -webkit-user-select: none;
         }
         #icon-install-apk {
-            left: 2vh;
-        }
-        #icon-open-app {
             left: 2vh;
         }
         #icon-install-ios {
             left: calc(2vh + 12vh + 4vh);
         }
-        #icon-open-app svg,
         #icon-install-apk svg,
         #icon-install-ios svg {
             display: block;
@@ -959,15 +953,7 @@ Prices are expressed in Vietnamese dong (VND).
         </text>
     </svg>
 </div>
-<div id="icon-open-app" hidden>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 100" fill="none">
-      <rect x="2" y="2" width="256" height="96" stroke="currentColor" stroke-width="2"/>
-      <g transform="translate(20 22) scale(1.8)" fill="currentColor">
-        <path d="M12 2 L20 12 L14 12 L14 24 L10 24 L10 12 L4 12 Z"/>
-      </g>
-      <text x="80" y="62" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="500" fill="currentColor">Open App</text>
-    </svg>
-</div>
+
 <div id="icon-install-apk" hidden>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 100" fill="none">
         <rect x="2" y="2" width="256" height="96" stroke="currentColor" stroke-width="2"/>
@@ -1086,7 +1072,6 @@ const $icon_dong = document.getElementById('icon-dong')
 const $logo = document.getElementById('logo')
 const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
-const $icon_open_app = document.getElementById('icon-open-app')
 
 var same_likes
 
@@ -1336,12 +1321,8 @@ $track.onpointerup = () => {
     start_tracking({fly: true})
 }
 
-const installButtons = [$icon_install_apk, $icon_install_ios]
-let installedOs = null
-
-
-function markInstallSuccess($icon_install) {
-    installButtons.forEach(button => {
+function mark_install_success($icon_install) {
+    ;[$icon_install_apk, $icon_install_ios].forEach(button => {
         button.style.color = '#888'
         button.style.cursor = 'default'
         button.style.opacity = 0.7
@@ -1359,16 +1340,10 @@ function markInstallSuccess($icon_install) {
     svg.appendChild(check)
 }
 
-if (localStorage.getItem('installed') == 'yes') {
-    $icon_open_app.onpointerup = () => window.location.href = 'web+danangkim:open'
-    $logo.style.cursor = 'pointer'
-    $logo.onpointerup = () => {
-        $icon_open_app.toggleAttribute('hidden')
-    }
-}
-else window.addEventListener('beforeinstallprompt', event_install => {
+window.addEventListener('beforeinstallprompt', event_install => {
     event_install.preventDefault()
     $logo.style.cursor = 'pointer'
+    $logo.style.pointerEvents = 'what should be here?'
 
     $logo.onpointerup = () => {
         $icon_install_apk.toggleAttribute('hidden')
@@ -1378,33 +1353,20 @@ else window.addEventListener('beforeinstallprompt', event_install => {
     $icon_install_apk.onpointerup = () => {
         event_install.prompt()
         event_install.userChoice.then(({ outcome }) => {
-            if (outcome === 'accepted') {
-                console.time('installation')
-                markInstallSuccess($icon_install_apk)
-            }
+            if (outcome === 'accepted') mark_install_success($icon_install_apk)
         })
     }
 
     $icon_install_ios.onpointerup = () => {
         event_install.prompt()
         event_install.userChoice.then(({ outcome }) => {
-            if (outcome == 'accepted') {
-                console.time('installation')
-                markInstallSuccess($icon_install_ios)
-            }
+            if (outcome == 'accepted') mark_install_success($icon_install_ios)
         })
     }
 })
 
 window.addEventListener('appinstalled', () => {
-    console.timeEnd('installation')
     gtag('event', 'installed')
-    localStorage.setItem('installed', 'yes')
-    $icon_install_apk.setAttribute('hidden', '')
-    $icon_install_ios.setAttribute('hidden', '')
-    $logo.style.cursor = 'default'
-    $logo.style.pointerEvents = 'none'
-    $logo.onpointerup = null
 })
 
 $heart.onpointerup = e => {
