@@ -2,12 +2,12 @@
   "name": "Danang Rent Map",
   "short_name": "Danang Rent",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "start_url": "/",
   "protocol_handlers": [
     {
       "protocol": "web+danangkim",
-      "url": "/"
+      "url": "/?open=%s"
     }
   ],
   "related_applications": [
