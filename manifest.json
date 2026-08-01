@@ -3,13 +3,6 @@
   "short_name": "Danang Rent",
   "start_url": "/",
   "display": "standalone",
-  "start_url": "/",
-  "protocol_handlers": [
-    {
-      "protocol": "web+danangkim",
-      "url": "/?open=%s"
-    }
-  ],
   "related_applications": [
     {
       "platform": "webapp",
