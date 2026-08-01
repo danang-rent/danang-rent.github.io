@@ -1343,7 +1343,7 @@ function mark_install_success($icon_install) {
 window.addEventListener('beforeinstallprompt', event_install => {
     event_install.preventDefault()
     $logo.style.cursor = 'pointer'
-    $logo.style.pointerEvents = 'what should be here?'
+    $logo.style.pointerEvents = 'auto'
 
     $logo.onpointerup = () => {
         $icon_install_apk.toggleAttribute('hidden')
