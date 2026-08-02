@@ -4,10 +4,18 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-08-02T22:11:15.885Z</updated>
+		<updated>2026-08-02T23:15:18.996Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/dat-107-bo-quan-10-ngu-hanh-son</id>
+			<title>Đất  107 Bờ Quan 10, Ngũ Hành Sơn</title>
+			<link href="https://danang.kim/id/dat-107-bo-quan-10-ngu-hanh-son"/>
+			<updated>2026-08-02T14:36:18.309Z</updated>
+			<published>2026-08-02T14:36:18.309Z</published>
+			<summary>Chính chủ cho thuê lâu dài lô đất tại địa chỉ 107 Bờ Quan 10. Diện tích 5 m x 21m, đường 7m5 lề 3m5. Lô đất gần đảo Kim Cương, gần đường Nguyễn Phước Lan. Thích hợp làm siêu thị mini, quán cafe, quán ăn. Giá cho thuê 3.5 triêu/ tháng. Ư tiên khách thuê lâu dài</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/can-ho-studio-full-noi-that-co-bep-day-du</id>
 			<title>CĂN HỘ STUDIO FULL NỘI THẤT, CÓ BẾP ĐẦY ĐỦ</title>
@@ -2648,23 +2656,5 @@ Thông tin chi tiết: Cho thuê nhà 2 tầng 8m Đa Mặn Đông 6 sát Lê V�
 - Liên Hệ: Ms Hiền 
 BẤT ĐỘNG SẢN NEWLANS CHUYÊN NHÀ ĐẤT THỔ CƯ
 + PKD1: 12 Vũ Văn Dũng, Sơn Trà</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-toa-nha-4-5-tang-7p-lam-viec-mt-duong-bui-ta-han-nam-viet-a</id>
-			<title>Cho thuê toà nhà 4,5 tầng 7p làm việc MT đường Bùi Tá Hán Nam Việt Á</title>
-			<link href="https://danang.kim/id/cho-thue-toa-nha-4-5-tang-7p-lam-viec-mt-duong-bui-ta-han-nam-viet-a"/>
-			<updated>2026-08-01T08:27:21.000Z</updated>
-			<published>2026-08-01T08:27:21.000Z</published>
-			<summary>Dự án: 
-Thông tin chi tiết: Cho thuê toà nhà văn phòng 4,5 tầng có hầm mặt tiền đường Bùi Tá Hán, khu Nam Việt Á, Phường Ngũ Hành Sơn.
-- Diện tích: 100m2 (5x20) DTS: 460m2, 
--MT đường 15m, lề 5m.
-- Công năng: Nhà 4,5 tầng kiên cố có tầng hầm để xe, có tổng 7 phòng làm việc, 4 wc, ( trong đó có  3 phòng làm việc lớn và 4 phòng nhỏ) thích hợp thuê làm spa, văn phòng, ở kết hợp kinh doanh..)
-- Vị trí: MT đường Bùi Tá Hán , trục đường thông kinh doanh tốt, gần sông và biển, tiện ích đầy đủ, khu dân trí cao.
-- Giá cho thuê: 35 tr/ th. Cọc 2 thanh toán 6 th/lần. ( thương lượng)
-- Liên hệ xem nhà: MS Hiền 
-Call/zalo.
-BĐS NEWLANDS CHUYÊN NHÀ ĐẤT THỔ CƯ ĐÀ NẴNG.
-+ PKD1: 12 Vũ Văn Dũng, Sơn Trà.</summary>
 		</entry>
 </feed>
