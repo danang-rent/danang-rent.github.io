@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-08-01</lastmod>
+		<lastmod>2026-08-02</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-1-phong-ngu-moi-100-nguyen-duc-an-son-tra</loc>
+		<lastmod>2026-08-01</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177840928</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/studio-ban-cong-thoang-10-5-trieu</loc>
