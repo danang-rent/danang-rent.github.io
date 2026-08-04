@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/nha-cap-4-duong-cao-hong-lanh</loc>
+		<lastmod>2026-08-04</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177903599</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-3-tang-kiet-nguyen-van-linh-gan-cau-rong-54m2</loc>
 		<lastmod>2026-08-04</lastmod>
 		<changefreq>daily</changefreq>
@@ -12465,19 +12472,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177549978</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-p601-luong-the-vinh-son-tra-8-6-trieu</loc>
-		<lastmod>2026-07-20</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177549969</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-moi-100-trung-tam-hoa-xuan</loc>
-		<lastmod>2026-07-20</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177549965</dk:id>
 	</url>
 </urlset>
