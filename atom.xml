@@ -4,7 +4,7 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-08-09T14:51:45.140Z</updated>
+		<updated>2026-08-09T15:48:15.990Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
@@ -1858,6 +1858,18 @@ Thông tin chi tiết: CĂN HỘ NGUYÊN CĂN
 ✨ Gần biển – gần trung tâm – gần chợ, quán ăn và các điểm vui chơi nổi tiếng.</summary>
 		</entry>
 		<entry>
+			<id>https://danang.kim/id/cho-thue-nha-mat-tien-nguyen-huu-tho-trung-tam-sam-uat</id>
+			<title>Cho thuê nhà mặt tiền Nguyễn Hữu Thọ, Trung tâm sầm uất</title>
+			<link href="https://danang.kim/id/cho-thue-nha-mat-tien-nguyen-huu-tho-trung-tam-sam-uat"/>
+			<updated>2026-08-09T03:08:02.412Z</updated>
+			<published>2026-08-09T03:08:02.412Z</published>
+			<summary>Dự án: 
+Thông tin chi tiết: Cho thue căn Mt Nguyễn Hữu Thọ đường 15m.
+- dtich 86m2 ngang 5m
+- Nha 3 tầng có 4pn, wc khép kín. Vi trí đẹp vừa ở vừa kinh doanh làm vpcty, spa, phòng khám….
+- hướng tây, giá 40tr/tháng có tl</summary>
+		</entry>
+		<entry>
 			<id>https://danang.kim/id/2-phong-ngu-65m2-tang-cao-view-bien-cho-thue-lau-dai</id>
 			<title>2 Phòng Ngủ 65m2, Tầng cao, View Biển Cho thuê lâu dài</title>
 			<link href="https://danang.kim/id/2-phong-ngu-65m2-tang-cao-view-bien-cho-thue-lau-dai"/>
@@ -2750,18 +2762,5 @@ Cần cho thuê căn hộ tại Tân Thái 8, vị trí thuận tiện, khu dân
 Thông tin chi tiết: Cho thuê nhà cấp 4 nguyên căn
 Công năng 2 phòng ngủ, 1 tolet, 1 bếp, 1 phòng khách
 Kiệt ô tô thông thẳng, khu vực gần trường học, bệnh viện, chợ..... cho thuê lâu dài</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/can-ho-studio-son-tra-gan-bien</id>
-			<title>Căn hộ Studio Sơn Trà gần biển</title>
-			<link href="https://danang.kim/id/can-ho-studio-son-tra-gan-bien"/>
-			<updated>2026-08-08T23:54:02.000Z</updated>
-			<published>2026-08-08T23:54:02.000Z</published>
-			<summary>🏡CĂN HỘ STUDIO 1G SƠN TRÀ 3xlb 
-📌Địa chỉ : 3X Loseby - P501
-💰Giá: 4TR6 - trống sẵn
-- Mô tả: loại phòng 1g cửa sổ thoáng nội thất cơ bản có bếp (máy giặt chung)có thang máy ,vị trí gần biển 🚫Ko nước ngoài
-⚡️Điện 4k, nc + phí dv 150k/ng
-☎️ ☎️Liên Hệ Zalo: ***</summary>
 		</entry>
 </feed>
