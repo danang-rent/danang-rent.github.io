@@ -4,10 +4,24 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-08-12T18:14:41.779Z</updated>
+		<updated>2026-08-12T20:14:05.156Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/cho-thue-nha-3-tang-mt-an-hoa-sat-cho-cam-le-gan-thang-long</id>
+			<title>CHO THUÊ NHÀ 3 TẦNG MT AN HOÀ - SÁT CHỢ CẨM LỆ- GẦN THĂNG LONG</title>
+			<link href="https://danang.kim/id/cho-thue-nha-3-tang-mt-an-hoa-sat-cho-cam-le-gan-thang-long"/>
+			<updated>2026-08-12T15:33:00.000Z</updated>
+			<published>2026-08-12T15:33:00.000Z</published>
+			<summary>Dự án: 
+Thông tin chi tiết: Cho Thuê Nhà 3 Tầng MT Đường An Hoà - Khuê Trung
+
+✅DT: 100m2 ,DTSD : 300m2
+✅3PN,2Wc , Phòng khách rộng
+✅Phù Hợp Công Ty,Spa,...
+✅Giá : 12 triệu / Tháng</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/cho-thue-nha-an-thuong-18-gan-chau-thi-vinh-te</id>
 			<title>CHO THUÊ NHÀ AN THƯỢNG 18 - GẦN CHÂU THỊ VĨNH TẾ</title>
@@ -2691,19 +2705,5 @@ vị trí phố Tây, tiện kề chợ Bắc Mỹ An sầm uất.
 Nhà có sân để xe
 - Lh Chung để xem nhà và lvcc
 - XIn cảm ơn khách đã đọc tin!</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-nha-2pn-mat-tien-an-thuong</id>
-			<title>CHO THUÊ NHÀ 2PN MẶT TIỀN AN THƯỢNG</title>
-			<link href="https://danang.kim/id/cho-thue-nha-2pn-mat-tien-an-thuong"/>
-			<updated>2026-08-12T02:28:10.000Z</updated>
-			<published>2026-08-12T02:28:10.000Z</published>
-			<summary>Dự án: 
-Thông tin chi tiết: CHO THUÊ NHÀ 2 PN MẶT TIỀN AN THƯỢNG
-- diện tích: 52m x 2 tầng 
-- Nhà 2 tầng, 2 phòng ngủ, 2 toilet.
-- Đầy đủ nội thất (máy lạnh, máy giặt, giường tủ, chăn nệm, bàn ăn....)
-- Phù hợp vừa ở vừa kinh doanh: Spa, văn phòng,....
-💰Giá thuê: 25 triệu/tháng. HĐ dài hạn</summary>
 		</entry>
 </feed>
