@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/153-cho-thue-nha-3-tang-full-noi-that-kiet-nguyen-van-linh</loc>
+		<lastmod>2026-08-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178153160</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/152-cho-thue-can-ho-2-phong-ngu-harmony-tower</loc>
+		<lastmod>2026-08-15</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178153124</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/nha-moi-nguyen-cong-tru-o-kd</loc>
 		<lastmod>2026-08-15</lastmod>
 		<changefreq>daily</changefreq>
@@ -12738,12 +12752,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177555556</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-day-du-tien-nghi</loc>
-		<lastmod>2026-08-02</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177794240</dk:id>
 	</url>
 </urlset>
