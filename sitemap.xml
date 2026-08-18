@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/khai-truong-can-ho-hoan-toan-moi</loc>
+		<lastmod>2026-08-18</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>176955771</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-3-tang-4pn-khu-loseby-gan-bien-pham-van-dong</loc>
+		<lastmod>2026-08-18</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178080624</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-cao-cap-trung-tam-hoa-khanh</loc>
 		<lastmod>2026-08-18</lastmod>
 		<changefreq>daily</changefreq>
@@ -3920,13 +3934,6 @@
 		<dk:id>178138043</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/can-studio-ngay-cau-rong-moi</loc>
-		<lastmod>2026-08-15</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178137892</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/can-ho-1-phong-ngu-ngay-trung-tam-gan-bien-tang-6</loc>
 		<lastmod>2026-08-15</lastmod>
 		<changefreq>daily</changefreq>
@@ -4345,13 +4352,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178126551</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-140-m2-cuoi-duong-ton-dan-cam-le-da-nang</loc>
-		<lastmod>2026-08-14</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177770396</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-1-phong-ngu-view-bien-nguyen-tat-thanh</loc>
@@ -12761,6 +12761,13 @@
 		<dk:id>177914910</dk:id>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-mat-bang-pham-nhu-xuong-kinh-doanh-dinh</loc>
+		<lastmod>2026-08-05</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177912799</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-day-du-noi-that-son-tra</loc>
 		<lastmod>2026-08-05</lastmod>
 		<changefreq>daily</changefreq>
@@ -12794,12 +12801,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177914271</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/biet-thu-phuc-loc-vien-3pn-full-noi-that-dep-khu-an-ninh-24-7</loc>
-		<lastmod>2026-08-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177914149</dk:id>
 	</url>
 </urlset>
