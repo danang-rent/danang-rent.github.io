@@ -7,6 +7,27 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/196-cho-thue-nha-4-tang-mat-tien-phan-phu-tien</loc>
+		<lastmod>2026-08-19</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178247554</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/195-cho-thue-nha-nguyen-can-duong-liem-lac</loc>
+		<lastmod>2026-08-19</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178247426</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-3-tang-4pn-khu-gan-bien-man-thai-gia-tot</loc>
+		<lastmod>2026-08-19</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177719044</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-3-tang-vua-o-vua-kd-mt-tran-thanh-tong</loc>
 		<lastmod>2026-08-19</lastmod>
 		<changefreq>daily</changefreq>
@@ -1685,13 +1706,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178225813</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-phong-ban-cong-day-du-tien-nghi</loc>
-		<lastmod>2026-08-18</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177814116</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-dat-2-mat-tien-vi-tri-vang-ngay-sat-bien-goc-2-mat-tien</loc>
@@ -4429,13 +4443,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178156220</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-dat-mat-tien-gan-khu-can-ho</loc>
-		<lastmod>2026-08-15</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178154873</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-mt-nguyen-huu-tho</loc>
@@ -12920,19 +12927,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177928523</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-2pn-quan-hai-chau-duong-han-thuyen</loc>
-		<lastmod>2026-08-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177930557</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-le-dai-hanh-studio-5tr-thang-day-du-noi-that</loc>
-		<lastmod>2026-08-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177930554</dk:id>
 	</url>
 </urlset>
