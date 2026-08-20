@@ -4,10 +4,20 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-08-20T13:09:39.217Z</updated>
+		<updated>2026-08-20T14:05:02.142Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/cho-thue-dat-5x20m-tu-giay-ngu-hanh-son</id>
+			<title>Cho thuê đất 5x20m - Từ Giấy - Ngũ Hành Sơn </title>
+			<link href="https://danang.kim/id/cho-thue-dat-5x20m-tu-giay-ngu-hanh-son"/>
+			<updated>2026-08-20T11:58:59.000Z</updated>
+			<published>2026-08-20T11:58:59.000Z</published>
+			<summary>‼️Cho thuê lâu dài 100m2 đất mặt tiền số 43 Đường Từ Giấy, Ngũ Hành Sơn, Đà Nẵng
+📌Phù hợp làm gara, quán ăn - cafe, spa, ...
+Có thể đàm phán</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/cho-thue-can-ho-3pn-sun-symphony</id>
 			<title>Cho thuê căn hộ 3Pn Sun Symphony</title>
@@ -2600,19 +2610,5 @@ căn 02 PN ban công thoáng, nội thất đẹp.
 Tầng 3 thang bộ
 Giá 8,5 triệu
 Zalo ***</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-can-ho-2pn-tran-hung-dao-gan-dh-kinh-te</id>
-			<title>Cho thuê căn hộ 2PN Trần Hưng Đạo, gần ĐH Kinh Tế</title>
-			<link href="https://danang.kim/id/cho-thue-can-ho-2pn-tran-hung-dao-gan-dh-kinh-te"/>
-			<updated>2026-08-20T03:27:05.000Z</updated>
-			<published>2026-08-20T03:27:05.000Z</published>
-			<summary>🏠 CĂN HỘ 2PN TRẦN HƯNG ĐẠO
-Đi 4phút là tới ĐH Kinh Tế
-💰 8.500.000đ/tháng
-👥 Ở tối đa 4 người | 3 xe máy
-🏡 Đầy đủ: Giường, bàn ăn, bếp từ, điều hòa, tủ lạnh...
-🧺 Tiện ích: Máy giặt sấy tầng 4
-📞 Liên hệ: ***</summary>
 		</entry>
 </feed>
