@@ -7,6 +7,41 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-4-tang-trinh-dinh-thao-6-phong</loc>
+		<lastmod>2026-08-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178295802</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-studio-view-dep-moi-trung-tam-hai-chau</loc>
+		<lastmod>2026-08-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178293317</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/nha-cho-thue</loc>
+		<lastmod>2026-08-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178295642</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-moi-nam-hoa-xuan</loc>
+		<lastmod>2026-08-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178295225</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-nguyen-can-co-gac-lung</loc>
+		<lastmod>2026-08-21</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178294944</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-goc-chung-cu-mia-center-point-chi-7-5tr-thang</loc>
 		<lastmod>2026-08-21</lastmod>
 		<changefreq>daily</changefreq>
@@ -2294,13 +2329,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>174545879</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/new-apartment-for-rent-near-the-han-river</loc>
-		<lastmod>2026-08-20</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177711110</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/can-ho-ponte-da-nang-51m-1pn-view-song-han</loc>
@@ -5502,13 +5530,6 @@
 		<dk:id>178189799</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-studio-new-100-view-bien-khu-vuc-son-tra</loc>
-		<lastmod>2026-08-17</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176098972</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-biet-thu-khu-phuc-loc-vien</loc>
 		<lastmod>2026-08-17</lastmod>
 		<changefreq>daily</changefreq>
@@ -6032,13 +6053,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178106381</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/new-studio-apartment-with-private-laundry-balcony</loc>
-		<lastmod>2026-08-16</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>177952180</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-2-phong-ngu-ngay-tttp-rong-94m2-gia-chi-15tr</loc>
@@ -12969,5 +12983,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177989251</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-2-tang-san-vuon-khu-nam-hoa-xuan-37-trieu</loc>
+		<lastmod>2026-08-08</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177988343</dk:id>
 	</url>
 </urlset>
