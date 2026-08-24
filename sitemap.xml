@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-phong-ban-cong-day-du-tien-nghi</loc>
+		<lastmod>2026-08-24</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>177814116</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/246-cho-thue-nha-3-tang-kiet-o-to-tran-dinh-tri</loc>
+		<lastmod>2026-08-24</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178357300</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-dat-12x25-mat-tien-song-ng-dinh-thi</loc>
 		<lastmod>2026-08-24</lastmod>
 		<changefreq>daily</changefreq>
@@ -215,6 +229,13 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177478218</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/phong-cho-thue-dinh-cong-tru</loc>
+		<lastmod>2026-08-24</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178353896</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-chuan-5-sao-2-phong-ngu-da-nang-golden-bay</loc>
@@ -1601,20 +1622,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>177879553</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-dt-25-m2</loc>
-		<lastmod>2026-08-23</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178275980</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-3-tang-dt</loc>
-		<lastmod>2026-08-23</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>176540652</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-ton-duc-thang-da-nang-day-du-noi-that</loc>
@@ -13172,5 +13179,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178057682</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-duong-an-thuong-24-gan-bien</loc>
+		<lastmod>2026-08-11</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178056825</dk:id>
 	</url>
 </urlset>
