@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương</title><meta name="ad:id" content="178041059">
-    <meta property="og:url" content="https://danang.kim/id/cho-thue-can-ho-moi-100-hoa-xuan-gan-cau-trung-luong">
+    <title>CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE</title><meta name="ad:id" content="177241923">
+    <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-3-tang-gan-song-han-ga-euro-village">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương" />
+    <meta property="og:title" content="CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương" />
+    <meta name="description" content="CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE" />
     <meta name="theme-color" content="transparent">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương">
+    <meta name="twitter:title" content="CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/cho-thue-can-ho-moi-100-hoa-xuan-gan-cau-trung-luong">
+    <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-3-tang-gan-song-han-ga-euro-village">
     <link rel="manifest" href="/manifest.json">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
@@ -428,7 +428,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '3a1d6386999e9d6fcebdeeb60c6805c5f7db8c7d128c66b33dfbff18d28185cc'// contact spirin.vladimir@gmail.com
+        const KEY = '823273292568c88b29bc49f5557a8d7169fb46d6a1ce96fa177c6bb46d942434'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -600,9 +600,9 @@ Prices are expressed in Vietnamese dong (VND).
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương",
-            "url":"https://danang.kim/id/cho-thue-can-ho-moi-100-hoa-xuan-gan-cau-trung-luong",
-			"price":"6000000",
+            "name":"CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE",
+            "url":"https://danang.kim/id/cho-thue-nha-3-tang-gan-song-han-ga-euro-village",
+			"price":"35000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -722,7 +722,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #icon-filter, #icon-dong, #icon-heart, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -763,7 +763,17 @@ Prices are expressed in Vietnamese dong (VND).
         #heart {
             top: env(safe-area-inset-top, 20px);
             right: 0vh;
-            width: 10vh;
+            width: 7vh;
+            height: 7vh;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
+        #share {
+            top: env(safe-area-inset-top, 20px);
+            right: 7vh;
+            width: 7vh;
             height: 7vh;
             touch-action: manipulation;
             user-select: none;
@@ -802,6 +812,18 @@ Prices are expressed in Vietnamese dong (VND).
             height: 3vh;
             pointer-events: none;
             stroke-width: 1;
+            stroke: var(--filter-color);
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-share {
+            display: block;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke-width: 1;
+            stroke: var(--filter-color);
             vector-effect: non-scaling-stroke;
         }
         #icon-close {
@@ -916,26 +938,36 @@ Prices are expressed in Vietnamese dong (VND).
             transform-box: fill-box;
             transform-origin: center;
         }
+        #toast {
+            position: fixed;
+            bottom: 2vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--filter-color);
+            color: var(--text-color-inverse);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease-out;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê căn hộ mới 100% Hòa Xuân, gần cầu Trung Lương</h1><p>KHAI TRƯƠNG CĂN HỘ MỚI 100% – HÒA XUÂN
-KHAI TRƯƠNG CĂN HỘ MỚI 100% – HÒA XUÂN
-📍 Phan Huỳnh Điểu, Hòa Xuân – gần cầu Trung Lương
+<div id="map"></div><article><h1>CHO THUÊ NHÀ 3 TẦNG  GẦN SÔNG HÀN GẦ EURO VILLAGE</h1><p>Dự án: 
+Thông tin chi tiết: - CHO THUÊ NHÀ 3 TẦNG – ĐƯỜNG PHAN HUY CHÚ, GẦN CẦU TRẦN THỊ LÝ 🏡
 
-💰 Giá chỉ: 6.000.000đ/tháng
+📍 Vị trí trung tâm, khu dân cư đông đúc, giao thông thuận tiện. Thích hợp để ở, mở văn phòng, công ty hoặc kết hợp kinh doanh.
+✨ Thông tin chi tiết:
 
-* Căn hộ mới 100%, sạch đẹp
-* Full nội thất, chỉ cần xách vali vào ở
-* Máy giặt riêng từng phòng
-* Ban công thoáng mát
-* Thang máy
-* Nhận khách nước ngoài
-
-Vị trí thuận tiện, khu dân cư yên tĩnh, dễ dàng di chuyển đến các khu vực trung tâm.
-
-Liên hệ Phượng để xem phòng và giữ căn đẹp.
-Zalo / WhatsApp / Call: ***</p></article>
+Nhà 3 tầng, thiết kế rộng rãi, thoáng mát
+5 phòng ngủ
+5 phòng vệ sinh
+Không gian bố trí hợp lý, đầy đủ công năng
+Phù hợp cho gia đình đông người, chuyên gia, văn phòng hoặc mô hình ở kết hợp làm việc
+💰 Giá thuê: 35 triệu/tháng</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1076,12 +1108,21 @@ Zalo / WhatsApp / Call: ***</p></article>
 
     </svg>
 </div>
-
+<div id="share" hidden>
+    <svg id="icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+        <polyline points="16 6 12 2 8 6"></polyline>
+        <line x1="12" y1="2" x2="12" y2="15"></line>
+    </svg>
+</div>
+<div id="toast" hidden></div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
+const $share = document.getElementById('share')
+const $toast = document.getElementById('toast')
 const $track = document.getElementById('track')
 const $track_circle_inner = $track.querySelectorAll('circle')[1]
 const $likes_count = document.getElementById('likes_count')
@@ -1151,6 +1192,7 @@ const router = () => {
     current_page == PAGE.SINGLE && console.log('SINGLE')
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
     $icon_filter.removeAttribute('hidden')
@@ -1184,8 +1226,11 @@ const router = () => {
 
 addEventListener('popstate', router)
 
-
-
+function show_toast(msg) {
+  $toast.textContent = msg
+  $toast.removeAttribute('hidden')
+  setTimeout(() => $toast.setAttribute('hidden', ''), 2000)
+}
 
 function user_animate() {
     const t = performance.now() * 0.005
@@ -1404,6 +1449,7 @@ $heart.onpointerup = e => {
         url.searchParams.set('likes', likes_local_storage.join(','))
         history.replaceState({}, '', url)
         current_page = PAGE.EDIT
+        
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', 'visible')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
@@ -1412,10 +1458,26 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
         map.setLayoutProperty('price-hitbox', 'visibility', 'none')
     }
+    $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
     $icon_filter.removeAttribute('hidden')
     $icon_dong.setAttribute('hidden', '')
+}
+
+$share.onclick = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Selected rentals',
+            text: '',
+            url: window.location.href
+        })
+    } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href)
+        show_toast('✓ Link copied')
+    } else {
+        window.prompt('Copy this link (Ctrl+C or Cmd+C):', window.location.href)
+    }
 }
 
 $close.onpointerup = e => {
