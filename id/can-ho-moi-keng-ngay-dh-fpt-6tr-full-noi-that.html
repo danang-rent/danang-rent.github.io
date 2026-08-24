@@ -428,7 +428,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '3a1d6386999e9d6fcebdeeb60c6805c5f7db8c7d128c66b33dfbff18d28185cc'// contact spirin.vladimir@gmail.com
+        const KEY = '823273292568c88b29bc49f5557a8d7169fb46d6a1ce96fa177c6bb46d942434'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -722,7 +722,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #icon-filter, #icon-dong, #icon-heart, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -763,7 +763,17 @@ Prices are expressed in Vietnamese dong (VND).
         #heart {
             top: env(safe-area-inset-top, 20px);
             right: 0vh;
-            width: 10vh;
+            width: 7vh;
+            height: 7vh;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
+        #share {
+            top: env(safe-area-inset-top, 20px);
+            right: 7vh;
+            width: 7vh;
             height: 7vh;
             touch-action: manipulation;
             user-select: none;
@@ -802,6 +812,18 @@ Prices are expressed in Vietnamese dong (VND).
             height: 3vh;
             pointer-events: none;
             stroke-width: 1;
+            stroke: var(--filter-color);
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-share {
+            display: block;
+            top: calc(env(safe-area-inset-top, 20px) + 2vh);
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke-width: 1;
+            stroke: var(--filter-color);
             vector-effect: non-scaling-stroke;
         }
         #icon-close {
@@ -915,6 +937,21 @@ Prices are expressed in Vietnamese dong (VND).
         .install-check {
             transform-box: fill-box;
             transform-origin: center;
+        }
+        #toast {
+            position: fixed;
+            bottom: 2vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--filter-color);
+            color: var(--text-color-inverse);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease-out;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -1070,12 +1107,21 @@ Ib Quy Nguyen hoặc sdt/zalo *** xem phòng trực tiếp</p></article>
 
     </svg>
 </div>
-
+<div id="share" hidden>
+    <svg id="icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+        <polyline points="16 6 12 2 8 6"></polyline>
+        <line x1="12" y1="2" x2="12" y2="15"></line>
+    </svg>
+</div>
+<div id="toast" hidden></div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
 const $close = document.getElementById('close')
 const $heart = document.getElementById('heart')
+const $share = document.getElementById('share')
+const $toast = document.getElementById('toast')
 const $track = document.getElementById('track')
 const $track_circle_inner = $track.querySelectorAll('circle')[1]
 const $likes_count = document.getElementById('likes_count')
@@ -1145,6 +1191,7 @@ const router = () => {
     current_page == PAGE.SINGLE && console.log('SINGLE')
     $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
     $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
     $icon_filter.removeAttribute('hidden')
@@ -1178,8 +1225,11 @@ const router = () => {
 
 addEventListener('popstate', router)
 
-
-
+function show_toast(msg) {
+  $toast.textContent = msg
+  $toast.removeAttribute('hidden')
+  setTimeout(() => $toast.setAttribute('hidden', ''), 2000)
+}
 
 function user_animate() {
     const t = performance.now() * 0.005
@@ -1398,6 +1448,7 @@ $heart.onpointerup = e => {
         url.searchParams.set('likes', likes_local_storage.join(','))
         history.replaceState({}, '', url)
         current_page = PAGE.EDIT
+        
         map.setLayoutProperty('likes-filled', 'visibility', 'visible')
         map.setLayoutProperty('likes-outline', 'visibility', 'visible')
         map.setLayoutProperty('likes-hitbox', 'visibility', 'visible')
@@ -1406,10 +1457,26 @@ $heart.onpointerup = e => {
         map.setLayoutProperty('price-text', 'visibility', 'none')
         map.setLayoutProperty('price-hitbox', 'visibility', 'none')
     }
+    $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', window.current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
     $icon_filter.removeAttribute('hidden')
     $icon_dong.setAttribute('hidden', '')
+}
+
+$share.onclick = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Selected rentals',
+            text: '',
+            url: window.location.href
+        })
+    } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href)
+        show_toast('✓ Link copied')
+    } else {
+        window.prompt('Copy this link (Ctrl+C or Cmd+C):', window.location.href)
+    }
 }
 
 $close.onpointerup = e => {
