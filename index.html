@@ -238,6 +238,15 @@ Prices are expressed in Vietnamese dong (VND).
           // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
+        set_ads_prices(data) {
+          // assembly/index/set_ads_prices(~lib/string/String) => bool
+          data = __lowerString(data) || __notnull();
+          return exports.set_ads_prices(data) != 0;
+        },
+        get_ad_img_urls(id) {
+          // assembly/index/get_ad_img_urls(f64) => ~lib/array/Array<~lib/string/String>
+          return __liftArray(pointer => __liftString(__getU32(pointer)), 2, exports.get_ad_img_urls(id) >>> 0);
+        },
       }, exports);
       function __liftString(pointer) {
         if (!pointer) return null;
@@ -258,6 +267,15 @@ Prices are expressed in Vietnamese dong (VND).
           memoryU16 = new Uint16Array(memory.buffer);
         for (let i = 0; i < length; ++i) memoryU16[(pointer >>> 1) + i] = value.charCodeAt(i);
         return pointer;
+      }
+      function __liftArray(liftElement, align, pointer) {
+        if (!pointer) return null;
+        const
+          dataStart = __getU32(pointer + 4),
+          length = __dataview.getUint32(pointer + 12, true),
+          values = new Array(length);
+        for (let i = 0; i < length; ++i) values[i] = liftElement(dataStart + (i << align >>> 0));
+        return values;
       }
       function __liftStaticArray(liftElement, align, pointer) {
         if (!pointer) return null;
@@ -318,7 +336,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1787978290032'
+    const VER_WASM = '1787989094248'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -2741,7 +2759,6 @@ apply_filter = throttle(apply_filter, 90)
             }
 
             const GA = 'https://www.googletagmanager.com/gtag/js?id=GT-TQL9TSPB'
-
             caches.open('ga')
             .then(c =>
                 c.match(GA)
@@ -2763,16 +2780,29 @@ apply_filter = throttle(apply_filter, 90)
                 gtag('js', new Date())
                 gtag('config', 'GT-TQL9TSPB')
             })
-
+            
+            const URL_ADS_PRICES = `/price.list?v=${VER_WASM}`
+            caches.open('price.list')
+            .then(cache =>
+                cache.keys()
+                .then(keys => keys[0])
+                .then(r =>
+                    r?.url.endsWith(`?v=${VER_WASM}`)
+                        ? cache.match(r)
+                        : Promise.resolve(r && cache.delete(r))
+                        .then(() => fetch(URL_ADS_PRICES))
+                        .then(response => {
+                            cache.put(URL_ADS_PRICES, response.clone())
+                            return response
+                        })
+                        .then(r => r.text())
+                        .then(set_ads_prices)
+                )
+            )
         })
 
     })
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
 </script>
-<script
-  async
-  src="https://cdn.conscriba.com/v1.js"
-  data-site-key="cmrrejfsm000h67im7rgey8mc"
-></script>
 </body>
 </html>
