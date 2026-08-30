@@ -1,7 +1,4 @@
 self.addEventListener('fetch', event => {
-    if (event.request.mode !== 'navigate')
-        return
-
     if (event.request.url.endsWith('manifest.json')) {
         event.respondWith(
             fetch(event.request)
@@ -31,6 +28,9 @@ self.addEventListener('fetch', event => {
         )
         return
     }
+
+    if (event.request.mode !== 'navigate')
+        return
 
     if (new URL(event.request.url).pathname !== '/')
         return
