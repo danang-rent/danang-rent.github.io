@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần</title><meta name="ad:id" content="178146458">
-    <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-3-tang-mt-7m5-cam-le-gan-nguyen-phuoc-tan">
+    <title>cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m</title><meta name="ad:id" content="178472029">
+    <meta property="og:url" content="https://danang.kim/id/can-cho-thue-dat-340m2-hai-mat-tien-view-song-cach-chuong-duong-15m">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần" />
+    <meta property="og:title" content="cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần" />
+    <meta name="description" content="cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m" />
     <meta name="theme-color" content="transparent">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần">
+    <meta name="twitter:title" content="cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
-    <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-3-tang-mt-7m5-cam-le-gan-nguyen-phuoc-tan">
+    <link rel="canonical" href="https://danang.kim/id/can-cho-thue-dat-340m2-hai-mat-tien-view-song-cach-chuong-duong-15m">
     <link rel="manifest" href="/manifest.json">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
@@ -31,6 +31,7 @@
     <meta name="msapplication-TileImage" content="/icon-192.png">
     <meta name="msapplication-config" content="none">
     <script>
+    window.fetch_native = window.fetch
     const exposedTo = [
         'https://alexandria.team',
         'https://claude.ai',
@@ -336,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1787989094248'
+    const VER_WASM = '1788070047300'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -405,8 +406,6 @@ Prices are expressed in Vietnamese dong (VND).
         })
     )
 
-    const orig_fetch = window.fetch
-
     window.fetch = (url, opts = {}) => {
         if (
             cache_pmtiles_exist_and_loading &&
@@ -438,7 +437,7 @@ Prices are expressed in Vietnamese dong (VND).
             }
         })
 
-        return orig_fetch(url, opts)
+        return fetch_native(url, opts)
     }
 
     window.search_params = new URLSearchParams(location.search)
@@ -446,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '19484d3274045501cc5bfd0e07fa0fef88715680c4895351d44b1b0941703422'// contact spirin.vladimir@gmail.com
+        const KEY = '3d2888e2f458787a4ee916808a8ab717def817df373be06dd0fd71749536aafd'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -618,9 +617,9 @@ Prices are expressed in Vietnamese dong (VND).
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần",
-            "url":"https://danang.kim/id/cho-thue-nha-3-tang-mt-7m5-cam-le-gan-nguyen-phuoc-tan",
-			"price":"8000000",
+            "name":"cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m",
+            "url":"https://danang.kim/id/can-cho-thue-dat-340m2-hai-mat-tien-view-song-cach-chuong-duong-15m",
+			"price":"25000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -745,7 +744,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #toggler_cards, #filter, #toggler, #close, #heart, #share, #icon-toggler-cards ,#icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -803,6 +802,16 @@ Prices are expressed in Vietnamese dong (VND).
             -webkit-user-select: none;
             cursor: pointer;
         }
+        #toggler_cards {
+            bottom: env(safe-area-inset-bottom, 0px);
+            left: 45%;
+            width: 10%;
+            height: 7vh;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
         #icon-filter {
             display: block;
             bottom: 2vh;
@@ -816,6 +825,18 @@ Prices are expressed in Vietnamese dong (VND).
             vector-effect: non-scaling-stroke;
         }
         #icon-dong {
+            display: block;
+            bottom: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-toggler-cards {
             display: block;
             bottom: 2vh;
             right: 2vh;
@@ -979,10 +1000,8 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần</h1><p>Dự án: 
-Thông tin chi tiết: Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn Phước Tần
-- 3pn, 2wc 
-- giá: 8tr/ tháng</p></article>
+<div id="map"></div><article><h1>cân cho thuê đất 340m2 hai mặt tiền view sông, cách chương dương 15m</h1><p>Dự án: 
+Thông tin chi tiết: Cho thuê đất 2 mặt tiền ánh thơ và mặc cửu, đường 7m5, lề 4m, cách bơ sông 20m, khu đô thị nam việt á, thích hợp nhiều ngành nghề như gym, cafe, nhà hàng, kho xưởng, vị trí thuận tiện đi lại trục ven sông, để xe oto xe máy thoải mái, giá thuê 25tr/tháng có đàm phán thiện chí</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1131,6 +1150,14 @@ Thông tin chi tiết: Cho thuê nhà 3 tầng MT 7m5 Cẩm lệ- gần Nguyễn
     </svg>
 </div>
 <div id="toast" hidden></div>
+<div id="cards" hidden></div>
+<div id="toggler_cards" hidden>
+    <svg id="icon-toggler-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
+        <path d="M4 12v8a2 4 0 0 0 2 2h12a3 7 0 0 0 2-2v-8"></path>
+        <polyline points="16 9 8 1 5 2"></polyline>
+        <line x1="2" y1="7" x2="11" y2="16"></line>
+    </svg>
+</div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -1146,6 +1173,7 @@ const $icon_dong = document.getElementById('icon-dong')
 const $logo = document.getElementById('logo')
 const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
+const $toggler_cards = document.getElementById('toggler_cards')
 
 var same_likes
 
@@ -2807,7 +2835,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=5')
 </script>
 </body>
 </html>
