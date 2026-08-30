@@ -17,6 +17,21 @@ self.addEventListener('fetch', event => {
         return
     }
 
+    if (event.request.url.endsWith('favicon.ico')) {
+        event.respondWith(
+            fetch(event.request)
+                .then(response => {
+                    const clone = response.clone()
+                    caches.open('favicon.ico').then(cache =>
+                        cache.put('favicon.ico', clone)
+                    )
+                    return response
+                })
+                .catch(() => caches.match('favicon.ico'))
+        )
+        return
+    }
+
     if (new URL(event.request.url).pathname !== '/')
         return
 
@@ -35,8 +50,14 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open('index')
-            .then(cache => cache.add('/'))
+        Promise.all([
+            caches.open('index')
+                .then(cache => cache.add('/')),
+            caches.open('manifest.json')
+                .then(cache => cache.add('manifest.json')),
+            caches.open('favicon.ico')
+                .then(cache => cache.add('favicon.ico'))
+        ])
     )
     self.skipWaiting()
 })
