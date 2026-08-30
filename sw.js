@@ -2,6 +2,9 @@ self.addEventListener('fetch', event => {
     if (event.request.mode !== 'navigate')
         return
 
+    if (new URL(event.request.url).pathname !== '/')
+        return
+
     event.respondWith(
         fetch(event.request)
             .then(response => {
