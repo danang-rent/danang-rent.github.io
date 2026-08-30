@@ -31,6 +31,7 @@
     <meta name="msapplication-TileImage" content="/icon-192.png">
     <meta name="msapplication-config" content="none">
     <script>
+    window.fetch_native = window.fetch
     const exposedTo = [
         'https://alexandria.team',
         'https://claude.ai',
@@ -336,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1787989094248'
+    const VER_WASM = '1788070047300'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -405,8 +406,6 @@ Prices are expressed in Vietnamese dong (VND).
         })
     )
 
-    const orig_fetch = window.fetch
-
     window.fetch = (url, opts = {}) => {
         if (
             cache_pmtiles_exist_and_loading &&
@@ -438,7 +437,7 @@ Prices are expressed in Vietnamese dong (VND).
             }
         })
 
-        return orig_fetch(url, opts)
+        return fetch_native(url, opts)
     }
 
     window.search_params = new URLSearchParams(location.search)
@@ -446,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '19484d3274045501cc5bfd0e07fa0fef88715680c4895351d44b1b0941703422'// contact spirin.vladimir@gmail.com
+        const KEY = '3d2888e2f458787a4ee916808a8ab717def817df373be06dd0fd71749536aafd'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -745,7 +744,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #toggler_cards, #filter, #toggler, #close, #heart, #share, #icon-toggler-cards ,#icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
         }
         #filter {
@@ -803,6 +802,16 @@ Prices are expressed in Vietnamese dong (VND).
             -webkit-user-select: none;
             cursor: pointer;
         }
+        #toggler_cards {
+            bottom: env(safe-area-inset-bottom, 0px);
+            left: 45%;
+            width: 10%;
+            height: 7vh;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
         #icon-filter {
             display: block;
             bottom: 2vh;
@@ -816,6 +825,18 @@ Prices are expressed in Vietnamese dong (VND).
             vector-effect: non-scaling-stroke;
         }
         #icon-dong {
+            display: block;
+            bottom: 2vh;
+            right: 2vh;
+            width: 3vh;
+            height: 3vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            fill: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #icon-toggler-cards {
             display: block;
             bottom: 2vh;
             right: 2vh;
@@ -1141,6 +1162,14 @@ Thông tin chi tiết: KHUÊ MỸ ĐÔNG 1 – CĂN 2 PN MỚI LENG KENG
     </svg>
 </div>
 <div id="toast" hidden></div>
+<div id="cards" hidden></div>
+<div id="toggler_cards" hidden>
+    <svg id="icon-toggler-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
+        <path d="M4 12v8a2 4 0 0 0 2 2h12a3 7 0 0 0 2-2v-8"></path>
+        <polyline points="16 9 8 1 5 2"></polyline>
+        <line x1="2" y1="7" x2="11" y2="16"></line>
+    </svg>
+</div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
@@ -1156,6 +1185,7 @@ const $icon_dong = document.getElementById('icon-dong')
 const $logo = document.getElementById('logo')
 const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
+const $toggler_cards = document.getElementById('toggler_cards')
 
 var same_likes
 
@@ -2817,7 +2847,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=5')
 </script>
 </body>
 </html>
