@@ -1,4 +1,24 @@
+
+var photos_cache
+caches.open('photos').then(_ => photos_cache = _)
+
 self.addEventListener('fetch', event => {
+    const u = event.request.url
+    if (u.includes('cdn.chotot.com') && u.endsWith('.jpg')) {
+        event.respondWith(
+            photos_cache.match(u)
+            .then(cached_r =>
+                cached_r || fetch(u, {mode: 'no-cors'})
+                .then(r =>
+                    (r.ok || r.type == 'opaque') &&
+                    photos_cache.put(u, r.clone())
+                    .then(() => r)
+                )
+            )
+        )
+        return
+    }
+    
     if (event.request.url.endsWith('manifest.json')) {
         event.respondWith(
             fetch(event.request)
