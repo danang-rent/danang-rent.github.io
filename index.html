@@ -1632,7 +1632,7 @@ function next_proto_right() {
         $dots.children[photo_current_index].classList.remove('active')
         photo_current_index++
         var dx = photo_current_index * 20
-        $photos_container.style.transform = `translate3d(-${dx},0,0)`
+        $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
         $dots.children[photo_current_index].classList.add('active')
     }
 }
@@ -1640,7 +1640,7 @@ function next_proto_left() {
     if (photo_current_index - 1 > 0) {
         photo_current_index--
         var dx = photo_current_index * 20
-        $photos_container.style.transform = `translate3d(-${dx},0,0)`
+        $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
     }
 }
 
