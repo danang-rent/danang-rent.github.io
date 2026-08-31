@@ -1629,7 +1629,7 @@ window.photo_total_count = null
 
 function next_proto_right() {
     if (photo_current_index + 1 < photo_total_count) {
-        $dots.children[photo_current_index].classList.remove('active')
+        ;[...$dots.children].forEach(_ => _.classList.remove('active'))
         photo_current_index++
         var dx = photo_current_index * 20
         $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
@@ -1638,7 +1638,7 @@ function next_proto_right() {
 }
 function next_proto_left() {
     if (photo_current_index - 1 > 0) {
-        $dots.children[photo_current_index].classList.remove('active')
+        ;[...$dots.children].forEach(_ => _.classList.remove('active'))
         photo_current_index--
         var dx = photo_current_index * 20
         $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
@@ -1647,10 +1647,11 @@ function next_proto_left() {
 }
 
 $dots.onclick = e => {
+    if (!e.target.classList.contains('dot')) return
     var index = [...$dots.children].findIndex(_ => _ == e.target)
     if (index == photo_current_index) return
     
-    $dots.children[photo_current_index].classList.remove('active')
+    ;[...$dots.children].forEach(_ => _.classList.remove('active'))
     
     photo_current_index = index
     var dx = photo_current_index * 20
