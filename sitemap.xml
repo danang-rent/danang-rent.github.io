@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-mat-tien-kinh-doanh-bau-hac-1-gia-11trieu</loc>
+		<lastmod>2026-08-31</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178173942</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-kiet-hoang-dieu-3pn-2wc-gia-8trieu</loc>
 		<lastmod>2026-08-31</lastmod>
 		<changefreq>daily</changefreq>
@@ -12934,12 +12941,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178180638</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-biet-thu-san-vuon-duong-dam-phuong-300m2</loc>
-		<lastmod>2026-08-17</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178180557</dk:id>
 	</url>
 </urlset>
