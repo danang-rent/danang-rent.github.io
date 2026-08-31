@@ -1599,6 +1599,64 @@ window.addEventListener('appinstalled', () => {
 $toggler_cards.onclick = () => {}
 $card_close.onclick = () => $card.setAttribute('hidden', '')
 
+var touchStartX = 0
+//var touchStartY = 0
+//var touchStartT = 0
+
+$photo.ontouchstart = e => {
+    touchStartX = e.changedTouches[0].screenX
+    //touchStartY = e.changedTouches[0].screenY
+    //touchStartT = Date.now()
+}
+$photo.ontouchend = e => {
+    var touchEndX = e.changedTouches[0].screenX
+    var dX = touchEndX - touchStartX
+    //if (Math.abs(dX) < 30) return
+    //var touchEndY = e.changedTouches[0].screenY
+    //var dY = touchEndY - touchStartY
+    //if (Math.abs(dY) > Math.abs(dX)) return
+    //let touchEndT = Date.now()
+    //let dT = touchEndT - touchStartT
+    //if (dT > 1500) return
+    if (dX < 0)
+        next_proto_right()
+    else
+        next_proto_left()
+}
+
+window.photo_current_index = null
+window.photo_total_count = null
+
+function next_proto_right() {
+    if (photo_current_index + 1 < photo_total_count) {
+        $dots.children[photo_current_index].classList.remove('active')
+        photo_current_index++
+        var dx = photo_current_index * 20
+        $photos_container.style.transform = `translate3d(-${dx},0,0)`
+        $dots.children[photo_current_index].classList.add('active')
+    }
+}
+function next_proto_left() {
+    if (photo_current_index - 1 > 0) {
+        photo_current_index--
+        var dx = photo_current_index * 20
+        $photos_container.style.transform = `translate3d(-${dx},0,0)`
+    }
+}
+
+$dots.onclick = e => {
+    var index = [...$dots.children].findIndex(_ => _ == e.target)
+    if (index == photo_current_index) return
+    
+    $dots.children[photo_current_index].classList.remove('active')
+    
+    photo_current_index = index
+    var dx = photo_current_index * 20
+    $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
+    
+    $dots.children[photo_current_index].classList.add('active')
+}
+
 $heart.onpointerup = e => {
     const url = new URL(location)
     if (url.searchParams.has('likes')) {
@@ -2870,6 +2928,8 @@ apply_filter = throttle(apply_filter, 90)
                 const photos_urls = get_ad_img_urls(id)
                 $photos_container.innerHTML = ''
                 $dots.innerHTML = ''
+                photo_total_count = photos_urls.length
+                photo_current_index = 0
                 $photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
                 for (var i = 0; i < photos_urls.length; i++) {
                     var $photo = document.createElement('div')
