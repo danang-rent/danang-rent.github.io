@@ -1637,7 +1637,7 @@ function next_proto_right() {
     }
 }
 function next_proto_left() {
-    if (photo_current_index - 1 > 0) {
+    if (photo_current_index - 1 >= 0) {
         ;[...$dots.children].forEach(_ => _.classList.remove('active'))
         photo_current_index--
         var dx = photo_current_index * 20
