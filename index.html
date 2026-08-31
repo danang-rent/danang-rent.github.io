@@ -2891,6 +2891,7 @@ apply_filter = throttle(apply_filter, 90)
                     layers: ['price-hitbox']
                 })
                 if (!features || !features.length) {
+                    $card.setAttribute('hidden', '')
                     if (current_page == PAGE.SINGLE) {
                         current_page = PAGE.MAIN
                         history.pushState({}, '', '/')
