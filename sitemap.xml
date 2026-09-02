@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-bau-cau-hoa-xuan</loc>
+		<lastmod>2026-09-02</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178527084</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/can-ho-studio-full-noi-that-co-bep-day-du</loc>
 		<lastmod>2026-09-02</lastmod>
 		<changefreq>daily</changefreq>
@@ -12934,12 +12941,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178133371</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-lo-dat-duong-morrison-vi-tri-dep-gan-bien</loc>
-		<lastmod>2026-08-14</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178133160</dk:id>
 	</url>
 </urlset>
