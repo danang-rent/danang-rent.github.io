@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788477551611'
+    const VER_WASM = '1788494582083'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '2b281160ecf756ad65a6649c4dd88ce7152bfc599b53e38bfae28e02da6861c0'// contact spirin.vladimir@gmail.com
+        const KEY = '35a01067030004af2ced6902f1bb58e87c13801372aafe188d3d9d5210ba46e9'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -620,7 +620,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"Cho thuê phòng trung tâm giao Ông Ích Khiêm, sát chợ Cồn, siêu thị GO",
             "url":"https://danang.kim/id/cho-thue-phong-trung-tam-giao-ong-ich-khiem-sat-cho-con-sieu-thi-go",
-			"price":"6500000",
+			"price":"6000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -750,10 +750,12 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            background-color: rgba(2, 2, 2, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
             height: 25vh;
             width: 100%;
             bottom: 0;
+            border-top-left-radius: 1vh;
+            border-top-right-radius: 1vh;
             container-type: size;
         }
         #photo {
@@ -762,6 +764,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 20vh;
             bottom: 2.5vh;
             left: 2.5vh;
+            border-radius: 1vh;
             overflow-x: hidden;
         }
         #photos_container {
@@ -1098,7 +1101,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê phòng trung tâm giao Ông Ích Khiêm, sát chợ Cồn, siêu thị GO</h1><p>Cho Thuê Phòng đường Đào Duy Từ, Thanh Khê, Đà Nẵng 
+<div id="map"></div><article><h1>Cho thuê phòng trung tâm giao Ông Ích Khiêm, sát chợ Cồn, siêu thị GO</h1><p>Cho Thuê Phòng mới 100% đường Đào Duy Từ, Thanh Khê, Đà Nẵng 
 Vị trí trung tâm TP, giao đường Ông Ích Khiêm, Hải Châu
 Diện tích 25m2 
 Công năng gồm 1WC, Bếp, Gác lửng.
