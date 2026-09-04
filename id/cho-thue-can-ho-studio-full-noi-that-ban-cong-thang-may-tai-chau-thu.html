@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788528780573'
+    const VER_WASM = '1788543712465'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'f358a373dd70df8e9061734f58ec87b138e0f5e61f1a1f75e1abf806ebd2c9df'// contact spirin.vladimir@gmail.com
+        const KEY = 'fba33bcb601ed29d02e7a7455d8b871ea1274ff5eeb2724ac2a8bb99edebe93b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -762,6 +762,33 @@ Prices are expressed in Vietnamese dong (VND).
             border-top-right-radius: 1vh;
             container-type: size;
         }
+        #card_info {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            bottom: 0;
+            width: 100%;
+            height: 25vh;
+            padding: 2.5vh;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-top-left-radius: 1vh;
+            border-top-right-radius: 1vh;
+            container-type: size;
+        }
+        #mover {
+            position: absolute;
+            background-color: white;
+            border-radius: 1vh;
+            width: 20%;
+            left: 40%;
+            top: 1vh;
+            height: 0.5vh;
+            transition: transform 0.1s ease;
+        }
+        #mover.drag {
+            transform: scale(2, 1);
+        }
         #photo {
             flex: 0 0 auto;
             height: 100%;
@@ -808,21 +835,12 @@ Prices are expressed in Vietnamese dong (VND).
             opacity: 1;
         }
         #price {
-            position: absolute;
+            display: flex;
             color: var(--filter-color);
-            height: auto;
-            width: auto;
-            top: 2.5vh;
-            left: calc(2.5vh + 20vh + 2.5vh);
             font-size: 15cqh;
         }
         #m2 {
-            position: absolute;
-            color: var(--filter-color);
-            height: auto;
-            width: auto;
-            left: calc(2.5vh + 20vh + 2.5vh);
-            bottom: 2.5vh;
+            display: flex;
             font-size: 10cqh;
         }
         #contact {
@@ -1276,12 +1294,15 @@ Nước: 50.000đ/người
 </div>
 <div id="toast" hidden></div>
 <div id="card" hidden>
+    <div id="mover"></div>
     <div id="photo">
         <div id="photos_container"></div>
     </div>
     <div id="dots"></div>
-    <div id="price"></div>
-    <div id="m2"></div>
+    <div id="card_info">
+        <div id="price"></div>
+        <div id="m2"></div>
+    </div>
     <div id="title" hidden></div>
     <a id="contact" target="_blank">
         <img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png">
@@ -1317,6 +1338,7 @@ const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
 const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
+const $mover = document.getElementById('mover')
 const $photo = document.getElementById('photo')
 const $photos_container = document.getElementById('photos_container')
 const $price = document.getElementById('price')
@@ -1629,13 +1651,63 @@ window.addEventListener('appinstalled', () => {
 $toggler_cards.onclick = () => {}
 $card_close.onclick = () => $card.setAttribute('hidden', '')
 
+var card_height = null
+var y_card_max = null
+var y_card_min = null
+var detect_y_card_min = false
+new ResizeObserver(() => {
+    var rect = $card.getBoundingClientRect()
+    card_height = rect.height
+    if (!y_card_min || detect_y_card_min == false) {
+        detect_y_card_min = true
+        y_card_min = card_height
+    }
+    y_card_max = Math.min(rect.width, window.innerHeight)
+}).observe($card)
+
+var mover_start_t = null
+var mover_end_t = null
+var mover_start_y = 0
+var mover_prev_y = 0
+var mover_prev_prev_y = 0
+var mover_end_y = 0
+$mover.ontouchstart = e => {
+    $mover.classList.add('drag')
+    mover_start_y = e.changedTouches[0].screenY
+    mover_start_t = Date.now()
+}
+$mover.ontouchmove = e => {
+    e.preventDefault()
+    mover_prev_prev_y = mover_prev_y 
+    mover_prev_y = e.changedTouches[0].screenY
+    
+    dy = mover_prev_y - mover_start_y
+    var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
+    $card.style.height = y + 'px'
+}
+$mover.ontouchend = e => {
+    $mover.classList.remove('drag')
+    mover_end_t = Date.now()
+    var dt = mover_end_t - mover_start_t
+    if (dt > 1000) return
+    mover_end_y = e.changedTouches[0].screenY
+    var dy = mover_end_y - mover_prev_prev_y
+    if (dy == 0) return
+    $card.style.height = (dy > 0
+        ? y_card_min
+        : y_card_max) + 'px'
+    $price.toggleAttribute('hidden', dy < 0)
+    $m2.toggleAttribute('hidden', dy < 0)
+    $contact.toggleAttribute('hidden', dy < 0)
+}
+
 window.photo_current_index = null
 window.photo_total_count = null
 
 var photo_size = null
 new ResizeObserver(() => {
     photo_size = $photo.getBoundingClientRect().width
-    //slide_to
+    to_current()
 }).observe($photo)
 
 var touch_start_x = 0
@@ -1715,9 +1787,8 @@ $dots.onclick = e => {
     ;[...$dots.children].forEach(_ => _.classList.remove('active'))
     
     photo_current_index = index
-    var dx = photo_current_index * 20
-    $photos_container.style.transform = `translate3d(-${dx}vh,0,0)`
-    
+    var x = photo_current_index * photo_size
+    $photos_container.style.transform = `translate3d(-${x}px,0,0)`
     $dots.children[photo_current_index].classList.add('active')
 }
 
