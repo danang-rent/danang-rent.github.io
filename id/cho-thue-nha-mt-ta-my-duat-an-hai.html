@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788477551611'
+    const VER_WASM = '1788494582083'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '2b281160ecf756ad65a6649c4dd88ce7152bfc599b53e38bfae28e02da6861c0'// contact spirin.vladimir@gmail.com
+        const KEY = '35a01067030004af2ced6902f1bb58e87c13801372aafe188d3d9d5210ba46e9'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -620,7 +620,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"🏡 CHO THUÊ NHÀ MT TẠ MỸ DUẬT – AN HẢI",
             "url":"https://danang.kim/id/cho-thue-nha-mt-ta-my-duat-an-hai",
-			"price":"18000000",
+			"price":"16000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -750,10 +750,12 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            background-color: rgba(2, 2, 2, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
             height: 25vh;
             width: 100%;
             bottom: 0;
+            border-top-left-radius: 1vh;
+            border-top-right-radius: 1vh;
             container-type: size;
         }
         #photo {
@@ -762,6 +764,7 @@ Prices are expressed in Vietnamese dong (VND).
             width: 20vh;
             bottom: 2.5vh;
             left: 2.5vh;
+            border-radius: 1vh;
             overflow-x: hidden;
         }
         #photos_container {
@@ -1106,7 +1109,8 @@ Prices are expressed in Vietnamese dong (VND).
 * Không gian thoáng, phù hợp ở gia đình hoặc chuyên gia nước ngoài
 * Khu dân cư yên tĩnh, gần biển, thuận tiện di chuyển
 
-💰 Giá thuê: 18 triệu/tháng</p></article>
+💰 Giá thuê: 16 triệu/tháng
+</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
