@@ -1202,8 +1202,8 @@ Prices are expressed in Vietnamese dong (VND).
     </svg>
     <svg hidden id="icon-dong" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
         <circle cx="12" cy="12" r="11" fill="none"/>
-        <text x="12" y="12" dy=".06em"
-        font-size="clamp(100%, 10vw, 160%)"
+        <text x="12" y="12"
+        font-size="clamp(100%, calc(90% + 1vw), 160%)"
         stroke="currentColor"
         stroke-width="0"
         dominant-baseline="central"
@@ -3034,22 +3034,29 @@ apply_filter = throttle(apply_filter, 90)
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
                 const photos_urls = get_ad_img_urls(id)
-                $photos_container.innerHTML = ''
+                //$photos_container.innerHTML = ''
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
                 photo_current_index = 0
                 $photos_container.style.transform = `translate3d(0,0,0)`
                 //$photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
-                for (var i = 0; i < photos_urls.length; i++) {
-                    var $photo = document.createElement('div')
-                    $photo.className = 'photo'
-                    $photo.style.left = `calc(${i} * 20vh)`
-                    $photo.style.backgroundImage = `url("${photos_urls[i]}")`
-                    $photos_container.appendChild($photo)
+                for (var i = 0, $photo; i < photos_urls.length; i++) {
+                    if ($photos_container.children[i]) {
+                        $photo = $photos_container.children[i]
+                        $photo.style.backgroundImage = `url("${photos_urls[i]}")`
+                    } else {
+                        $photo = document.createElement('div')
+                        $photo.className = 'photo'
+                        $photo.style.backgroundImage = `url("${photos_urls[i]}")`
+                        $photos_container.appendChild($photo)
+                    }
                     var $dot = document.createElement('div')
                     $dot.className = 'dot'
                     $dots.appendChild($dot)
                     if (i == 0) $dot.classList.add('active')
+                }
+                while ($photos_container.children.length > photos_urls.length) {
+                    $photos_container.lastElementChild.remove()
                 }
                 $price.textContent = `${(price / 1e6).toFixed(1).replace('.0', '').replace('.', ',')} triệu/tháng`
                 $m2.textContent = `${ad.m2} m²`
