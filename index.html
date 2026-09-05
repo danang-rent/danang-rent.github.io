@@ -3038,7 +3038,8 @@ apply_filter = throttle(apply_filter, 90)
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
                 photo_current_index = 0
-                $photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
+                $photos_container.style.transform = `translate3d(0,0,0)`
+                //$photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
                 for (var i = 0; i < photos_urls.length; i++) {
                     var $photo = document.createElement('div')
                     $photo.className = 'photo'
@@ -3149,7 +3150,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=6')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=9')
 </script>
 </body>
 </html>
