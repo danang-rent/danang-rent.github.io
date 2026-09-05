@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/042-cho-thue-nha-4-tang-mat-tien-nguyen-nhan</loc>
+		<lastmod>2026-09-05</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178590108</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-phong-tro</loc>
 		<lastmod>2026-09-05</lastmod>
 		<changefreq>daily</changefreq>
@@ -103,13 +110,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178455043</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-2-phong-ngu-vip-full-noi-that</loc>
-		<lastmod>2026-09-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178584281</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1pn-khu-do-thi-fpt-gan-truong-dai-hoc-fpt</loc>
@@ -9555,13 +9555,6 @@
 		<dk:id>178347093</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-moi-keng-vao-o-ngay-sat-bien</loc>
-		<lastmod>2026-08-24</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178298526</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/nha-5-tang-mt-hoang-dieu-2-chieu-nha-moi-dep-co-thang-may</loc>
 		<lastmod>2026-08-24</lastmod>
 		<changefreq>daily</changefreq>
@@ -10064,13 +10057,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178335653</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-quan-caphe-view-song-nha-vuon-go</loc>
-		<lastmod>2026-08-24</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178298508</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-the-ponte-2pn-82m-view-cau-rong-full-noi-that-30tr-thang</loc>
@@ -11254,6 +11240,13 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178311898</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/nha-nguyen-can-kiet-oto-to-hien-thanh</loc>
+		<lastmod>2026-08-22</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178311884</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/nha-trong-suot-80m2-mat-tien-le-thach</loc>
