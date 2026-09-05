@@ -782,10 +782,6 @@ Prices are expressed in Vietnamese dong (VND).
             left: 40%;
             top: 1vh;
             height: 0.5vh;
-            transition: transform 0.1s ease;
-        }
-        #mover.drag {
-            transform: scale(2, 1);
         }
         #photo {
             flex: 0 0 auto;
@@ -1311,7 +1307,6 @@ const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
 const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
-const $mover = document.getElementById('mover')
 const $photo = document.getElementById('photo')
 const $photos_container = document.getElementById('photos_container')
 const $price = document.getElementById('price')
@@ -1644,12 +1639,13 @@ var mover_start_y = 0
 var mover_prev_y = 0
 var mover_prev_prev_y = 0
 var mover_end_y = 0
-$mover.ontouchstart = e => {
-    $mover.classList.add('drag')
+$card.ontouchstart = e => {
+    if (e.target.classList.contains('photo')) return
     mover_start_y = e.changedTouches[0].screenY
     mover_start_t = Date.now()
 }
-$mover.ontouchmove = e => {
+$card.ontouchmove = e => {
+    if (e.target.classList.contains('photo')) return
     e.preventDefault()
     mover_prev_prev_y = mover_prev_y 
     mover_prev_y = e.changedTouches[0].screenY
@@ -1658,8 +1654,8 @@ $mover.ontouchmove = e => {
     var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
     $card.style.height = y + 'px'
 }
-$mover.ontouchend = e => {
-    $mover.classList.remove('drag')
+$card.ontouchend = e => {
+    if (e.target.classList.contains('photo')) return
     mover_end_t = Date.now()
     var dt = mover_end_t - mover_start_t
     if (dt > 1000) return
