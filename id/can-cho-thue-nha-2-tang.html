@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788569854290'
+    const VER_WASM = '1788586764908'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'af9e43a1c63e7248a67fabf68e5bf8b8dd7e1d555bf46d94bebb6999961e40ba'// contact spirin.vladimir@gmail.com
+        const KEY = 'e704304874a96a8401240e68b8ab7a1f72d9bef8bcfbcd61c0e2ebb139bf7ac8'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -779,15 +779,11 @@ Prices are expressed in Vietnamese dong (VND).
         #mover {
             position: absolute;
             background-color: white;
-            border-radius: 1vh;
-            width: 20%;
-            left: 40%;
-            top: 1vh;
-            height: 0.5vh;
-            transition: transform 0.1s ease;
-        }
-        #mover.drag {
-            transform: scale(2, 1);
+            border-radius: 4px;
+            width: 40px;
+            left: calc(50% - 20px);
+            height: 4px;
+            top: 8px;
         }
         #photo {
             flex: 0 0 auto;
@@ -1206,8 +1202,8 @@ Lề 3m , nhà mới sạch sẽ</p></article>
     </svg>
     <svg hidden id="icon-dong" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
         <circle cx="12" cy="12" r="11" fill="none"/>
-        <text x="12" y="12" dy=".06em"
-        font-size="clamp(100%, 10vw, 160%)"
+        <text x="12" y="12"
+        font-size="clamp(100%, calc(90% + 1vw), 160%)"
         stroke="currentColor"
         stroke-width="0"
         dominant-baseline="central"
@@ -1315,7 +1311,6 @@ const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
 const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
-const $mover = document.getElementById('mover')
 const $photo = document.getElementById('photo')
 const $photos_container = document.getElementById('photos_container')
 const $price = document.getElementById('price')
@@ -1626,21 +1621,24 @@ window.addEventListener('appinstalled', () => {
 })
 
 $toggler_cards.onclick = () => {}
-$card_close.onclick = () => $card.setAttribute('hidden', '')
+$card_close.onclick = () => {
+    $card.setAttribute('hidden', '')
+    if (y_card_min) $card.style.height = y_card_min + 'px'
+}
 
 var card_height = null
 var y_card_max = null
 var y_card_min = null
 var detect_y_card_min = false
-new ResizeObserver(() => {
-    var rect = $card.getBoundingClientRect()
-    card_height = rect.height
-    if (!y_card_min || detect_y_card_min == false) {
-        detect_y_card_min = true
-        y_card_min = card_height
-    }
-    y_card_max = Math.min(rect.width, window.innerHeight)
-}).observe($card)
+//new ResizeObserver(() => {
+//    var rect = $card.getBoundingClientRect()
+//    card_height = rect.height
+//    if (!y_card_min || detect_y_card_min == false) {
+//        detect_y_card_min = true
+//        y_card_min = card_height
+//    }
+//    y_card_max = Math.min(rect.width, window.innerHeight)
+//}).observe($card)
 
 var mover_start_t = null
 var mover_end_t = null
@@ -1648,12 +1646,20 @@ var mover_start_y = 0
 var mover_prev_y = 0
 var mover_prev_prev_y = 0
 var mover_end_y = 0
-$mover.ontouchstart = e => {
-    $mover.classList.add('drag')
+$card.ontouchstart = e => {
+    if (e.target.classList.contains('photo')) return
     mover_start_y = e.changedTouches[0].screenY
     mover_start_t = Date.now()
+    var rect = $card.getBoundingClientRect()
+    card_height = rect.height
+    if (!y_card_min || detect_y_card_min == false) {
+        detect_y_card_min = true
+        y_card_min = card_height
+    }
+    y_card_max = Math.min(rect.width, window.innerHeight)
 }
-$mover.ontouchmove = e => {
+$card.ontouchmove = e => {
+    if (e.target.classList.contains('photo')) return
     e.preventDefault()
     mover_prev_prev_y = mover_prev_y 
     mover_prev_y = e.changedTouches[0].screenY
@@ -1662,8 +1668,8 @@ $mover.ontouchmove = e => {
     var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
     $card.style.height = y + 'px'
 }
-$mover.ontouchend = e => {
-    $mover.classList.remove('drag')
+$card.ontouchend = e => {
+    if (e.target.classList.contains('photo')) return
     mover_end_t = Date.now()
     var dt = mover_end_t - mover_start_t
     if (dt > 1000) return
@@ -1688,21 +1694,24 @@ new ResizeObserver(() => {
 }).observe($photo)
 
 var touch_start_x = 0
+var touch_start_y = 0
 var touch_prev_x = 0
 var touch_prev_prev_x = 0
 var dx = 0
+var dy = 0
 var x_photo_min = null
 var x_photo_max = null
 var cur_x
 $photo.ontouchstart = e => {
     touch_start_x = e.changedTouches[0].screenX
+    touch_start_y = e.changedTouches[0].screenY
     $photos_container.style.transition = 'none'
     x_photo_min = 0
     x_photo_max = (photo_total_count - 1) * photo_size
     cur_x = photo_current_index * photo_size
 }
 $photo.ontouchmove = e => {
-    touch_prev_prev_x = touch_prev_x 
+    touch_prev_prev_x = touch_prev_x
     touch_prev_x = e.changedTouches[0].screenX
     
     dx = touch_prev_x - touch_start_x
@@ -1712,10 +1721,12 @@ $photo.ontouchmove = e => {
 $photo.ontouchend = e => {
     $photos_container.style.transition = 'transform 0.25s ease'
     var touch_end_x = e.changedTouches[0].screenX
+    var touch_end_y = e.changedTouches[0].screenY
     var last_move_direction = touch_end_x > touch_prev_prev_x
         ? 'left'
         : 'right'
     dx = touch_end_x - touch_start_x
+    dy = touch_end_y - touch_start_y
     var frames = Math.ceil(Math.abs(dx / photo_size))
     if (last_move_direction == 'right') {
         if (dx > 0) to_current() 
@@ -1723,6 +1734,10 @@ $photo.ontouchend = e => {
     } else {
         if (dx < 0) to_current() 
         next_proto_left(frames)
+    }
+    if (dy > dx) {
+        if (dy > 0 && y_card_min) $card.style.height = y_card_min + 'px'
+        if (dy < 0 && y_card_max) $card.style.height = y_card_max + 'px'
     }
 }
 
@@ -3038,21 +3053,29 @@ apply_filter = throttle(apply_filter, 90)
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
                 const photos_urls = get_ad_img_urls(id)
-                $photos_container.innerHTML = ''
+                //$photos_container.innerHTML = ''
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
                 photo_current_index = 0
-                $photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
-                for (var i = 0; i < photos_urls.length; i++) {
-                    var $photo = document.createElement('div')
-                    $photo.className = 'photo'
-                    $photo.style.left = `calc(${i} * 20vh)`
-                    $photo.style.backgroundImage = `url("${photos_urls[i]}")`
-                    $photos_container.appendChild($photo)
+                $photos_container.style.transform = `translate3d(0,0,0)`
+                //$photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
+                for (var i = 0, $photo; i < photos_urls.length; i++) {
+                    if ($photos_container.children[i]) {
+                        $photo = $photos_container.children[i]
+                        $photo.style.backgroundImage = `url("${photos_urls[i]}")`
+                    } else {
+                        $photo = document.createElement('div')
+                        $photo.className = 'photo'
+                        $photo.style.backgroundImage = `url("${photos_urls[i]}")`
+                        $photos_container.appendChild($photo)
+                    }
                     var $dot = document.createElement('div')
                     $dot.className = 'dot'
                     $dots.appendChild($dot)
                     if (i == 0) $dot.classList.add('active')
+                }
+                while ($photos_container.children.length > photos_urls.length) {
+                    $photos_container.lastElementChild.remove()
                 }
                 $price.textContent = `${(price / 1e6).toFixed(1).replace('.0', '').replace('.', ',')} triệu/tháng`
                 $m2.textContent = `${ad.m2} m²`
@@ -3064,6 +3087,7 @@ apply_filter = throttle(apply_filter, 90)
                 })
                 if (!features || !features.length) {
                     $card.setAttribute('hidden', '')
+                    if (y_card_min) $card.style.height = y_card_min + 'px'
                     if (current_page == PAGE.SINGLE) {
                         current_page = PAGE.MAIN
                         history.pushState({}, '', '/')
@@ -3153,7 +3177,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=6')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=9')
 </script>
 </body>
 </html>
