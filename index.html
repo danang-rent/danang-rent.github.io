@@ -777,11 +777,11 @@ Prices are expressed in Vietnamese dong (VND).
         #mover {
             position: absolute;
             background-color: white;
-            border-radius: 1vh;
-            width: 20%;
-            left: 40%;
-            top: 1vh;
-            height: 0.5vh;
+            border-radius: 4px;
+            width: 40px;
+            left: calc(50% - 20px);
+            height: 4px;
+            top: 8px;
         }
         #photo {
             flex: 0 0 auto;
@@ -1617,21 +1617,24 @@ window.addEventListener('appinstalled', () => {
 })
 
 $toggler_cards.onclick = () => {}
-$card_close.onclick = () => $card.setAttribute('hidden', '')
+$card_close.onclick = () => {
+    $card.setAttribute('hidden', '')
+    if (y_card_min) $card.style.height = y_card_min + 'px'
+}
 
 var card_height = null
 var y_card_max = null
 var y_card_min = null
 var detect_y_card_min = false
-new ResizeObserver(() => {
-    var rect = $card.getBoundingClientRect()
-    card_height = rect.height
-    if (!y_card_min || detect_y_card_min == false) {
-        detect_y_card_min = true
-        y_card_min = card_height
-    }
-    y_card_max = Math.min(rect.width, window.innerHeight)
-}).observe($card)
+//new ResizeObserver(() => {
+//    var rect = $card.getBoundingClientRect()
+//    card_height = rect.height
+//    if (!y_card_min || detect_y_card_min == false) {
+//        detect_y_card_min = true
+//        y_card_min = card_height
+//    }
+//    y_card_max = Math.min(rect.width, window.innerHeight)
+//}).observe($card)
 
 var mover_start_t = null
 var mover_end_t = null
@@ -1643,6 +1646,13 @@ $card.ontouchstart = e => {
     if (e.target.classList.contains('photo')) return
     mover_start_y = e.changedTouches[0].screenY
     mover_start_t = Date.now()
+    var rect = $card.getBoundingClientRect()
+    card_height = rect.height
+    if (!y_card_min || detect_y_card_min == false) {
+        detect_y_card_min = true
+        y_card_min = card_height
+    }
+    y_card_max = Math.min(rect.width, window.innerHeight)
 }
 $card.ontouchmove = e => {
     if (e.target.classList.contains('photo')) return
@@ -3064,6 +3074,7 @@ apply_filter = throttle(apply_filter, 90)
                 })
                 if (!features || !features.length) {
                     $card.setAttribute('hidden', '')
+                    if (y_card_min) $card.style.height = y_card_min + 'px'
                     if (current_page == PAGE.SINGLE) {
                         current_page = PAGE.MAIN
                         history.pushState({}, '', '/')
