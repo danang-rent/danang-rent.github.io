@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788652356482'
+    const VER_WASM = '1788667505038'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'b26d4857740c1a8de8705f7fea6c6e88b711f22d866cda20f153abccf3e1b93d'// contact spirin.vladimir@gmail.com
+        const KEY = 'c2aad0e4cd61e6a9c96e8248688f7174dc6fead01c6df105237c1609fe675a90'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -3067,13 +3067,18 @@ apply_filter = throttle(apply_filter, 90)
                 window.card_id = id
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
-                const photos_urls = get_ad_img_urls(id)
-                //$photos_container.innerHTML = ''
+                var photos_urls
+                try {
+                    photos_urls = get_ad_img_urls(id)
+                    navigator.serviceWorker.controller.postMessage({type: 'PHOTO_PRIORITY', url: photos_urls[0]})
+                } catch (e) {
+                    console.error(`ERROR: get_ad_img_urls(${id}) ${url}`)
+                    photos_urls = []
+                }
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
                 photo_current_index = 0
                 $photos_container.style.transform = `translate3d(0,0,0)`
-                //$photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
                 for (var i = 0, $photo; i < photos_urls.length; i++) {
                     if ($photos_container.children[i]) {
                         $photo = $photos_container.children[i]
@@ -3192,7 +3197,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=9')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=14')
 </script>
 </body>
 </html>
