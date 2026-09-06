@@ -3051,15 +3051,15 @@ apply_filter = throttle(apply_filter, 90)
                 var photos_urls
                 try {
                     photos_urls = get_ad_img_urls(id)
+                    navigator.serviceWorker.controller.postMessage({type: 'PHOTO_PRIORITY', url: photos_urls[0]})
                 } catch (e) {
                     console.error(`ERROR: get_ad_img_urls(${id}) ${url}`)
+                    photos_urls = []
                 }
-                //$photos_container.innerHTML = ''
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
                 photo_current_index = 0
                 $photos_container.style.transform = `translate3d(0,0,0)`
-                //$photos_container.style.width = `calc(${photos_urls.length} * 20vh)`
                 for (var i = 0, $photo; i < photos_urls.length; i++) {
                     if ($photos_container.children[i]) {
                         $photo = $photos_container.children[i]
@@ -3178,7 +3178,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=10')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=14')
 </script>
 </body>
 </html>
