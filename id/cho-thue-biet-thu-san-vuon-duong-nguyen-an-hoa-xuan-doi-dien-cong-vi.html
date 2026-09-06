@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788667505038'
+    const VER_WASM = '1788684283084'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'c2aad0e4cd61e6a9c96e8248688f7174dc6fead01c6df105237c1609fe675a90'// contact spirin.vladimir@gmail.com
+        const KEY = 'd4bd704f9a62f36e2ebd3dbd9499b688a71cee0777e4a7940e21dc01b218e209'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -638,11 +638,13 @@ Prices are expressed in Vietnamese dong (VND).
             --text-color: black;
             --text-color-inverse: white;
             --filter-color: black;
+            --card-background-color: rgb(194,200,202);
         }
         html[dark] {
             --text-color: white;
             --text-color-inverse: black;
             --filter-color: white;
+            --card-background-color: rgb(27,27,29);
         }
         :root {
             --status-bar-height: env(safe-area-inset-top, 0px);
@@ -752,28 +754,34 @@ Prices are expressed in Vietnamese dong (VND).
             position: fixed;
             bottom: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             width: 100%;
-            height: 25vh;
-            padding: 2.5vh;
+            height: 20vh;
+            padding: 1vh;
+            padding-top: 20px;
             box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: var(--card-background-color);
             border-top-left-radius: 1vh;
             border-top-right-radius: 1vh;
+            border-top-color: rgba(255, 255, 255, 0.2);
+            border-top-style: solid;
+            border-top-width: 1px;
             container-type: size;
+        }
+        #card_content {
+            justify-content: center;
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            width: 100%;
+            gap: 1vh;
         }
         #card_info {
             display: flex;
             flex-direction: column;
             justify-content: end;
-            bottom: 0;
             width: 100%;
-            height: 25vh;
-            padding: 2.5vh;
-            box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-top-left-radius: 1vh;
-            border-top-right-radius: 1vh;
             container-type: size;
         }
         #mover {
@@ -786,11 +794,12 @@ Prices are expressed in Vietnamese dong (VND).
             top: 8px;
         }
         #photo {
+            position: relative;
             flex: 0 0 auto;
             height: 100%;
             aspect-ratio: 1;
             overflow: hidden;
-            border-radius: 1vh;
+            border-radius: 4px;
             touch-action: pan-y;
         }
         #photos_container {
@@ -807,25 +816,24 @@ Prices are expressed in Vietnamese dong (VND).
             background-repeat: no-repeat;
         }
         #dots {
+            position: absolute;
             display: flex;
             justify-content: center;
             flex-direction: row;
             align-items: center;
             gap: 0.5vh;
-            position: absolute;
-            height: 2.5vh;
-            width: 20vh;
-            bottom: 0;
-            left: 2.5vh;
+            height: 1.5vh;
+            width: 100%;
+            bottom: 0.5vh;
             overflow-x: hidden;
         }
         .dot {
             display: flex;
-            height: 1vh;
-            width: 1vh;
+            height: 0.6vh;
+            width: 0.6vh;
             background-color: var(--filter-color);
-            border-radius: 0.5vh;
-            opacity: 0.5;
+            border-radius: 0.6vh;
+            opacity: 0.4;
         }
         .dot.active {
             opacity: 1;
@@ -833,11 +841,13 @@ Prices are expressed in Vietnamese dong (VND).
         #price {
             display: flex;
             color: var(--filter-color);
-            font-size: 15cqh;
+            font-size: 12pt;
+            font-family: Inter, Arial, sans-serif;
         }
         #m2 {
             display: flex;
-            font-size: 10cqh;
+            font-size: 10pt;
+            font-family: Inter, Arial, sans-serif;
         }
         #contact {
             position: absolute;
@@ -868,10 +878,10 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card_close {
             position: absolute;
-            top: 2.5vh;
-            right: 2.5vh;
-            width: 3vh;
-            height: 3vh;
+            top: 1vh;
+            right: 1vh;
+            width: 2vh;
+            height: 2vh;
             touch-action: manipulation;
             cursor: pointer;
         }
@@ -1274,23 +1284,25 @@ BĐS NEWLANDS CHUYÊN NHÀ ĐẤT THỔ CƯ ĐÀ NẴNG</p></article>
 <div id="toast" hidden></div>
 <div id="card" hidden>
     <div id="mover"></div>
-    <div id="photo">
-        <div id="photos_container"></div>
-    </div>
-    <div id="dots"></div>
-    <div id="card_info">
-        <div id="price"></div>
-        <div id="m2"></div>
-    </div>
-    <div id="title" hidden></div>
-    <a id="contact" target="_blank">
-        <img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png">
-    </a>
-    <div id="card_close">
-        <svg id="icon-card-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-            <line x1="4" y1="4" x2="20" y2="20"/>
-            <line x1="20" y1="4" x2="4" y2="20"/>
-        </svg>
+    <div id="card_content">
+        <div id="photo">
+            <div id="photos_container"></div>
+            <div id="dots"></div>
+        </div>
+        <div id="card_info" hidden>
+            <div hidden id="price"></div>
+            <div hidden id="m2"></div>
+            <div id="title" hidden></div>
+            <a id="contact" target="_blank">
+                <img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png">
+            </a>
+        </div>
+        <div hidden id="card_close">
+            <svg id="icon-card-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+                <line x1="4" y1="4" x2="20" y2="20"/>
+                <line x1="20" y1="4" x2="4" y2="20"/>
+            </svg>
+        </div>
     </div>
 </div>
 <div id="toggler_cards" hidden>
