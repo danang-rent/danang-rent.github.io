@@ -3048,7 +3048,12 @@ apply_filter = throttle(apply_filter, 90)
                 window.card_id = id
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
-                const photos_urls = get_ad_img_urls(id)
+                var photos_urls
+                try {
+                    photos_urls = get_ad_img_urls(id)
+                } catch (e) {
+                    console.error(`ERROR: get_ad_img_urls(${id}) ${url}`)
+                }
                 //$photos_container.innerHTML = ''
                 $dots.innerHTML = ''
                 photo_total_count = photos_urls.length
@@ -3173,7 +3178,7 @@ apply_filter = throttle(apply_filter, 90)
         })
 
     })
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=9')
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js?v=10')
 </script>
 </body>
 </html>
