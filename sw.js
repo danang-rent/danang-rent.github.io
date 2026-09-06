@@ -2,6 +2,28 @@
 var photos_cache
 caches.open('photos').then(_ => photos_cache = _)
 
+function cache_fetch(URL) {
+    const [url, ver] = URL.split('?')
+    
+    return caches.open(url)
+    .then(cache =>
+        cache.keys()
+        .then(keys => keys[0])
+        .then(r => r?.url.endsWith(ver || '')
+            ? cache.match(r)
+            : Promise.resolve(r && cache.delete(r))
+                .then(() => fetch(URL))
+                .then(response => {
+                    cache.put(URL, response.clone())
+                    return response
+                })
+        )
+    ).catch(e =>
+        console.error(`cache_fetch(${URL})`, e) ||
+        fetch(URL)
+    )
+}
+
 const request_photo = ({url, retry}) =>
     fetch(url, {mode: 'no-cors'})
     .then(r =>
@@ -22,6 +44,8 @@ const request_photo = ({url, retry}) =>
         debugger
         if (retry > 0) {
             return request_photo({url, retry: retry - 1})
+        } else {
+            throw e // for fallback to /photo-default.jpg
         }
     })
 
@@ -44,62 +68,30 @@ self.addEventListener('fetch', event => {
         return
     }
     
-    if (event.request.url.endsWith('manifest.json')) {
+    if (event.request.url.includes('manifest.json')) {
         event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const clone = response.clone()
-                    caches.open('manifest.json').then(cache =>
-                        cache.put('manifest.json', clone)
-                    )
-                    return response
-                })
-                .catch(() => caches.match('manifest.json'))
+            cache_fetch(event.request.url)
         )
         return
     }
 
-    if (event.request.url.endsWith('favicon.ico')) {
+    if (event.request.url.includes('favicon.ico')) {
         event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const clone = response.clone()
-                    caches.open('favicon.ico').then(cache =>
-                        cache.put('favicon.ico', clone)
-                    )
-                    return response
-                })
-                .catch(() => caches.match('favicon.ico'))
+            cache_fetch(event.request.url)
         )
         return
     }
 
-    if (event.request.url.endsWith('icon-192.png')) {
+    if (event.request.url.includes('icon-192.png')) {
         event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const clone = response.clone()
-                    caches.open('icon-192.png').then(cache =>
-                        cache.put('icon-192.png', clone)
-                    )
-                    return response
-                })
-                .catch(() => caches.match('icon-192.png'))
+            cache_fetch(event.request.url)
         )
         return
     }
 
-    if (event.request.url.endsWith('icon-512.png')) {
+    if (event.request.url.includes('icon-512.png')) {
         event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const clone = response.clone()
-                    caches.open('icon-512.png').then(cache =>
-                        cache.put('icon-512.png', clone)
-                    )
-                    return response
-                })
-                .catch(() => caches.match('icon-512.png'))
+            cache_fetch(event.request.url)
         )
         return
     }
