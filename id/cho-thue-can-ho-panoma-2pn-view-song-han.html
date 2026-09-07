@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788753851396'
+    const VER_WASM = '1788772945687'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'db9c769456e665d09dd4927788719c42b68b66073229fe7db6cdb3824da4122c'// contact spirin.vladimir@gmail.com
+        const KEY = '23eaa8772b98c51f1d7926978871d72728df4cff9a4b6506a78a85eb952f5d89'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -752,13 +752,13 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: 0;
+            bottom: -20vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             height: 20vh;
-            padding: 1vh;
+            padding: 10px;
             padding-top: 20px;
             box-sizing: border-box;
             background-color: var(--card-background-color);
@@ -768,9 +768,10 @@ Prices are expressed in Vietnamese dong (VND).
             border-top-style: solid;
             border-top-width: 1px;
             container-type: size;
+            transition: bottom 0.25s ease, height 0.25s ease;
         }
         #card_content {
-            justify-content: center;
+            justify-content: space-between;
             display: flex;
             flex-direction: row;
             height: 100%;
@@ -878,10 +879,10 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card_close {
             position: absolute;
-            top: 1vh;
-            right: 1vh;
-            width: 2vh;
-            height: 2vh;
+            top: 5px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
             touch-action: manipulation;
             cursor: pointer;
         }
@@ -1288,7 +1289,7 @@ Thông tin chi tiết: 🏡 CHO THUÊ PANOMA 2PN – CHỈ 26TR/THÁNG
     </svg>
 </div>
 <div id="toast" hidden></div>
-<div id="card" hidden>
+<div id="card">
     <div id="mover"></div>
     <div id="card_content">
         <div id="photo">
@@ -1303,7 +1304,7 @@ Thông tin chi tiết: 🏡 CHO THUÊ PANOMA 2PN – CHỈ 26TR/THÁNG
                 <img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png">
             </a>
         </div>
-        <div hidden id="card_close">
+        <div id="card_close">
             <svg id="icon-card-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
                 <line x1="4" y1="4" x2="20" y2="20"/>
                 <line x1="20" y1="4" x2="4" y2="20"/>
@@ -1664,23 +1665,26 @@ var detect_y_card_min = false
 //    y_card_max = Math.min(rect.width, window.innerHeight)
 //}).observe($card)
 
-var mover_start_t = null
-var mover_end_t = null
 var mover_start_y = 0
+var mover_start_small = true
+var mover_going_close = undefined
 var mover_prev_y = 0
 var mover_prev_prev_y = 0
 var mover_end_y = 0
 $card.ontouchstart = e => {
     if (e.target.classList.contains('photo')) return
+    $card.style.transition = 'none'
     mover_start_y = e.changedTouches[0].screenY
-    mover_start_t = Date.now()
     var rect = $card.getBoundingClientRect()
     card_height = rect.height
     if (!y_card_min || detect_y_card_min == false) {
         detect_y_card_min = true
         y_card_min = card_height
     }
-    y_card_max = Math.min(rect.width, window.innerHeight)
+    y_card_max = Math.min(rect.width, 0.75 * window.innerHeight) +
+        10 // addition for mover then aspect 1:1 for photo would be correct
+        // where 10px is diff between padding and top padding
+    mover_going_close = undefined
 }
 $card.ontouchmove = e => {
     if (e.target.classList.contains('photo')) return
@@ -1689,23 +1693,51 @@ $card.ontouchmove = e => {
     mover_prev_y = e.changedTouches[0].screenY
     
     dy = mover_prev_y - mover_start_y
-    var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
-    $card.style.height = y + 'px'
+    if (dy == 0) return
+    
+    var h = +$card.style.height.replace('px', '') || y_card_min
+    var bottom = +$card.style.bottom.replace('px', '') || 0
+    var last_move_direction = dy > 0
+        ? 'down'
+        : 'up'
+
+    if (mover_going_close == undefined) {
+        mover_going_close = mover_start_small &&
+        last_move_direction == 'down'
+    }
+    
+    if (mover_going_close) {
+        var y = Math.max(0, Math.min(h, dy))
+        $card.style.bottom = `-${y}px`
+    } else {
+        var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
+        $card.style.height = `${y}px`
+    }
 }
 $card.ontouchend = e => {
     if (e.target.classList.contains('photo')) return
-    mover_end_t = Date.now()
-    var dt = mover_end_t - mover_start_t
-    if (dt > 1000) return
+    $card.style.transition = 'bottom 0.25s ease, height 0.25s ease'
     mover_end_y = e.changedTouches[0].screenY
-    var dy = mover_end_y - mover_prev_prev_y
-    if (dy == 0) return
-    $card.style.height = (dy > 0
-        ? y_card_min
-        : y_card_max) + 'px'
-    $price.toggleAttribute('hidden', dy < 0)
-    $m2.toggleAttribute('hidden', dy < 0)
-    $contact.toggleAttribute('hidden', dy < 0)
+    var h = +$card.style.height.replace('px', '') || y_card_min
+    var last_move_direction = mover_end_y > mover_prev_prev_y
+        ? 'down'
+        : 'up'
+
+    if (mover_going_close) {
+        $card.style.bottom = last_move_direction == 'down'
+            ? `-${y_card_min}px`
+            : 0
+    } else {
+        if (last_move_direction == 'down') {
+            mover_start_small = true
+            $card.style.height = y_card_min + 'px'
+            //$card_info.removeAttribute('hidden')
+        } else {
+            mover_start_small = false
+            $card.style.height = y_card_max + 'px'
+            //$card_info.setAttribute('hidden', '')
+        }
+    }
 }
 
 window.photo_current_index = null
@@ -1713,6 +1745,7 @@ window.photo_total_count = null
 
 var photo_size = null
 new ResizeObserver(() => {
+    $photos_container.style.transition = 'none'
     photo_size = $photo.getBoundingClientRect().width
     to_current()
 }).observe($photo)
@@ -1745,12 +1778,12 @@ $photo.ontouchmove = e => {
 $photo.ontouchend = e => {
     $photos_container.style.transition = 'transform 0.25s ease'
     var touch_end_x = e.changedTouches[0].screenX
-    var touch_end_y = e.changedTouches[0].screenY
+    //var touch_end_y = e.changedTouches[0].screenY
     var last_move_direction = touch_end_x > touch_prev_prev_x
         ? 'left'
         : 'right'
     dx = touch_end_x - touch_start_x
-    dy = touch_end_y - touch_start_y
+    //dy = touch_end_y - touch_start_y
     var frames = Math.ceil(Math.abs(dx / photo_size))
     if (last_move_direction == 'right') {
         if (dx > 0) to_current() 
@@ -1759,10 +1792,10 @@ $photo.ontouchend = e => {
         if (dx < 0) to_current() 
         next_proto_left(frames)
     }
-    if (dy > dx) {
-        if (dy > 0 && y_card_min) $card.style.height = y_card_min + 'px'
-        if (dy < 0 && y_card_max) $card.style.height = y_card_max + 'px'
-    }
+    //if (dy > dx) {
+    //    if (dy > 0 && y_card_min) $card.style.height = y_card_min + 'px'
+    //    if (dy < 0 && y_card_max) $card.style.height = y_card_max + 'px'
+    //}
 }
 
 
@@ -3076,6 +3109,7 @@ apply_filter = throttle(apply_filter, 90)
                 window.card_id = id
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
+                $card.style.bottom = 0
                 var photos_urls
                 try {
                     photos_urls = get_ad_img_urls(id)
