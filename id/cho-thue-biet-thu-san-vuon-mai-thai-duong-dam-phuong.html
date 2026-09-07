@@ -337,7 +337,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1788772945687'
+    const VER_WASM = '1788796294204'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -445,7 +445,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '23eaa8772b98c51f1d7926978871d72728df4cff9a4b6506a78a85eb952f5d89'// contact spirin.vladimir@gmail.com
+        const KEY = '2f9436b08db01b7c4229fb00888711e17cd38443394b45ea9d2b9d826d6f3b23'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -481,13 +481,14 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
+            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
             dup_map.set(key, dup_set)
             if (price < limit$.min) limit$.min = price
             if (price > limit$.max) limit$.max = price
-            ads[i / ad_size] = { id, price, longitude, latitude, m2 }
+            ads[i / ad_size] = { id, price, longitude, latitude, m2, publish }
         }
         dup_map.forEach((dup_set, key) =>
             dup_set.size == 1 &&
@@ -776,12 +777,13 @@ Prices are expressed in Vietnamese dong (VND).
             flex-direction: row;
             height: 100%;
             width: 100%;
-            gap: 1vh;
+            gap: 2vh;
         }
         #card_info {
             display: flex;
             flex-direction: column;
             justify-content: end;
+            gap: 1vh;
             width: 100%;
             container-type: size;
         }
@@ -801,7 +803,7 @@ Prices are expressed in Vietnamese dong (VND).
             aspect-ratio: 1;
             overflow: hidden;
             border-radius: 4px;
-            touch-action: pan-y;
+            touch-action: none;
         }
         #photos_container {
             display: flex;
@@ -839,24 +841,17 @@ Prices are expressed in Vietnamese dong (VND).
         .dot.active {
             opacity: 1;
         }
-        #price {
+        .card-info-row {
             display: flex;
-            color: var(--filter-color);
+            justify-content: space-between;
+            width: 100%;
+            /*font-weight: bold;*/
             font-size: 12pt;
             font-family: Inter, Arial, sans-serif;
-        }
-        #m2 {
-            display: flex;
-            font-size: 10pt;
-            font-family: Inter, Arial, sans-serif;
+            color: var(--filter-color);
         }
         #contact {
-            position: absolute;
             color: var(--filter-color);
-            height: 28px;
-            width: 104px;
-            bottom: 2.5vh;
-            right: 2.5vh;
         }
         #filter {
             bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh);
@@ -1293,13 +1288,26 @@ Nhận khách nước ngoài
             <div id="photos_container"></div>
             <div id="dots"></div>
         </div>
-        <div id="card_info" hidden>
-            <div hidden id="price"></div>
-            <div hidden id="m2"></div>
-            <div id="title" hidden></div>
-            <a id="contact" target="_blank">
-                <img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png">
-            </a>
+        <div id="card_info">
+            <div class="card-info-row">
+                <div>Price</div>
+                <div id="price"></div>
+            </div>
+            <div class="card-info-row">
+                <div>Size</div>
+                <div id="m2"></div>
+            </div>
+            <div class="card-info-row">
+                <div>Publish</div>
+                <div id="publish">3 hours</div>
+            </div>
+            <div class="card-info-row">
+                <div>Contact</div>
+                <a id="contact" target="_blank">
+                    NhaTot
+                    <!--img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png"-->
+                </a>
+            </div>    
         </div>
         <div id="card_close">
             <svg id="icon-card-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
@@ -1333,11 +1341,13 @@ const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
 const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
+const $card_info = document.getElementById('card_info')
 const $photo = document.getElementById('photo')
 const $photos_container = document.getElementById('photos_container')
 const $price = document.getElementById('price')
 const $dots = document.getElementById('dots')
 const $m2 = document.getElementById('m2')
+const $publish = document.getElementById('publish')
 const $title = document.getElementById('title')
 const $contact = document.getElementById('contact')
 const $card_close = document.getElementById('card_close')
@@ -1728,11 +1738,11 @@ $card.ontouchend = e => {
         if (last_move_direction == 'down') {
             mover_start_small = true
             $card.style.height = y_card_min + 'px'
-            //$card_info.removeAttribute('hidden')
+            $card_info.removeAttribute('hidden')
         } else {
             mover_start_small = false
             $card.style.height = y_card_max + 'px'
-            //$card_info.setAttribute('hidden', '')
+            $card_info.setAttribute('hidden', '')
         }
     }
 }
@@ -2130,6 +2140,32 @@ function throttle(func, wait, options) {
   };
 
   return throttled;
+}
+
+ago = t => {
+    var dt = Date.now() - t
+    var s = Math.round(dt / 1000)
+    if (s < 1) return 'now'
+    if (s == 1) return s + ' second'
+    if (s < 60) return s + ' seconds'
+    var m = Math.round(s / 60)
+    if (m == 1) return m + ' minute'
+    if (m < 60) return m + ' minutes'
+    var h = Math.round(m / 60)
+    if (h == 1) return h + ' hour'
+    if (h < 24) return h + ' hours'
+    var d = Math.round(h / 24)
+    if (d == 1) return d + ' day'
+    if (d < 7) return d + ' days'
+    var w = Math.round(d / 7)
+    if (w == 1) return w + ' week'
+    if (w < 4) return w + ' weeks'
+    var M = Math.round(d / 30)
+    if (M == 1) return M + ' month'
+    if (M < 12) return M + ' months'
+    var Y = Math.round(d / 365)
+    if (Y == 1) return Y + ' year'
+    return Y + ' years'
 }
 
 apply_filter = () => {
@@ -3107,6 +3143,8 @@ apply_filter = throttle(apply_filter, 90)
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
                 $card.style.bottom = 0
+                if (y_card_min) $card.style.height = y_card_min + 'px'
+                $card_info.removeAttribute('hidden')
                 var photos_urls
                 try {
                     photos_urls = get_ad_img_urls(id)
@@ -3137,8 +3175,16 @@ apply_filter = throttle(apply_filter, 90)
                 while ($photos_container.children.length > photos_urls.length) {
                     $photos_container.lastElementChild.remove()
                 }
-                $price.textContent = `${(price / 1e6).toFixed(1).replace('.0', '').replace('.', ',')} triệu/tháng`
+                var price_string = String(price).split('').reverse()
+                var price_string_space = ''
+                for (var i = 0; i < price_string.length; i++) {
+                    if (i != 0 && i % 3 == 0)
+                        price_string_space = ' ' + price_string_space
+                    price_string_space = price_string[i] + price_string_space
+                }
+                $price.textContent = `${price_string_space} VND`
                 $m2.textContent = `${ad.m2} m²`
+                $publish.textContent = `${ago(ad.publish)}`
                 $contact.href = url
             })
             map.on('click', e => {
