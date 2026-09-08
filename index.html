@@ -31,6 +31,10 @@
     <meta name="msapplication-TileImage" content="/icon-192.png">
     <meta name="msapplication-config" content="none">
     <script>
+    window.is_touch_vertical = () =>
+         matchMedia('(pointer: coarse)').matches &&
+         window.innerHeight > window.innerWidth
+
     window.fetch_native = window.fetch
     const exposedTo = [
         'https://alexandria.team',
@@ -1645,6 +1649,7 @@ window.addEventListener('appinstalled', () => {
 
 $toggler_cards.onclick = () => {}
 $card_close.onclick = () => {
+    window.card_was_open = false
     $card.setAttribute('hidden', '')
     if (y_card_min) $card.style.height = y_card_min + 'px'
 }
@@ -1653,15 +1658,15 @@ var card_height = null
 var y_card_max = null
 var y_card_min = null
 var detect_y_card_min = false
-//new ResizeObserver(() => {
-//    var rect = $card.getBoundingClientRect()
-//    card_height = rect.height
-//    if (!y_card_min || detect_y_card_min == false) {
-//        detect_y_card_min = true
-//        y_card_min = card_height
-//    }
-//    y_card_max = Math.min(rect.width, window.innerHeight)
-//}).observe($card)
+
+window.card_was_open = false
+window.addEventListener('resize', () => {
+    if (is_touch_vertical()) {
+        if (card_was_open) $card.removeAttribute('hidden')
+    } else {
+        $card.setAttribute('hidden', '')
+    }
+})
 
 var mover_start_y = 0
 var mover_start_small = true
@@ -3146,11 +3151,16 @@ apply_filter = throttle(apply_filter, 90)
                 const id = e.features[0].id
                 const price = e.features[0].properties.price
                 const url = get_url(id)
-                gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
-                //window.open(url, '_blank')
+                if (!is_touch_vertical()) {
+                    gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
+                    window.open(url, '_blank')
+                    return
+                }
+
                 window.card_id = id
                 const ad = ads.find(ad => ad.id == id)
                 $card.removeAttribute('hidden')
+                window.card_was_open = true
                 $card.style.bottom = 0
                 if (y_card_min) $card.style.height = y_card_min + 'px'
                 $card_info.removeAttribute('hidden')
@@ -3194,6 +3204,7 @@ apply_filter = throttle(apply_filter, 90)
                 $price.textContent = `${price_string_space} VND`
                 $m2.textContent = `${ad.m2} m²`
                 $publish.textContent = `${ago(ad.publish)}`
+                $contact.onclick = () => gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
                 $contact.href = url
             })
             map.on('click', e => {
