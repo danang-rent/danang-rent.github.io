@@ -4,10 +4,25 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-09-08T17:21:58.950Z</updated>
+		<updated>2026-09-08T21:08:57.053Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-duc-hien</id>
+			<title>CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN DƯƠNG ĐỨC HIỀN</title>
+			<link href="https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-duc-hien"/>
+			<updated>2026-09-08T14:05:27.000Z</updated>
+			<published>2026-09-08T14:05:27.000Z</published>
+			<summary>Dự án: 
+Thông tin chi tiết: 📐 Diện tích: 72m² x 3 tầng (Không gian thiết kế kiên cố, hiện đại, thoáng mát và tối ưu công năng sử dụng).
+ 🏢 Công năng:
+ 4 Phòng ngủ rộng rãi, thiết kế ấm cúng.
+ 4 WC tiện nghi, sạch sẽ.
+ Sân để xe an toàn, phòng khách sang trọng, khu vực bếp hiện đại và ban công cực thoáng mát.
+ 🛋️ Nội thất: Full nội thất đầy đủ, tiện nghi – chỉ việc xách vali vào ở ngay.
+ 🎯 Đối tượng: Thích hợp cho hộ gia đình sinh sống lâu dài, làm việc tại khu vực trung tâm/Liên Chiểu (Lưu ý: Không nhận khách nước ngoài).</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/cho-thue-can-ho-studio-co-ban-cong-khu-khue-my-dong-14</id>
 			<title>CHO THUÊ CĂN HỘ STUDIO CÓ BAN CÔNG – KHU KHUÊ MỸ ĐÔNG 14</title>
@@ -2955,14 +2970,5 @@ Thông tin chi tiết: Nhà 3 Tầng đường lớn 2 con lương . Đường A
 Nhà 3 tầng 3 phòng ngủ 3 nhà vệ sinh 
 Có sân phơi ban công 
 Nhà để xe oto</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-mat-bang-giat-ui</id>
-			<title>cho thuê mặt bằng giặt ủi</title>
-			<link href="https://danang.kim/id/cho-thue-mat-bang-giat-ui"/>
-			<updated>2026-09-08T03:49:18.689Z</updated>
-			<published>2026-09-08T03:49:18.689Z</published>
-			<summary>Dự án: 
-Thông tin chi tiết: Phù hợp với giặt ủi, khu vực đông sinh viên, trọ</summary>
 		</entry>
 </feed>
