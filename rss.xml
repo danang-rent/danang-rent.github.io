@@ -5,8 +5,22 @@
 		<link>https://danang.kim/</link>
 		<description>Recently added and updated rental listings</description>
 		<language>vi</language>
-		<lastBuildDate>Tue, 08 Sep 2026 17:21:58 GMT</lastBuildDate>
+		<lastBuildDate>Tue, 08 Sep 2026 21:08:57 GMT</lastBuildDate>
 		<ttl>100</ttl>
+		<item>
+			<guid isPermaLink="true">https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-duc-hien</guid>
+			<title>CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN DƯƠNG ĐỨC HIỀN</title>
+			<link>https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-duc-hien</link>
+			<description>Dự án: 
+Thông tin chi tiết: 📐 Diện tích: 72m² x 3 tầng (Không gian thiết kế kiên cố, hiện đại, thoáng mát và tối ưu công năng sử dụng).
+ 🏢 Công năng:
+ 4 Phòng ngủ rộng rãi, thiết kế ấm cúng.
+ 4 WC tiện nghi, sạch sẽ.
+ Sân để xe an toàn, phòng khách sang trọng, khu vực bếp hiện đại và ban công cực thoáng mát.
+ 🛋️ Nội thất: Full nội thất đầy đủ, tiện nghi – chỉ việc xách vali vào ở ngay.
+ 🎯 Đối tượng: Thích hợp cho hộ gia đình sinh sống lâu dài, làm việc tại khu vực trung tâm/Liên Chiểu (Lưu ý: Không nhận khách nước ngoài).</description>
+			<pubDate>Tue, 08 Sep 2026 14:05:27 GMT</pubDate>
+		</item>
 		<item>
 			<guid isPermaLink="true">https://danang.kim/id/cho-thue-can-ho-studio-co-ban-cong-khu-khue-my-dong-14</guid>
 			<title>CHO THUÊ CĂN HỘ STUDIO CÓ BAN CÔNG – KHU KHUÊ MỸ ĐÔNG 14</title>
@@ -2805,14 +2819,6 @@ Nhà 3 tầng 3 phòng ngủ 3 nhà vệ sinh
 Có sân phơi ban công 
 Nhà để xe oto</description>
 			<pubDate>Tue, 08 Sep 2026 03:51:04 GMT</pubDate>
-		</item>
-		<item>
-			<guid isPermaLink="true">https://danang.kim/id/cho-thue-mat-bang-giat-ui</guid>
-			<title>cho thuê mặt bằng giặt ủi</title>
-			<link>https://danang.kim/id/cho-thue-mat-bang-giat-ui</link>
-			<description>Dự án: 
-Thông tin chi tiết: Phù hợp với giặt ủi, khu vực đông sinh viên, trọ</description>
-			<pubDate>Tue, 08 Sep 2026 03:49:18 GMT</pubDate>
 		</item>
 	</channel>
 </rss>
