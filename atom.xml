@@ -4,10 +4,27 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-09-08T21:08:57.053Z</updated>
+		<updated>2026-09-08T23:30:40.990Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-sam-tower-cao-cap</id>
+			<title>CHO THUÊ CĂN HỘ 1 PHÒNG NGỦ SAM TOWER CAO CẤP</title>
+			<link href="https://danang.kim/id/cho-thue-can-ho-1-phong-ngu-sam-tower-cao-cap"/>
+			<updated>2026-09-08T14:06:15.964Z</updated>
+			<published>2026-09-08T14:06:15.964Z</published>
+			<summary>Dự án: 
+Thông tin chi tiết: Cho thuê căn hộ cao cấp Sam tower Nội thất cao cấp sang trọng
+Căn hộ 1 phòng ngủ 2 nhà vệ sinh
+Diện tích : 54m2
+Giá thuê : 19.000.000 / tháng
+Giá thuê không bao gồm phí quản lý , wifi , điện nước
+Căn hộ được trang bị nội thất cao cấp hiện đại , tầm nhìn view tuyệt đẹp , tầng cao yên tĩnh 
+Hệ thống an ninh 24/24
+Trải nghiệm các tiện ích sang xịn như : Hồ bơi , Gym, spa , nhà trẻ , bãi đậu xe thông minh
+Liên hệ xem nhà : phone , zalo , whatsapp , KakaoTalk</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/cho-thue-nha-3-tang-mat-tien-duong-duc-hien</id>
 			<title>CHO THUÊ NHÀ 3 TẦNG MẶT TIỀN DƯƠNG ĐỨC HIỀN</title>
@@ -2958,17 +2975,5 @@ Zalo/WhatsApp
 ✔ Located in a safe and quiet neighborhood, perfect for expatriates, freelancers, and digital nomads.
 ✔ Easy access to My Khe Beach, Da Nang International Airport, cafés, coworking spaces, restaurants, and the city center.
 </summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-mat-tien-an-duong-vuong</id>
-			<title>Cho Thuê Mặt Tiền An Dương Vương</title>
-			<link href="https://danang.kim/id/cho-thue-mat-tien-an-duong-vuong"/>
-			<updated>2026-09-08T03:51:04.922Z</updated>
-			<published>2026-09-08T03:51:04.922Z</published>
-			<summary>Dự án: 
-Thông tin chi tiết: Nhà 3 Tầng đường lớn 2 con lương . Đường An Dương Vương.
-Nhà 3 tầng 3 phòng ngủ 3 nhà vệ sinh 
-Có sân phơi ban công 
-Nhà để xe oto</summary>
 		</entry>
 </feed>
