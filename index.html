@@ -1702,14 +1702,14 @@ function toggle_like(id) {
         liked = true
     }
     if (window.card_id == id) $card_heart.classList.toggle('like', liked)
-    if (window.map) map.setFeatureState(
-        { source: 'prices', id },
-        { liked }
-    )
     const likes_string = [...likes].join(',')
     localStorage.setItem('likes', likes_string)
     $likes_count.textContent = likes.size || ''
     if (current_page == PAGE.EDIT) {
+        if (window.map) map.setFeatureState(
+            { source: 'prices', id },
+            { liked }
+        )
         const url = new URL(location)
         url.searchParams.set('likes', likes_string)
         history.replaceState({}, '', url)
@@ -1717,9 +1717,7 @@ function toggle_like(id) {
     return likes
 }
 
-$card_heart.onclick = () => {
-    toggle_like(card_id)
-}
+$card_heart.onclick = () => toggle_like(card_id)
 
 var card_height = null
 var y_card_max = null
@@ -1742,6 +1740,7 @@ var mover_prev_y = 0
 var mover_prev_prev_y = 0
 var mover_end_y = 0
 $card.ontouchstart = e => {
+    e.stopPropagation()
     if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
@@ -1759,6 +1758,7 @@ $card.ontouchstart = e => {
     mover_going_close = undefined
 }
 $card.ontouchmove = e => {
+    e.stopPropagation()
     if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
@@ -1789,6 +1789,7 @@ $card.ontouchmove = e => {
     }
 }
 $card.ontouchend = e => {
+    e.stopPropagation()
     if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
@@ -3118,6 +3119,9 @@ apply_filter = throttle(apply_filter, 90)
                 map.getCanvas().style.cursor = 'pointer'
             })
             map.on('mouseleave', 'price-hitbox', e => {
+                const $ = document.elementFromPoint(e.point.x, e.point.y)
+                if ($?.closest('#card')) return
+
                 if (hovered_price_id != null) {
                     map.setFeatureState(
                         { source: 'prices', id: hovered_price_id },
@@ -3214,7 +3218,7 @@ apply_filter = throttle(apply_filter, 90)
                 if (y_card_min) $card.style.height = y_card_min + 'px'
                 $card_info.removeAttribute('hidden')
                 const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
-                $card_heart.classList.toggle(likes.has(id))
+                $card_heart.classList.toggle('like', likes.has(id))
 
                 var photos_urls
                 try {
