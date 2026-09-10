@@ -874,6 +874,19 @@ Prices are expressed in Vietnamese dong (VND).
             touch-action: manipulation;
             cursor: pointer;
         }
+        #card_heart {
+            position: absolute;
+            top: 0;
+            right: 35px;
+            width: 11px;
+            height: 11px;
+            padding-right: 10px;
+            padding-left: 15px;
+            padding-bottom: 15px;
+            padding-top: 4px;
+            touch-action: manipulation;
+            cursor: pointer;
+        }
         #card_close {
             position: absolute;
             top: 0;
@@ -1001,6 +1014,15 @@ Prices are expressed in Vietnamese dong (VND).
             stroke-width: 1;
             stroke: var(--filter-color);
             vector-effect: non-scaling-stroke;
+        }
+        #icon-card-heart {
+            display: block;
+            stroke-width: 1;
+            stroke: var(--filter-color);
+            vector-effect: non-scaling-stroke;
+        }
+        #card_heart.like #icon-card-heart {
+            stroke: #ff69b4;
         }
         #icon-card-close {
             display: block;
@@ -1304,6 +1326,20 @@ Prices are expressed in Vietnamese dong (VND).
                 </a>
             </div>    
         </div>
+        <div id="card_heart">
+            <svg id="icon-card-heart" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 80 80">
+            <path
+                fill="none" stroke-width="4" stroke-linejoin="round"
+                d="M40 72
+                   L12 43
+                   C2 33 2 17 15 12
+                   C24 8 34 12 40 22
+                   C46 12 56 8 65 12
+                   C78 17 78 33 68 43
+                   Z"/>
+            </svg>
+        </div>
         <div id="card_close">
             <svg id="icon-card-close" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
                 <line x1="4" y1="4" x2="20" y2="20"/>
@@ -1345,6 +1381,7 @@ const $m2 = document.getElementById('m2')
 const $publish = document.getElementById('publish')
 const $title = document.getElementById('title')
 const $contact = document.getElementById('contact')
+const $card_heart = document.getElementById('card_heart')
 const $card_close = document.getElementById('card_close')
 
 var same_likes
@@ -1652,6 +1689,36 @@ $card_close.onclick = () => {
     window.card_was_open = false
     $card.setAttribute('hidden', '')
     if (y_card_min) $card.style.height = y_card_min + 'px'
+}
+
+function toggle_like(id) {
+    var liked
+    const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
+    if (likes.has(id)) {
+        likes.delete(id)
+        liked = false
+    } else {
+        likes.add(id)
+        liked = true
+    }
+    if (window.card_id == id) $card_heart.classList.toggle('like', liked)
+    if (window.map) map.setFeatureState(
+        { source: 'prices', id },
+        { liked }
+    )
+    const likes_string = [...likes].join(',')
+    localStorage.setItem('likes', likes_string)
+    $likes_count.textContent = likes.size || ''
+    if (current_page == PAGE.EDIT) {
+        const url = new URL(location)
+        url.searchParams.set('likes', likes_string)
+        history.replaceState({}, '', url)
+    }
+    return likes
+}
+
+$card_heart.onclick = () => {
+    toggle_like(card_id)
 }
 
 var card_height = null
@@ -3123,25 +3190,7 @@ apply_filter = throttle(apply_filter, 90)
                     window.open(url, '_blank')
                     return
                 }
-                var liked
-                const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
-                if (likes.has(id)) {
-                    likes.delete(id)
-                    liked = false
-                } else {
-                    likes.add(id)
-                    liked = true
-                }
-                map.setFeatureState(
-                    { source: 'prices', id },
-                    { liked }
-                )
-                const likes_string = [...likes].join(',')
-                localStorage.setItem('likes', likes_string)
-                $likes_count.textContent = likes.size || ''
-                const url = new URL(location)
-                url.searchParams.set('likes', likes_string)
-                history.replaceState({}, '', url)
+                var likes = toggle_like(id)
             })
             map.on('click', 'price-hitbox', e => {
                 const click_priority = {normal: 1, filtered: 0}
@@ -3164,6 +3213,9 @@ apply_filter = throttle(apply_filter, 90)
                 $card.style.bottom = 0
                 if (y_card_min) $card.style.height = y_card_min + 'px'
                 $card_info.removeAttribute('hidden')
+                const likes = new Set((localStorage.getItem('likes') || '').split(',').filter(_ => !!_).map(_ => Number(_)))
+                $card_heart.classList.toggle(likes.has(id))
+
                 var photos_urls
                 try {
                     photos_urls = get_ad_img_urls(id)
