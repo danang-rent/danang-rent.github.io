@@ -781,14 +781,6 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
             gap: 2vh;
         }
-        #card_info {
-            display: flex;
-            flex-direction: column;
-            justify-content: end;
-            gap: 1vh;
-            width: 100%;
-            container-type: size;
-        }
         #mover {
             position: absolute;
             background-color: white;
@@ -843,14 +835,34 @@ Prices are expressed in Vietnamese dong (VND).
         .dot.active {
             opacity: 1;
         }
+        #card_info {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            gap: 1vh;
+            width: 100%;
+            container-type: size;
+        }
+        .card-metric {
+            margin-left: 5px;
+            color: grey;
+        }
+        #price {
+            font-weight: bold;
+        }
         .card-info-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             width: 100%;
-            /*font-weight: bold;*/
             font-size: 12pt;
             font-family: Inter, Arial, sans-serif;
             color: var(--filter-color);
+        }
+        .card-info-row-last {
+            margin-top: 20px;
+        }
+        .card-info-row-last div {
+            display: inline;
         }
         #contact {
             color: var(--filter-color);
@@ -1307,24 +1319,18 @@ Prices are expressed in Vietnamese dong (VND).
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div>Price</div>
                 <div id="price"></div>
+                <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div>Size</div>
                 <div id="m2"></div>
+                <div class="card-metric">m²</div>
             </div>
-            <div class="card-info-row">
-                <div>Publish</div>
-                <div id="publish">3 hours</div>
+            <div class="card-info-row card-info-row-last">
+                <div>
+                    <div id="publish"></div> ago at <a id="contact" target="_blank">NhaTot</a>
+                </div>
             </div>
-            <div class="card-info-row">
-                <div>Contact</div>
-                <a id="contact" target="_blank">
-                    NhaTot
-                    <!--img height="28" width="104" alt="Nhà Tốt" src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty.png"-->
-                </a>
-            </div>    
         </div>
         <div id="card_heart">
             <svg id="icon-card-heart" xmlns="http://www.w3.org/2000/svg"
@@ -3257,8 +3263,8 @@ apply_filter = throttle(apply_filter, 90)
                         price_string_space = ' ' + price_string_space
                     price_string_space = price_string[i] + price_string_space
                 }
-                $price.textContent = `${price_string_space} VND`
-                $m2.textContent = `${ad.m2} m²`
+                $price.textContent = price_string_space
+                $m2.textContent = ad.m2
                 $publish.textContent = `${ago(ad.publish)}`
                 $contact.onclick = () => gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
                 $contact.href = url
