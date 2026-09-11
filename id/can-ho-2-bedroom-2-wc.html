@@ -341,7 +341,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789099721332'
+    const VER_WASM = '1789117294557'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -449,7 +449,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '022c94a47dffea1a718ac92711d9871af8ae754637ade541dd78985814d22dfa'// contact spirin.vladimir@gmail.com
+        const KEY = 'be1da2361c2f242ed1783aced3b1987c1223b304cb2ab75cef9fe39538dc3cf7'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -625,7 +625,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"căn hộ 2 bedroom -2 WC",
             "url":"https://danang.kim/id/can-ho-2-bedroom-2-wc",
-			"price":"16000000",
+			"price":"15500000",
 			"priceCurrency":"VND"
         }
     </script>
