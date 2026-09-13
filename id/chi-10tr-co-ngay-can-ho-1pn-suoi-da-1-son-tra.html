@@ -243,6 +243,16 @@ Prices are expressed in Vietnamese dong (VND).
           // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
+        layers_order(a, b) {
+          // assembly/index/layers_order(~lib/string/String, ~lib/string/String) => i32
+          a = __retain(__lowerString(a) || __notnull());
+          b = __lowerString(b) || __notnull();
+          try {
+            return exports.layers_order(a, b);
+          } finally {
+            __release(a);
+          }
+        },
         set_ads_prices(data) {
           // assembly/index/set_ads_prices(~lib/string/String) => bool
           data = __lowerString(data) || __notnull();
@@ -341,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789260935773'
+    const VER_WASM = '1789290165921'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -449,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'b77d4c2d7542ddce9a28672b972ee987d1c0bc39975e9a0c9db3a67635e2a3ff'// contact spirin.vladimir@gmail.com
+        const KEY = '60ab207d87af0efe32ca3fd559f92d98f7134249ef965a3be9cd3c717846926a'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -752,8 +762,39 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #toggler_cards, #filter, #toggler, #close, #heart, #share, #icon-toggler-cards ,#icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
+        }
+        #last_update_time {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding-left: 2vh;
+            gap: 1vh;
+            height: 5vh;
+            bottom: env(safe-area-inset-bottom, 0px);
+            left: 0;
+            color: var(--filter-color);
+            font-family: Inter, Arial, sans-serif;
+            font-size: 1vh;
+            font-weight: 100;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #icon-last-update-time {
+            display: flex;
+            width: 2vh;
+            height: 2vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #last_update_time_value {
+            display: flex;
+            white-space: nowrap;
         }
         #card {
             position: fixed;
@@ -950,16 +991,6 @@ Prices are expressed in Vietnamese dong (VND).
             -webkit-user-select: none;
             cursor: pointer;
         }
-        #toggler_cards {
-            bottom: env(safe-area-inset-bottom, 0px);
-            left: 45%;
-            width: 10%;
-            height: 7vh;
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-user-select: none;
-            cursor: pointer;
-        }
         #icon-filter {
             display: block;
             bottom: 2vh;
@@ -973,18 +1004,6 @@ Prices are expressed in Vietnamese dong (VND).
             vector-effect: non-scaling-stroke;
         }
         #icon-dong {
-            display: block;
-            bottom: 2vh;
-            right: 2vh;
-            width: 3vh;
-            height: 3vh;
-            pointer-events: none;
-            stroke: var(--filter-color);
-            fill: var(--filter-color);
-            stroke-width: 1;
-            vector-effect: non-scaling-stroke;
-        }
-        #icon-toggler-cards {
             display: block;
             bottom: 2vh;
             right: 2vh;
@@ -1368,12 +1387,12 @@ Thông tin chi tiết: 🔥 CĂN HỘ 1PN – SUỐI ĐÁ 1, SƠN TRÀ 🌿
         </div>
     </div>
 </div>
-<div id="toggler_cards" hidden>
-    <svg id="icon-toggler-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
-        <path d="M4 12v8a2 4 0 0 0 2 2h12a3 7 0 0 0 2-2v-8"></path>
-        <polyline points="16 9 8 1 5 2"></polyline>
-        <line x1="2" y1="7" x2="11" y2="16"></line>
+<div id="last_update_time" hidden>
+    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
     </svg>
+    <span id="last_update_time_value">2026-09-13 12:23<span>
 </div>
 <script>
 const $min_label = min.firstElementChild
@@ -1390,7 +1409,6 @@ const $icon_dong = document.getElementById('icon-dong')
 const $logo = document.getElementById('logo')
 const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
-const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
 const $card_info = document.getElementById('card_info')
 const $photo = document.getElementById('photo')
@@ -1403,6 +1421,8 @@ const $title = document.getElementById('title')
 const $contact = document.getElementById('contact')
 const $card_heart = document.getElementById('card_heart')
 const $card_close = document.getElementById('card_close')
+const $last_update_time = document.getElementById('last_update_time')
+const $last_update_time_value = document.getElementById('last_update_time_value')
 
 var same_likes
 
@@ -1470,6 +1490,7 @@ const router = () => {
     $icon_filter.removeAttribute('hidden')
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
+    $last_update_time.removeAttribute('hidden')
 
     const likes = likes_search_params.length
         ? likes_search_params
@@ -1704,7 +1725,6 @@ window.addEventListener('appinstalled', () => {
     gtag('event', 'installed')
 })
 
-$toggler_cards.onclick = () => {}
 $card_close.onclick = () => {
     window.card_was_open = false
     $card.setAttribute('hidden', '')
@@ -2400,43 +2420,6 @@ apply_filter = throttle(apply_filter, 90)
                     }
                 },
                 {
-                    "id": "water",
-                    "type": "fill",
-                    "source": "danang",
-                    "source-layer": "water",
-                    "filter": [
-                        "all",
-                        [
-                            "==",
-                            "$type",
-                            "Polygon"
-                        ],
-                        [
-                            "!=",
-                            "brunnel",
-                            "tunnel"
-                        ]
-                    ],
-                    "paint": {
-                        "fill-antialias": theme.paint.water['fill-antialias'][+!dark],
-                        "fill-color": theme.paint.water['fill-color'][+!dark]
-                    }
-                },
-                {
-                    "id": "waterway",
-                    "type": "line",
-                    "source": "danang",
-                    "source-layer": "waterway",
-                    "filter": [
-                        "==",
-                        "$type",
-                        "LineString"
-                    ],
-                    "paint": {
-                        "line-color": theme.paint.waterway['line-color'][+!dark]
-                    }
-                },
-                {
                     "id": "building",
                     "type": "fill",
                     "source": "danang",
@@ -2814,6 +2797,43 @@ apply_filter = throttle(apply_filter, 90)
                     }
                 },
                 {
+                    "id": "water",
+                    "type": "fill",
+                    "source": "danang",
+                    "source-layer": "water",
+                    "filter": [
+                        "all",
+                        [
+                            "==",
+                            "$type",
+                            "Polygon"
+                        ],
+                        [
+                            "!=",
+                            "brunnel",
+                            "tunnel"
+                        ]
+                    ],
+                    "paint": {
+                        "fill-antialias": theme.paint.water['fill-antialias'][+!dark],
+                        "fill-color": theme.paint.water['fill-color'][+!dark]
+                    }
+                },
+                {
+                    "id": "waterway",
+                    "type": "line",
+                    "source": "danang",
+                    "source-layer": "waterway",
+                    "filter": [
+                        "==",
+                        "$type",
+                        "LineString"
+                    ],
+                    "paint": {
+                        "line-color": theme.paint.waterway['line-color'][+!dark]
+                    }
+                },
+                {
                     id: 'price-circle-filtered',
                     type: 'circle',
                     source: 'prices',
@@ -3072,7 +3092,7 @@ apply_filter = throttle(apply_filter, 90)
                         'circle-opacity': 0
                     }
                 }
-            ]
+            ].sort((a, b) => layers_order(a.id, b.id))
         }
 
         const map_args = {
@@ -3316,6 +3336,17 @@ apply_filter = throttle(apply_filter, 90)
                     }
                 }
             })
+
+            var time_values = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hourCycle: 'h23'
+            }).formatToParts(new Date(+VER_WASM)).map(_ => [_.type, _.value]))
+            $last_update_time_value.textContent =
+                `${time_values.year}-${time_values.month}-${time_values.day} ${time_values.hour}:${time_values.minute}`
 
             router()
         })
