@@ -750,8 +750,18 @@ Prices are expressed in Vietnamese dong (VND).
             width: 100%;
         }
 
-        #toggler_cards, #filter, #toggler, #close, #heart, #share, #icon-toggler-cards ,#icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
+        #filter, #toggler, #close, #heart, #share, #icon-filter, #icon-dong, #icon-heart, #icon-share, #icon-close, #scale, #min, #max, #track, #icon-track {
             position: absolute;
+        }
+        #last_update_time {
+            position: absolute;
+            bottom: env(safe-area-inset-bottom, 0px);
+            left: 0;
+            width: 10%;
+            height: 7vh;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
         #card {
             position: fixed;
@@ -948,16 +958,6 @@ Prices are expressed in Vietnamese dong (VND).
             -webkit-user-select: none;
             cursor: pointer;
         }
-        #toggler_cards {
-            bottom: env(safe-area-inset-bottom, 0px);
-            left: 45%;
-            width: 10%;
-            height: 7vh;
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-user-select: none;
-            cursor: pointer;
-        }
         #icon-filter {
             display: block;
             bottom: 2vh;
@@ -982,7 +982,8 @@ Prices are expressed in Vietnamese dong (VND).
             stroke-width: 1;
             vector-effect: non-scaling-stroke;
         }
-        #icon-toggler-cards {
+        #icon-last-update-time {
+            position: absolute;
             display: block;
             bottom: 2vh;
             right: 2vh;
@@ -990,7 +991,6 @@ Prices are expressed in Vietnamese dong (VND).
             height: 3vh;
             pointer-events: none;
             stroke: var(--filter-color);
-            fill: var(--filter-color);
             stroke-width: 1;
             vector-effect: non-scaling-stroke;
         }
@@ -1354,12 +1354,8 @@ Prices are expressed in Vietnamese dong (VND).
         </div>
     </div>
 </div>
-<div id="toggler_cards" hidden>
-    <svg id="icon-toggler-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet">
-        <path d="M4 12v8a2 4 0 0 0 2 2h12a3 7 0 0 0 2-2v-8"></path>
-        <polyline points="16 9 8 1 5 2"></polyline>
-        <line x1="2" y1="7" x2="11" y2="16"></line>
-    </svg>
+<div id="last_update_time" hidden>
+    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
 </div>
 <script>
 const $min_label = min.firstElementChild
@@ -1376,7 +1372,6 @@ const $icon_dong = document.getElementById('icon-dong')
 const $logo = document.getElementById('logo')
 const $icon_install_apk = document.getElementById('icon-install-apk')
 const $icon_install_ios = document.getElementById('icon-install-ios')
-const $toggler_cards = document.getElementById('toggler_cards')
 const $card = document.getElementById('card')
 const $card_info = document.getElementById('card_info')
 const $photo = document.getElementById('photo')
@@ -1389,6 +1384,7 @@ const $title = document.getElementById('title')
 const $contact = document.getElementById('contact')
 const $card_heart = document.getElementById('card_heart')
 const $card_close = document.getElementById('card_close')
+const $last_update_time = document.getElementById('last_update_time')
 
 var same_likes
 
@@ -1456,6 +1452,7 @@ const router = () => {
     $icon_filter.removeAttribute('hidden')
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
+    $last_update_time.removeAttribute('hidden')
 
     const likes = likes_search_params.length
         ? likes_search_params
@@ -1690,7 +1687,6 @@ window.addEventListener('appinstalled', () => {
     gtag('event', 'installed')
 })
 
-$toggler_cards.onclick = () => {}
 $card_close.onclick = () => {
     window.card_was_open = false
     $card.setAttribute('hidden', '')
