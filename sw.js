@@ -27,7 +27,6 @@ function cache_fetch(URL) {
 const photo_priority = new Set()
 
 function request_photo({url, retry}) {
-    console.time(url)
     return fetch(
         url,
         {
@@ -37,20 +36,11 @@ function request_photo({url, retry}) {
     )
     .then(r => {
         if (r.ok || r.type == 'opaque') {
-            console.time(`photos_cache.put(${url})`)
             return photos_cache.put(url, r.clone())
             .then(
-                () => {
-                    console.timeEnd(`photos_cache.put(${url})`)
-                    console.timeEnd(url)
-                    return r
-                },
+                () => r,
                 e => {
                     console.error('sw.js', '1. CacheStorage put', 'url:', url, 'error:', e, 'respond:', r, 'retry:', retry)
-                    debugger
-                    //here need retrun `r` anyway
-                    console.timeEnd(`photos_cache.put(${url})`)
-                    console.timeEnd(url)
                     return r
                 }
             )
@@ -58,7 +48,6 @@ function request_photo({url, retry}) {
     })
     .catch(e => {
         console.error('sw.js', '2. fetch(mode no-cors)', 'url:', url, 'error:', e)
-        debugger
         if (retry > 0) {
             return request_photo({url, retry: retry - 1})
         } else {
