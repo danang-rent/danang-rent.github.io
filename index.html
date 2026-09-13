@@ -755,13 +755,34 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #last_update_time {
             position: absolute;
+            display: flex;
+            align-items: center;
+            padding-left: 2vh;
+            gap: 1vh;
+            height: 5vh;
             bottom: env(safe-area-inset-bottom, 0px);
             left: 0;
-            width: 10%;
-            height: 7vh;
-            touch-action: manipulation;
-            user-select: none;
+            color: var(--filter-color);
+            font-family: Inter, Arial, sans-serif;
+            font-size: 1vh;
+            font-weight: 100;
+            pointer-events: none;
             -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #icon-last-update-time {
+            display: flex;
+            width: 2vh;
+            height: 2vh;
+            pointer-events: none;
+            stroke: var(--filter-color);
+            stroke-width: 1;
+            vector-effect: non-scaling-stroke;
+        }
+        #last_update_time_value {
+            display: flex;
+            white-space: nowrap;
         }
         #card {
             position: fixed;
@@ -979,18 +1000,6 @@ Prices are expressed in Vietnamese dong (VND).
             pointer-events: none;
             stroke: var(--filter-color);
             fill: var(--filter-color);
-            stroke-width: 1;
-            vector-effect: non-scaling-stroke;
-        }
-        #icon-last-update-time {
-            position: absolute;
-            display: block;
-            bottom: 2vh;
-            right: 2vh;
-            width: 3vh;
-            height: 3vh;
-            pointer-events: none;
-            stroke: var(--filter-color);
             stroke-width: 1;
             vector-effect: non-scaling-stroke;
         }
@@ -1355,7 +1364,11 @@ Prices are expressed in Vietnamese dong (VND).
     </div>
 </div>
 <div id="last_update_time" hidden>
-    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+    </svg>
+    <span id="last_update_time_value">2026-09-13 12:23<span>
 </div>
 <script>
 const $min_label = min.firstElementChild
@@ -1385,6 +1398,7 @@ const $contact = document.getElementById('contact')
 const $card_heart = document.getElementById('card_heart')
 const $card_close = document.getElementById('card_close')
 const $last_update_time = document.getElementById('last_update_time')
+const $last_update_time_value = document.getElementById('last_update_time_value')
 
 var same_likes
 
@@ -3298,6 +3312,17 @@ apply_filter = throttle(apply_filter, 90)
                     }
                 }
             })
+
+            var time_values = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hourCycle: 'h23'
+            }).formatToParts(new Date(+VER_WASM)).map(_ => [_.type, _.value]))
+            $last_update_time_value.textContent =
+                `${time_values.year}-${time_values.month}-${time_values.day} ${time_values.hour}:${time_values.minute}`
 
             router()
         })
