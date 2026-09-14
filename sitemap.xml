@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-09-13</lastmod>
+		<lastmod>2026-09-14</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/villa-4-phong-ngu-full-noi-that-cuc-dep</loc>
+		<lastmod>2026-09-13</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178758745</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-2pn-full-noi-that-chung-cu-ori-garden-chi-6tr-thang</loc>
+		<lastmod>2026-09-13</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>172871416</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-dep-hoa-xuan-3pn-gia-20tr</loc>
+		<lastmod>2026-09-13</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178758647</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-studio-duong-da-man-14-gia-7-trieu</loc>
@@ -1034,13 +1055,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178738097</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-ca</loc>
-		<lastmod>2026-09-12</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178721594</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-2pn-mia-full-noi-that-chi-11-trieu-thang</loc>
@@ -11557,13 +11571,6 @@
 		<dk:id>178504576</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-ori-garden-2-phong-ngu-full-noi-that-xin</loc>
-		<lastmod>2026-09-01</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178463408</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-2pn-fpt-plaza-3-day-du-noi-that-nhu-hinh</loc>
 		<lastmod>2026-09-01</lastmod>
 		<changefreq>daily</changefreq>
@@ -12283,13 +12290,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178430231</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-3-tang-le-dinh-ly-4-phong-3wc-du-noi-that</loc>
-		<lastmod>2026-08-30</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178463694</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-moi-dep-duong-vu-mong-nguyen</loc>
