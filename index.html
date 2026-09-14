@@ -888,12 +888,17 @@ Prices are expressed in Vietnamese dong (VND).
             margin-left: 5px;
             color: grey;
         }
+        .card-metric sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
         #price {
             font-weight: bold;
         }
         .card-info-row {
             display: flex;
             justify-content: flex-end;
+            align-items: baseline;
             width: 100%;
             font-size: 12pt;
             font-family: Inter, Arial, sans-serif;
@@ -1349,7 +1354,7 @@ Prices are expressed in Vietnamese dong (VND).
             </div>
             <div class="card-info-row">
                 <div id="m2"></div>
-                <div class="card-metric">m²</div>
+                <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
                 <div>
