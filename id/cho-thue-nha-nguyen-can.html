@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cho thuê nhà nguyên căn</title><meta name="ad:id" content="178447460">
+    <title>CHO THUÊ NHÀ NGUYÊN CĂN</title><meta name="ad:id" content="177888921">
     <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-nguyen-can">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cho thuê nhà nguyên căn" />
+    <meta property="og:title" content="CHO THUÊ NHÀ NGUYÊN CĂN" />
     <meta property="og:description" content="Map of Danang with apartment/room rental ads" />
     <meta property="og:image" content="https://danang.kim/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta charset='utf-8' />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Cho thuê nhà nguyên căn" />
+    <meta name="description" content="CHO THUÊ NHÀ NGUYÊN CĂN" />
     <meta name="theme-color" content="transparent">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cho thuê nhà nguyên căn">
+    <meta name="twitter:title" content="CHO THUÊ NHÀ NGUYÊN CĂN">
     <meta name="twitter:description" content="Map of Danang with apartment/room rental ads">
     <meta name="twitter:image" content="https://danang.kim/og.png">
     <link rel="canonical" href="https://danang.kim/id/cho-thue-nha-nguyen-can">
@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789344702437'
+    const VER_WASM = '1789361848663'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'cdc10aac4f033f963d581cb63e987eec1062c9a2053f7282d081d5d84a20976e'// contact spirin.vladimir@gmail.com
+        const KEY = '44ce2bcf9a6c42c859db328b39c8ae7ed1e5b48bff927bcca4007b51a8d565b6'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -633,9 +633,9 @@ Prices are expressed in Vietnamese dong (VND).
         {
             "@context":"https://schema.org",
             "@type":"Offer",
-            "name":"Cho thuê nhà nguyên căn",
+            "name":"CHO THUÊ NHÀ NGUYÊN CĂN",
             "url":"https://danang.kim/id/cho-thue-nha-nguyen-can",
-			"price":"14000000",
+			"price":"15000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -890,12 +890,17 @@ Prices are expressed in Vietnamese dong (VND).
             margin-left: 5px;
             color: grey;
         }
+        .card-metric sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
         #price {
             font-weight: bold;
         }
         .card-info-row {
             display: flex;
             justify-content: flex-end;
+            align-items: baseline;
             width: 100%;
             font-size: 12pt;
             font-family: Inter, Arial, sans-serif;
@@ -1182,12 +1187,9 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê nhà nguyên căn</h1><p>Cho thuê nhà 4 tầng mt thái thị bôi
-Dt :50m
-Công năng :3pn,3wc
-Nội thất: điều hoà,nóng lạnh
-Giá thuê:14tr( tt 3t cọc 1t)
-Lh: ***</p></article>
+<div id="map"></div><article><h1>CHO THUÊ NHÀ NGUYÊN CĂN</h1><p>Dự án: 
+Thông tin chi tiết: CHO THUÊ NHÀ NGUYÊN CĂN
+cho thuê nhà song song Nguyễn Phước Lan, vị trí yên tĩnh, nội thất đầy đủ</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1335,7 +1337,13 @@ Lh: ***</p></article>
         <line x1="12" y1="2" x2="12" y2="15"></line>
     </svg>
 </div>
-<div id="toast" hidden></div>
+<div id="last_update_time" hidden>
+    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+    </svg>
+    <span id="last_update_time_value"><span>
+</div>
 <div id="card">
     <div id="mover"></div>
     <div id="card_content">
@@ -1350,7 +1358,7 @@ Lh: ***</p></article>
             </div>
             <div class="card-info-row">
                 <div id="m2"></div>
-                <div class="card-metric">m²</div>
+                <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
                 <div>
@@ -1380,13 +1388,7 @@ Lh: ***</p></article>
         </div>
     </div>
 </div>
-<div id="last_update_time" hidden>
-    <svg id="icon-last-update-time" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M12 6v6l4 2"/>
-    </svg>
-    <span id="last_update_time_value">2026-09-13 12:23<span>
-</div>
+<div id="toast" hidden></div>
 <script>
 const $min_label = min.firstElementChild
 const $max_label = max.firstElementChild
