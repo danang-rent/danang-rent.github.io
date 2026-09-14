@@ -4,10 +4,18 @@
 		<id>https://danang.kim/</id>
 		<link rel="alternate" href="https://danang.kim/"/>
 		<link rel="self" href="https://danang.kim/atom.xml"/>
-		<updated>2026-09-14T21:01:29.609Z</updated>
+		<updated>2026-09-14T23:58:05.697Z</updated>
 		<author>
 			<name>Rental Map Danang</name>
 		</author>
+		<entry>
+			<id>https://danang.kim/id/1-bedroom-60m2-son-tra</id>
+			<title>1 bedroom 60m2 Son Tra</title>
+			<link href="https://danang.kim/id/1-bedroom-60m2-son-tra"/>
+			<updated>2026-09-14T15:38:03.000Z</updated>
+			<published>2026-09-14T15:38:03.000Z</published>
+			<summary>căn hộ Mường Thanh sát biển diện tích 60m2. 1 phòng ngủ 1 nhà vệ sinh cho nuôi pet</summary>
+		</entry>
 		<entry>
 			<id>https://danang.kim/id/can-ho-f-home-2-phong-ngu-2-wc</id>
 			<title>căn hộ F.home 2 phòng ngủ 2 WC</title>
@@ -2606,14 +2614,5 @@ Thông tin mặt bằng:
 Phù hợp làm văn phòng, studio, nail/mi, spa nhỏ, salon, shop, showroom, cửa hàng dịch vụ, đại lý, lớp học nhỏ hoặc mô hình vừa kinh doanh vừa ở.
 
 ✨ Ưu điểm lớn: Không phải thuê thêm phòng ở riêng — phía sau đã có phòng ngủ + WC, phía trước tách biệt làm không gian kinh doanh.</summary>
-		</entry>
-		<entry>
-			<id>https://danang.kim/id/cho-thue-can-ho-5-sao-1-ngu-hoa-binh-grren-da-nang</id>
-			<title>CHO THUÊ CĂN HỘ 5 SAO 1 NGỦ HOÀ BÌNH Grren ĐÀ NẴNG</title>
-			<link href="https://danang.kim/id/cho-thue-can-ho-5-sao-1-ngu-hoa-binh-grren-da-nang"/>
-			<updated>2026-09-14T08:48:00.507Z</updated>
-			<published>2026-09-14T08:48:00.507Z</published>
-			<summary>Dự án: 
-Thông tin chi tiết: Quý khách được sữ dụng miễn phí hồ bơi vô cực và bãi đổ ô tô thông thoáng,cùng nhiều tiện ích đi kèm,giá thuê trên chưa bao gồm phí hàng tháng</summary>
 		</entry>
 </feed>
