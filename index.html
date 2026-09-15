@@ -1796,6 +1796,8 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'card_heart') return
+    if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     $card.style.transition = 'none'
@@ -1823,6 +1825,8 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'card_heart') return
+    if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     try{ e?.preventDefault()} catch(e) {}
@@ -1876,6 +1880,8 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'card_heart') return
+    if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     card_end_t = Date.now()
