@@ -26,8 +26,9 @@ function cache_fetch(URL) {
 
 const photo_priority = new Set()
 
+const prevent_same_photo_request = {}
 function request_photo({url, retry}) {
-    return fetch(
+    return prevent_same_photo_request[url] ??= fetch(
         url,
         {
             mode: 'no-cors',
