@@ -355,7 +355,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789446450695'
+    const VER_WASM = '1789466684761'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -463,7 +463,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'c41c2a8eb25f2e878f8e6a66b4987d16e78dfdf21a877b364a12484ac75954d6'// contact spirin.vladimir@gmail.com
+        const KEY = 'da91994b1caebcfb0da088c7bdb24849ec8711dbc2b8176de4332c58c13d61eb'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -915,7 +915,8 @@ Prices are expressed in Vietnamese dong (VND).
             color: var(--filter-color);
         }
         .card-info-row-last {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .card-info-row-last div {
             display: inline;
@@ -1811,6 +1812,7 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1840,6 +1842,7 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1895,6 +1898,7 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
