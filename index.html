@@ -908,7 +908,8 @@ Prices are expressed in Vietnamese dong (VND).
             color: var(--filter-color);
         }
         .card-info-row-last {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .card-info-row-last div {
             display: inline;
@@ -1796,6 +1797,7 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1825,6 +1827,7 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1880,6 +1883,7 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
