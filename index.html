@@ -812,7 +812,7 @@ Prices are expressed in Vietnamese dong (VND).
             border-top-style: solid;
             border-top-width: 1px;
             container-type: size;
-            transition: bottom 0.25s ease, height 0.25s ease;
+            transition: bottom 0.1s linear, height 0.1s linear;
         }
         #card_content {
             justify-content: space-between;
@@ -1764,19 +1764,22 @@ window.addEventListener('resize', () => {
     }
 })
 
-var mover_start_y = 0
-var mover_start_small = true
-var mover_going_close = undefined
-var mover_prev_y = 0
-var mover_prev_prev_y = 0
-var mover_end_y = 0
+var card_start_t = null
+var card_start_y = 0
+var card_start_small = true
+var card_going_close = undefined
+var card_prev_y = 0
+var card_prev_prev_y = 0
+var card_end_t = null
+var card_end_y = 0
 $card.ontouchstart = e => {
     e.stopPropagation()
     if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     $card.style.transition = 'none'
-    mover_start_y = e.changedTouches[0].screenY
+    card_start_t = Date.now()
+    card_start_y = e.changedTouches[0].screenY
     var rect = $card.getBoundingClientRect()
     card_height = rect.height
     if (!y_card_min || detect_y_card_min == false) {
@@ -1786,7 +1789,7 @@ $card.ontouchstart = e => {
     y_card_max = Math.min(rect.width, 0.75 * window.innerHeight) +
         10 // addition for mover then aspect 1:1 for photo would be correct
         // where 10px is diff between padding and top padding
-    mover_going_close = undefined
+    card_going_close = undefined
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
@@ -1794,10 +1797,10 @@ $card.ontouchmove = e => {
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     e.preventDefault()
-    mover_prev_prev_y = mover_prev_y 
-    mover_prev_y = e.changedTouches[0].screenY
+    card_prev_prev_y = card_prev_y 
+    card_prev_y = e.changedTouches[0].screenY
     
-    dy = mover_prev_y - mover_start_y
+    dy = card_prev_y - card_start_y
     if (dy == 0) return
     
     var h = +$card.style.height.replace('px', '') || y_card_min
@@ -1806,17 +1809,18 @@ $card.ontouchmove = e => {
         ? 'down'
         : 'up'
 
-    if (mover_going_close == undefined) {
-        mover_going_close = mover_start_small &&
+    if (card_going_close == undefined) {
+        card_going_close = card_start_small &&
         last_move_direction == 'down'
     }
     
-    if (mover_going_close) {
-        var y = Math.max(0, Math.min(h, dy))
+    if (card_going_close) {
+        var y = Math.max(0, Math.min(y_card_min, dy))
         $card.style.bottom = `-${y}px`
     } else {
         var y = Math.max(y_card_min, Math.min(y_card_max, card_height - dy))
         $card.style.height = `${y}px`
+        $card_info.setAttribute('hidden', '')
     }
 }
 $card.ontouchend = e => {
@@ -1824,24 +1828,44 @@ $card.ontouchend = e => {
     if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
-    $card.style.transition = 'bottom 0.25s ease, height 0.25s ease'
-    mover_end_y = e.changedTouches[0].screenY
+    card_end_t = Date.now()
+    card_end_y = e.changedTouches[0].screenY
+    var dt = card_end_t - card_start_t // user moved by finger in ms
+    var dy = card_end_y - card_start_y // user moved by finger by px
+    var dY = null // future rest path for animation
+    var dT = null // future rest time for animation
+    var v = Math.max(0.3, 1.5 * Math.abs(dy / dt))
     var h = +$card.style.height.replace('px', '') || y_card_min
-    var last_move_direction = mover_end_y > mover_prev_prev_y
+    var b = +$card.style.bottom.replace('px', '') || 0
+    var last_move_direction = card_end_y > card_prev_prev_y
         ? 'down'
         : 'up'
 
-    if (mover_going_close) {
-        $card.style.bottom = last_move_direction == 'down'
-            ? `-${y_card_min}px`
-            : 0
+    if (card_going_close) {
+        if (last_move_direction == 'down') {
+            dY = y_card_min - b
+            dT = Math.abs(dY / v)
+            $card.style.transition = `bottom ${(dT/1000).toFixed(2)}s linear`
+            $card.style.bottom = `-${y_card_min}px`
+        } else {
+            dY = 0 - b
+            dT = Math.abs(dY / v)
+            $card.style.transition = `bottom ${(dT/1000).toFixed(2)}s linear`
+            $card.style.bottom = 0
+        }
     } else {
         if (last_move_direction == 'down') {
-            mover_start_small = true
+            card_start_small = true
+            dY = y_card_min - h
+            dT = Math.abs(dY / v)
+            $card.style.transition = `height ${(dT/1000).toFixed(2)}s linear`
             $card.style.height = y_card_min + 'px'
-            $card_info.removeAttribute('hidden')
+            setTimeout(() => $card_info.removeAttribute('hidden'), dT)
         } else {
-            mover_start_small = false
+            card_start_small = false
+            dY = y_card_max - h
+            dT = Math.abs(dY / v)
+            $card.style.transition = `height ${(dT/1000).toFixed(2)}s linear`
             $card.style.height = y_card_max + 'px'
             $card_info.setAttribute('hidden', '')
         }
@@ -1886,7 +1910,7 @@ $photo.ontouchmove = e => {
     $photos_container.style.transform = `translate3d(-${x}px,0,0)`
 }
 $photo.ontouchend = e => {
-    $photos_container.style.transition = 'transform 0.25s ease'
+    $photos_container.style.transition = 'transform 0.25s ease-out'
     var touch_end_t = Date.now()
     var touch_end_x = e.changedTouches[0].screenX
     var touch_end_y = e.changedTouches[0].screenY
@@ -1898,10 +1922,6 @@ $photo.ontouchend = e => {
     dy = touch_end_y - touch_start_y
     if (dt < 1000 && dy > 0 && dy > 2 * Math.abs(dx)) {
         to_current()
-        mover_start_small = true
-        $card.style.transition = 'height 0.25s ease'
-        $card.style.height = y_card_min + 'px'
-        $card_info.removeAttribute('hidden')
         return
     }
     var frames = Math.ceil(Math.abs(dx / photo_size))
