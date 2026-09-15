@@ -1765,20 +1765,22 @@ window.addEventListener('resize', () => {
 })
 
 var card_start_t = null
+var card_start_x = 0
 var card_start_y = 0
 var card_start_small = true
 var card_going_close = undefined
 var card_prev_y = 0
 var card_prev_prev_y = 0
 var card_end_t = null
+var card_end_x = 0
 var card_end_y = 0
 $card.ontouchstart = e => {
     e.stopPropagation()
-    if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     $card.style.transition = 'none'
     card_start_t = Date.now()
+    card_start_x = e.changedTouches[0].screenX
     card_start_y = e.changedTouches[0].screenY
     var rect = $card.getBoundingClientRect()
     card_height = rect.height
@@ -1793,14 +1795,13 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
-    if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     e.preventDefault()
     card_prev_prev_y = card_prev_y 
     card_prev_y = e.changedTouches[0].screenY
     
-    dy = card_prev_y - card_start_y
+    var dy = card_prev_y - card_start_y
     if (dy == 0) return
     
     var h = +$card.style.height.replace('px', '') || y_card_min
@@ -1808,12 +1809,15 @@ $card.ontouchmove = e => {
     var last_move_direction = dy > 0
         ? 'down'
         : 'up'
+    
 
     if (card_going_close == undefined) {
         card_going_close = card_start_small &&
         last_move_direction == 'down'
     }
     
+    if (e.target.classList.contains('photo')) return
+
     if (card_going_close) {
         var y = Math.max(0, Math.min(y_card_min, dy))
         $card.style.bottom = `-${y}px`
@@ -1825,13 +1829,23 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
-    if (e.target.classList.contains('photo')) return
     if (e.target.classList.contains('dot')) return
     if (e.target.id == 'dots') return
     card_end_t = Date.now()
+    card_end_x = e.changedTouches[0].screenX
     card_end_y = e.changedTouches[0].screenY
     var dt = card_end_t - card_start_t // user moved by finger in ms
+    var dx = card_end_x - card_start_x // user moved by finger by px
     var dy = card_end_y - card_start_y // user moved by finger by px
+    if (
+        e.target.classList.contains('photo') &&
+        (
+            card_going_close ||
+            dt > 1000 ||
+            dy < 0 ||
+            dy < 2 * Math.abs(dx)
+        )
+    ) return
     var dY = null // future rest path for animation
     var dT = null // future rest time for animation
     var v = Math.max(0.3, 1.5 * Math.abs(dy / dt))
@@ -3274,9 +3288,9 @@ apply_filter = throttle(apply_filter, 90)
                 var photos_urls
                 try {
                     photos_urls = get_ad_img_urls(id)
-                    navigator.serviceWorker.controller.postMessage({type: 'PHOTO_PRIORITY', url: photos_urls[0]})
+                    if ('serviceWorker' in navigator) navigator.serviceWorker.controller?.postMessage({type: 'PHOTO_PRIORITY', url: photos_urls[0]})
                 } catch (e) {
-                    console.error(`ERROR: get_ad_img_urls(${id}) ${url}`)
+                    console.error(`ERROR: get_ad_img_urls(${id}) ${url}`, e)
                     photos_urls = []
                 }
                 $dots.innerHTML = ''
