@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789589249641'
+    const VER_WASM = '1789599577838'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '46097cbd029befdd41e6185eeac99598719287c9cb360d090d5aaed137a5b8f6'// contact spirin.vladimir@gmail.com
+        const KEY = 'db7548503bd4a759e323b80abf69caf8b7e1ecdb82b2654f81ad7996ba6c16c6'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -635,7 +635,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"Cho thuê căn hộ 1pn đường Phước trường 12, quận sơn trà, ban công",
             "url":"https://danang.kim/id/cho-thue-can-ho-1pn-duong-phuoc-truong-12-quan-son-tra-ban-cong",
-			"price":"9800000",
+			"price":"8900000",
 			"priceCurrency":"VND"
         }
     </script>
