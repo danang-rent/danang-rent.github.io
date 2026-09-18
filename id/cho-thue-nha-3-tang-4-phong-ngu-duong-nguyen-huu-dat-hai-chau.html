@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CHO THUÊ NHÀ 3 TẦNG 4 PHÒNG NGỦ ĐƯỜNG NGUYỄN HỮU DẬT,HẢI CHÂU</title><meta name="ad:id" content="178539246">
+    <title>CHO THUÊ NHÀ 3 TẦNG 4 PHÒNG NGỦ ĐƯỜNG NGUYỄN HỮU DẬT,HẢI CHÂU</title><meta name="ad:id" content="178687172">
     <meta property="og:url" content="https://danang.kim/id/cho-thue-nha-3-tang-4-phong-ngu-duong-nguyen-huu-dat-hai-chau">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789446450695'
+    const VER_WASM = '1789683135872'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'c41c2a8eb25f2e878f8e6a66b4987d16e78dfdf21a877b364a12484ac75954d6'// contact spirin.vladimir@gmail.com
+        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -910,7 +910,8 @@ Prices are expressed in Vietnamese dong (VND).
             color: var(--filter-color);
         }
         .card-info-row-last {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .card-info-row-last div {
             display: inline;
@@ -1190,13 +1191,15 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ NHÀ 3 TẦNG 4 PHÒNG NGỦ ĐƯỜNG NGUYỄN HỮU DẬT,HẢI CHÂU</h1><p>Cho thuê nhà 3 tầng đường Nguyễn Hữu Dật,Hải Châu
-Diện tích : 100m2 Ngang 5m
-Nhà 4 phòng ngủ,4 vệ sinh
-Nội thất đầy đủ
-Giá thuê : 20 triệu/tháng
+<div id="map"></div><article><h1>CHO THUÊ NHÀ 3 TẦNG 4 PHÒNG NGỦ ĐƯỜNG NGUYỄN HỮU DẬT,HẢI CHÂU</h1><p>CHO THUÊ NHÀ 3 TẦNG: ĐƯỜNG NGUYỄN HỮU DẬT, P HÒA CƯỜNG BẮC, Q HẢI CHÂU 
+1. Giá thuê: 20 Triệu  đồng/Tháng
+2. Thông tin bất động sản
+- Diện tích: 100 m² (ngang: 5 m)
+- 3 tầng, 4 phòng ngủ, 4 wc
+- Đường rộng: 10.5 m, lề: 5 m• 5 phòng làm việc , công năng đầy đủ
+ • Phù hợp mở công ty văn phòng , giáo dục
 
-Liên hệ làm việc : O̲7̲9̲6̲ ̲6̼4̼6̼ ͙6͙3͙6͙</p></article>
+- Liên hệ làm việc : O̲7̲9̲6̲ ̲6̼4̼6̼ ͙6͙3͙6͙</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1804,6 +1807,7 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1833,6 +1837,7 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1888,6 +1893,7 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return

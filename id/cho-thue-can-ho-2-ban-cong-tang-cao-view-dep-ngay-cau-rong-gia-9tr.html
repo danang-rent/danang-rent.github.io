@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789446450695'
+    const VER_WASM = '1789683135872'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'c41c2a8eb25f2e878f8e6a66b4987d16e78dfdf21a877b364a12484ac75954d6'// contact spirin.vladimir@gmail.com
+        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -635,7 +635,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"☘️ CHO THUÊ CĂN HỘ 2 BAN CÔNG TẦNG CAO VIEW ĐẸP NGAY CẦU RỒNG GIÁ 9TR",
             "url":"https://danang.kim/id/cho-thue-can-ho-2-ban-cong-tang-cao-view-dep-ngay-cau-rong-gia-9tr",
-			"price":"9000000",
+			"price":"8000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -910,7 +910,8 @@ Prices are expressed in Vietnamese dong (VND).
             color: var(--filter-color);
         }
         .card-info-row-last {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .card-info-row-last div {
             display: inline;
@@ -1196,7 +1197,7 @@ Thông tin chi tiết: STUDIO CÓ BAN CÔNG THOÁNG MÁT , VIEW ĐẸP GẦN C�
 👉 Hệ thống cửa bằng vân tay, thẻ từ thông minh. Camera an ninh, nhà để xe; 
 👉 Đầy đủ nội thất
 Xung quanh khu vực tiện ích đầy đủ, gần phòng tập Gym, sân chơi thể thao, chợ, vinmart , ngân hàng, trường học.
-✅  Giá thuê  9 triệu/ tháng 
+✅  Giá thuê  8 triệu/ tháng 
 cọc 1 tháng thanh toán linh hoạt 
      - Điện 4,2k/1kwh 
      - Nước 80k/người
@@ -1812,6 +1813,7 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1841,6 +1843,7 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1896,6 +1899,7 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return

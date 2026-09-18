@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>🏡 CĂN HỘ GOLDEN BAY – ĐÀ NẴNG Bạn đang tìm căn hộ có view đẹp, nội thấ</title><meta name="ad:id" content="178597717">
+    <title>🏡 CĂN HỘ GOLDEN BAY – ĐÀ NẴNG Bạn đang tìm căn hộ có view đẹp, nội thấ</title><meta name="ad:id" content="178642073">
     <meta property="og:url" content="https://danang.kim/id/can-ho-golden-bay-da-nang-ban-dang-tim-can-ho-co-view-dep-noi-tha">
     <meta property="og:created" content="2026-06-09" />
     <meta property="og:type" content="website" />
@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789446450695'
+    const VER_WASM = '1789683135872'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = 'c41c2a8eb25f2e878f8e6a66b4987d16e78dfdf21a877b364a12484ac75954d6'// contact spirin.vladimir@gmail.com
+        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -635,7 +635,7 @@ Prices are expressed in Vietnamese dong (VND).
             "@type":"Offer",
             "name":"🏡 CĂN HỘ GOLDEN BAY – ĐÀ NẴNG Bạn đang tìm căn hộ có view đẹp, nội thấ",
             "url":"https://danang.kim/id/can-ho-golden-bay-da-nang-ban-dang-tim-can-ho-co-view-dep-noi-tha",
-			"price":"9000000",
+			"price":"25000000",
 			"priceCurrency":"VND"
         }
     </script>
@@ -910,7 +910,8 @@ Prices are expressed in Vietnamese dong (VND).
             color: var(--filter-color);
         }
         .card-info-row-last {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .card-info-row-last div {
             display: inline;
@@ -1191,18 +1192,10 @@ Prices are expressed in Vietnamese dong (VND).
 </head>
 <body>
 <div id="map"></div><article><h1>🏡 CĂN HỘ GOLDEN BAY – ĐÀ NẴNG Bạn đang tìm căn hộ có view đẹp, nội thấ</h1><p>Dự án: 
-Thông tin chi tiết: Cho thuê căn hộ cao cấp 5 sao Golden Bay Đà Nẵng, Căn Hộ Dát vàng tại Đà Nẵng.
-* Diện tích: 40m2.
-* 1 phòng ngủ, 1 WC, phòng khách, phòng bếp, ban công.
-* Căn hộ được trang bị đầy đủ nội thất chuẩn 5*, View toàn thành phố, view biển, núi, sông, vịnh.
-* Căn hộ được trang bị đầy đủ nội thất: Sofa, bàn ăn, máy giặt, tủ lạnh, hút mùi, bếp từ, nước nóng, giường nệm cao cấp,... Quý khách hàng chỉ cần vào ở ngay.
-* Tiện ích:
-* Được sử dụng toàn bộ tiện ích trong tòa nhà.
-* Hồ bơi vô cực Miễn Phí, nhà hàng, bar, phòng hội nghị, siêu thị, gym, lễ tân, an ninh.
-* Có chỗ để ô tô miễn phí.
-* Bảo vệ 24/24.
-Giá thuê chỉ từ 9tr/tháng.
-Liên hệ ngay em Quân để chọn được căn ưng ý nhất.</p></article>
+Thông tin chi tiết: 👉 Hiện có: • Studio • 2 phòng ngủ • Diện tích 40 / 44 / 70m²
+🌊 View vịnh – Sông Hàn – thành phố 🛋️ Full nội thất 🏊 Hồ bơi và nhiều tiện ích ngay trong khu 📅 Nhận thuê ngày hoặc tháng
+Muốn xem ảnh, giá và căn còn trống, cứ inbox mình nhé.
+📞 Zalo / WhatsApp: +84 357 202 226</p></article>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1810,6 +1803,7 @@ var photo_swipe
 
 $card.ontouchstart = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1839,6 +1833,7 @@ $card.ontouchstart = e => {
 }
 $card.ontouchmove = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
@@ -1894,6 +1889,7 @@ $card.ontouchmove = e => {
 }
 $card.ontouchend = e => {
     e.stopPropagation()
+    if (e.target.id == 'contact') return
     if (e.target.id == 'card_heart') return
     if (e.target.id == 'icon-card-heart') return
     if (e.target.classList.contains('dot')) return
