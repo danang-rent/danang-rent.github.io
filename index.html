@@ -243,6 +243,10 @@ Prices are expressed in Vietnamese dong (VND).
           // assembly/index/get_ads() => ~lib/staticarray/StaticArray<f64>
           return __liftStaticArray(__getF64, 3, exports.get_ads() >>> 0);
         },
+        get_ad_range(id) {
+          // assembly/index/get_ad_range(f64) => ~lib/staticarray/StaticArray<f64>
+          return __liftStaticArray(__getF64, 3, exports.get_ad_range(id) >>> 0);
+        },
         layers_order(a, b) {
           // assembly/index/layers_order(~lib/string/String, ~lib/string/String) => i32
           a = __retain(__lowerString(a) || __notnull());
@@ -351,7 +355,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789720725909'
+    const VER_WASM = '1789730018304'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -3330,6 +3334,39 @@ apply_filter = throttle(apply_filter, 90)
                 $publish.textContent = `${ago(ad.publish)}`
                 $contact.onclick = () => gtag('event', 'ad_click', {ad_id: id, ad_url: url, price, page: current_page})
                 $contact.href = url
+                
+                fetch(
+                    '/ads.bin',
+                    {headers: {'Range': `bytes=${get_ad_range(id).join('-')}`}}
+                )
+                .then(_ => _.arrayBuffer())
+                .then(ab => {
+                    const view = new DataView(ab)
+                    const decoder = new TextDecoder('utf-8')
+                    var offset = 0
+                    
+                    const subjectLen = view.getUint32(offset, false)
+                    offset += 4
+                    const subject = decoder.decode(new Uint8Array(ab, offset, subjectLen))
+                    offset += subjectLen
+                    
+                    const bodyLen = view.getUint32(offset, false)
+                    offset += 4
+                    const body = decoder.decode(new Uint8Array(ab, offset, bodyLen))
+                    offset += bodyLen
+                    
+                    const streetLen = view.getUint32(offset, false)
+                    offset += 4
+                    const street_name = decoder.decode(new Uint8Array(ab, offset, streetLen))
+                    return [subject, body, street_name]
+                })
+                .then(([subject, body, street_name]) => {
+                    console.log(
+                        'subject:', subject,
+                        'body:', body,
+                        'street_name:', street_name
+                    )
+                })
             })
             map.on('click', e => {
                 features = map.queryRenderedFeatures(e.point, {
