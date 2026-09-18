@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,47 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>TRỐNG SẴN Studio Full Nội Thất - Trung Tâm An Thượng - Có Hồ Bơi, Gym</h1><p>𝐓𝐑𝐎̂́𝐍𝐆 𝐒𝐀̆̃𝐍 𝐒𝐭𝐮𝐝𝐢𝐨 𝐅𝐮𝐥𝐥 𝐍𝐨̣̂𝐢 𝐓𝐡𝐚̂́𝐭 - 𝐓𝐫𝐮𝐧𝐠 𝐓𝐚̂𝐦 𝐀𝐧 𝐓𝐡𝐮̛𝐨̛̣𝐧𝐠 - 𝐂𝐨́ 𝐇𝐨̂̀ 𝐁𝐨̛𝐢, 𝐆𝐲𝐦
-
-Trống sẵn - Dọn vào ở ngay! Phòng P303
-
-Thông tin chi tiết:
-
-Địa chỉ: Đường Lê Quang Đạo, Mỹ An, Ngũ Hành Sơn - Trung tâm khu An Thượng, gần biển Mỹ Khê
-
-Tiện nghi: Thang máy, khóa thông minh, máy lạnh, wifi mạnh, giường Queen 1m6, TV HD 4K, máy giặt riêng, nước nóng, camera an ninh 24/7, hệ thống báo cháy và chữa cháy tự động
-Tiện ích tòa nhà: Hồ bơi, khu tập gym, gara để xe có bảo vệ
-Dịch vụ: Dọn phòng 1 lần / tuần, thay ga trải giường 1 lần / tuần
-
-Giá thuê: 𝟖,𝟖𝟎𝟎,𝟎𝟎𝟎 VNĐ / tháng
-
-Chi phí dịch vụ:
-
-Điện: 3.900đ / Kwh
-Phí dịch vụ: 300.000đ / người
-Liên hệ 𝐏𝐡𝐚́𝐩 Đ𝐞̣𝐩 𝐓𝐫𝐚𝐢 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩/𝐙𝐚𝐥𝐨) xem phòng trực tiếp. Hỗ trợ xem nhà 24/7.
-
-[ENGLISH]
-
-𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐋𝐄 𝐍𝐎𝐖 - 𝐅𝐮𝐥𝐥𝐲 𝐅𝐮𝐫𝐧𝐢𝐬𝐡𝐞𝐝 𝐒𝐭𝐮𝐝𝐢𝐨 - 𝐂𝐞𝐧𝐭𝐞𝐫 𝐨𝐟 𝐀𝐧 𝐓𝐡𝐮𝐨𝐧𝐠 - 𝐒𝐰𝐢𝐦𝐦𝐢𝐧𝐠 𝐏𝐨𝐨𝐥, 𝐆𝐲𝐦
-
-Available now - Ready to move in! Room P303
-
-Details:
-
-Address: Le Quang Dao Street, My An, Ngu Hanh Son - Center of An Thuong area, near My Khe beach
-
-Amenities: Elevator, smart lock, air conditioner, strong wifi, Queen bed 1.6m, HD 4K TV, private washing machine, hot water, 24/7 security camera, automatic fire alarm system
-Building facilities: Swimming pool, gym, guarded parking garage
-Service: Room cleaning 1 time / week, bed sheet change 1 time / week
-
-Rental Price: 𝟖,𝟖𝟎𝟎,𝟎𝟎𝟎 VND / month
-
-Service Fees:
-
-Electricity: 3,900 VND / Kwh
-Service fee: 300,000 VND / person
-Contact 𝐏𝐡𝐚𝐩 𝐑𝐞𝐚𝐥 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩/𝐙𝐚𝐥𝐨) for viewing. Fast support 24/7.</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1395,11 +1355,11 @@ Contact 𝐏𝐡𝐚𝐩 𝐑𝐞𝐚𝐥 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">8 800 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">45</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1519,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1528,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params

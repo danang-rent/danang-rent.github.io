@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,50 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>CHO THUÊ CĂN 2PN GIÁ TỐT TẠI MIA</h1><p>CHO THUÊ CĂN 2PN MIA – GIÁ TỐT “NHÌ” DỰ ÁN
-(English as bellow)
-
-Địa chỉ: 61 Ngô Thì Nhậm, Liên Chiểu, Đà Nẵng
-
-* Tầng cao, view biển
-* Diện tích: 63.3m²
-* Nội thất chủ đầu tư
-* 2 nhà vệ sinh
-* Bếp điện từ, máy hút mùi, máy nước nóng
-
-Giá thuê: 8.000.000 VNĐ/tháng
-
-Hợp đồng 1 năm
-Cọc 1 tháng, thanh toán 3 tháng/lần
-Không nuôi pet
-
-Căn 2PN tầng cao, view biển, diện tích rộng mà giá chỉ 8 triệu/tháng – mức giá rất tốt trong dự án.
-
-Liên hệ em Phương *** để xem nhà và chốt cọc.
-
-⸻
-
-FOR RENT – 2-BEDROOM APARTMENT AT MIA
-
-Address: 61 Ngo Thi Nham Street, Lien Chieu, Da Nang
-
-* High floor with sea view
-* Size: 63.3m²
-* Developer-standard interior
-* 2 bathrooms
-* Induction cooker, range hood and water heaters
-
-Rental price: VND 8,500,000/month
-
-1-year lease
-1-month deposit, payment every 3 months
-No pets allowed
-
-A high-floor 2-bedroom apartment with a sea view at only VND 8.5 million/month – one of the best rental prices in the project.
-
-Contact Phương *** zalo/whatsapp for a viewing and reservation.
-
-#Miacenterpoint</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1398,11 +1355,11 @@ Contact Phương *** zalo/whatsapp for a viewing and reservation.
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">8 000 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">63</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1522,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1531,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params

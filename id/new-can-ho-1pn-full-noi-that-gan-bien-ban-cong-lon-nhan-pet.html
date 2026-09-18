@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,43 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>(NEW 💯%) CĂN HỘ 1PN FULL NỘI THẤT - GẦN BIỂN - BAN CÔNG LỚN, NHẬN PET</h1><p>🏢 𝐓𝐎̀𝐀 𝐂𝐀̆𝐍 𝐇𝐎̣̂ 𝐌𝐎̛́𝐈 𝐗𝐀̂𝐘 𝟏𝟎𝟎% - 𝐅𝐔𝐋𝐋 𝐍𝐎̣̂𝐈 𝐓𝐇𝐀̂́𝐓 - 𝐆𝐀̂̀𝐍 𝐁𝐈𝐄̂̉𝐍 𝐌𝐘̃ 𝐊𝐇𝐄̂, 𝐊𝐇𝐔 𝐀𝐍 𝐓𝐇𝐔̛𝐎̛̣𝐍𝐆 - 𝐍𝐇𝐀̣̂𝐍 𝐏𝐄𝐓
-
-Sẵn sàng hoạt động từ 12/09/2026 - Yên tĩnh, không có công trình xây dựng xung quanh!
-
-Thông tin chi tiết:
-
-Vị trí: Gần biển Mỹ Khê, gần khu An Thượng, đầy đủ tiện ích trong bán kính 500m (chợ, siêu thị, quán ăn, gym, spa)
-Loại hình: Căn hộ 1PN full nội thất mới 100%
-Phòng: 402 - Có ban công riêng rộng lớn, thoáng mát, nhận nuôi pet
-Giá thuê: 𝟏𝟑,𝟎𝟎𝟎,𝟎𝟎𝟎 VNĐ / tháng
-
-Chi phí dịch vụ:
-
-Điện: 4.200đ / Kwh
-Nước: 100.000đ / người
-Phí dịch vụ: 200.000đ / phòng (Bao gồm: Rác, Wifi, Dọn vệ sinh 1 lần / tháng + giặt ga giường)
-Liên hệ 𝐏𝐡𝐚́𝐩 Đ𝐞̣𝐩 𝐓𝐫𝐚𝐢 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩/𝐙𝐚𝐥𝐨) xem phòng trực tiếp. Hỗ trợ xem nhà 24/7.
-
-[ENGLISH]
-
-🏢 𝐁𝐑𝐀𝐍𝐃 𝐍𝐄𝐖 𝐁𝐔𝐈𝐋𝐃𝐈𝐍𝐆 𝟏𝟎𝟎% - 𝐅𝐔𝐋𝐋𝐘 𝐅𝐔𝐑𝐍𝐈𝐒𝐇𝐄𝐃 - 𝐍𝐄𝐀𝐑 𝐌𝐘 𝐊𝐇𝐄 𝐁𝐄𝐀𝐂𝐇, 𝐀𝐍 𝐓𝐇𝐔𝐎𝐍𝐆 𝐀𝐑𝐄𝐀 - 𝐏𝐄𝐓 𝐅𝐑𝐈𝐄𝐍𝐃𝐋𝐘
-
-Ready for operation from 12/09/2026 - Quiet area, no construction sites around!
-
-Details:
-
-Location: Near My Khe Beach, near An Thuong area, full amenities within 500m radius
-Type: 1 Bedroom, 100% brand new fully furnished apartment
-Unit: 402 - Large private balcony, pet-friendly
-Rental Price: 𝟏𝟑,𝟎𝟎𝟎,𝟎𝟎𝟎 VND / month
-
-Service Fees:
-
-Electricity: 4,200 VND / Kwh
-Water: 100,000 VND / person
-Service fee: 200,000 VND / room (Including: Trash, Wifi, Cleaning 1 time / month + bed sheet laundry)
-Contact 𝐏𝐡𝐚𝐩 𝐑𝐞𝐚𝐥 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩/𝐙𝐚𝐥𝐨) for viewing. Fast support 24/7.</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1391,11 +1355,11 @@ Contact 𝐏𝐡𝐚𝐩 𝐑𝐞𝐚𝐥 (𝐏𝐡𝐨𝐧𝐞/𝐖𝐡𝐚𝐭
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">13 000 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">45</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1515,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1524,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params

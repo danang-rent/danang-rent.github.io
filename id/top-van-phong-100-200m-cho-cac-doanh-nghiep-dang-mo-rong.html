@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,35 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Top văn phòng 100-200m² cho các doanh nghiệp đang mở rộng</h1><p>1. Văn phòng đường Hải Phòng, di chuyển trung tâm hành chính nhanh chóng
-Diện tích: 102m²
-Giá thuê: 13$/m²/tháng
-Quy mô tòa nhà có 23 tầng + hầm
-Ngay đường chính Hải Phòng giao nhau với Nguyễn Thị Minh Khai, Ngô Gia Tự
-Có 4 tầng hầm là bãi đậu xe máy, ô tô bằng rô bốt thông minh
-Được trang thiết bị được đầu tư tối tân, từ thang máy tốc độ cao, hệ thống PCCC tự động, máy lạnh trung tâm tiết kiệm nhiên liệu
-
-2. Văn phòng đường Trần Hưng Đạo, tập trung nhiều doanh nghiệp
-Diện tích: 193m2 - 217 m2
-giá thuê: 45-50tr/tháng
-Tòa nhà mới xây dựng với thiết kế 7 tầng nổi và 1 tầng hầm
-Vị trí trung tâm TP. Đà Nẵng, cách cầu rộng 500m, cách sông Hàn 200m đi bộ.
-Tiện ích đầy đủ gồm coffee highland, starbuck, siêu thị, sân thể thao, chung cư, tuyến đường sầm uất.
-Đường 15m5 lề 12m, đậu ô tô thoải mái
-
-3. Văn phòng đường 2/9, vị trí thuận tiện giao dịch
-Diện tích từ 45m2 đến 320m2
-giá thuê từ 12$-14$/m2 ~ từ 318.000/m2
-Vị trí đắc địa, thuận tiện giao thông và đi lại.
-Hạ tầng hiện đại, đầy đủ tiêu chuẩn cho văn phòng
-Diện tích thuê linh hoạt, phù hợp từ văn phòng nhỏ đến nguyên sàn lớn
-
-4. Văn phòng đường Lê Thanh Nghị, kết nối nhanh đến các đường lớn
-Diện tích: 200m2
-giá thuê: 20tr/tháng
-Vị trí trên tuyến đường lớn, thuận tiện lưu thông; vị trí gần các trục lớn như Xô Viết Nghệ Tĩnh, Phan Đăng Lưu
-Tiện ích xung quanh: cửa hàng ăn uống, café, tiện dịch vụ văn phòng, ngân hàng gần
-</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1383,11 +1355,11 @@ Tiện ích xung quanh: cửa hàng ăn uống, café, tiện dịch vụ văn p
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">36 172 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">102</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1507,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1516,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params

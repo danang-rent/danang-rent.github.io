@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,35 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>1-bedroom apartment with a view of the Han River for rent</h1><p>Chính chủ cho thuê căn hộ (PLEASE SEE BELOW FOR ENGLISH) 
-Loại căn hộ 1-2 phòng ngủ diện tích 50m2 như hình.  
-- Full nội thất và đầy đủ tiện ích, giặt phơi riêng 
-- Thoáng, nhiều ánh sáng tự nhiên, ban công ngắm sông Hàn
-- Giờ giấc tự do, nhà xe rộng rãi 
-- Dọn dẹp vệ sinh miễn phí tháng/lần 
-Thanh toán linh hoạt 
-Giá 10.5-12tr loại 1-2PN (ở tối đa 2-3 người) 
-Vui lòng liên hệ trực tiếp để trao đổi thêm thông tin.  Trân trọng cảm ơn!
-
-HOMIES APARTMENT AMENS♥️
-• 1 or 2-bedrooms apartment, 50m² in size, fully functional
-• Fully furnished with a separate laundry and drying area
-• Large windows, filled with natural sunlight and Han river view
-• No curfew, freedom in daily schedule
-• Free regular cleaning service once a month.
-• Spacious parking area with 24/7 security cameras
-
-💡 Monthly rent: 1***00.000 VND (excluding tax if required)
-💡 Utilities (separately metered):
-• Electricity: 4,500 VND/kWh
-• Water: 100,000 VND/person/month (children counted as 50%)
-
-‼️ Prices and services apply to long-term rentals (contracts from 3 months or more)
-‼️ Flexible rental packages available by month or day (different rates apply)
-📍 Address: 193 Tran Hung Dao, An Hai Ward, Da Nang City
-
-📱 For more details, please contact our management team for quick support:
-Phone/Zalo/WhatsApp: ***</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1383,11 +1355,11 @@ Phone/Zalo/WhatsApp: ***</p></article>
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">10 500 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">50</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1507,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1516,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params

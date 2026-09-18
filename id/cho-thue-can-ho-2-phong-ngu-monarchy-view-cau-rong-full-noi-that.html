@@ -351,7 +351,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1789683135872'
+    const VER_WASM = '1789690792433'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -459,7 +459,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '592ae67063167b88c5c9c7096b98ea711c60d6db6bc4dd28040b1b099b84145c'// contact spirin.vladimir@gmail.com
+        const KEY = 'c7943e746d9bdfe83b841ba6907e9c8c71471c9b9ee22243b49ca2e8e518370b'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
@@ -495,7 +495,7 @@ Prices are expressed in Vietnamese dong (VND).
             var longitude = raw_ads[i + 2]
             var latitude = raw_ads[i + 3]
             var m2 = raw_ads[i + 8]
-            var publish = ad_size == 10 ? raw_ads[i + 9] : Date.now() - 3600 * 24 * 1000 
+            var publish = raw_ads[i + 9] 
             var key = longitude + '-' + latitude
             var dup_set = dup_map.get(key) || new Set()
             dup_set.add(id)
@@ -798,7 +798,7 @@ Prices are expressed in Vietnamese dong (VND).
         }
         #card {
             position: fixed;
-            bottom: -20vh;
+            bottom: 0;/*card SSR*/
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1191,44 +1191,7 @@ Prices are expressed in Vietnamese dong (VND).
     </style>
 </head>
 <body>
-<div id="map"></div><article><h1>Cho thuê căn hộ 2 phòng ngủ Monarchy, View cầu rồng, Full nội thất</h1><p>Dự án: 
-Thông tin chi tiết: ✨ 𝐂Ă𝐍 𝐇Ộ 𝐌𝐎𝐍𝐀𝐑𝐂𝐇𝐘 𝐂𝐇𝐎 𝐓𝐇𝐔Ê – 𝟐 𝐏𝐇Ò𝐍𝐆 𝐍𝐆Ủ ✨
-
-Bạn đang tìm kiếm một căn hộ hiện đại tại Đà Nẵng? Căn hộ 2 phòng ngủ tuyệt đẹp tại Monarchy này hiện đã sẵn sàng chào đón cư dân mới!
-🏡 𝗧𝗵ô𝗻𝗴 𝘁𝗶𝗻 𝗰ă𝗻 𝗵ộ:
-• 2 phòng ngủ
-• Đầy đủ nội thất
-• Phòng khách hiện đại
-• Phòng ngủ rộng rãi
-• Bếp trang bị đầy đủ tiện nghi
-• View tầng cao, cầu sông Hàn
-• Không gian thoáng đãng, dễ chịu
-
-📍 Vị trí đắc địa gần bãi biển Mỹ Khê, Cầu Rồng, các nhà hàng, quán cà phê và trung tâm thành phố.
-
-📞 Liên hệ / WhatsApp/ Zalo: +84 333 362 613
-
-#MonarchyApartment #DanangApartment #ApartmentForRent #DanangLiving #RentalProp
-===========================================
-
-✨ 𝐌𝐎𝐍𝐀𝐑𝐂𝐇𝐘 𝐀𝐏𝐀𝐑𝐓𝐌𝐄𝐍𝐓 𝐅𝐎𝐑 𝐑𝐄𝐍𝐓 – 𝟐 𝐁𝐄𝐃𝐑𝐎𝐎𝐌𝐒 ✨
-
-Are you looking for a modern apartment in Da Nang? This stunning 2-bedroom apartment at Monarchy is ready to welcome new residents!
-
-🏡 𝗔𝗽𝗮𝗿𝘁𝗺𝗲𝗻𝘁 𝗗𝗲𝘁𝗮𝗶𝗹𝘀:
-• 2 bedrooms
-• Fully furnished
-• Modern living room
-• Spacious bedrooms
-• Fully equipped kitchen
-• High-floor view overlooking the Han River Bridge
-• Airy and pleasant atmosphere
-
-📍 Prime location near My Khe Beach, Dragon Bridge, restaurants, cafes, and the city center.
-
-📞 Contact / WhatsApp / Zalo: +84 333 362 613
-
-#MonarchyApartment #DanangApartment #ApartmentForRent #DanangLiving #RentalProperty</p></article>
+<div id="map"></div>
 <div id="logo" hidden>
     <svg xmlns="http://www.w3.org/2000/svg"
         width="300"
@@ -1392,11 +1355,11 @@ Are you looking for a modern apartment in Da Nang? This stunning 2-bedroom apart
         </div>
         <div id="card_info">
             <div class="card-info-row">
-                <div id="price"></div>
+                <div id="price">19 000 000</div>
                 <div class="card-metric">VND</div>
             </div>
             <div class="card-info-row">
-                <div id="m2"></div>
+                <div id="m2">72</div>
                 <div class="card-metric">m<sup>2</sup></div>
             </div>
             <div class="card-info-row card-info-row-last">
@@ -1516,8 +1479,8 @@ const router = () => {
     current_page == PAGE.MAIN && console.log('MAIN')
     current_page == PAGE.EDIT && console.log('EDIT')
     current_page == PAGE.SINGLE && console.log('SINGLE')
-    $close.toggleAttribute('hidden', current_page != PAGE.SHARED && current_page != PAGE.SINGLE)
-    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED || current_page == PAGE.SINGLE)
+    $close.toggleAttribute('hidden', current_page != PAGE.SHARED)
+    $heart.toggleAttribute('hidden', current_page == PAGE.SHARED)
     $share.toggleAttribute('hidden', current_page != PAGE.EDIT)
     toggler.toggleAttribute('hidden', current_page != PAGE.MAIN)
     filter.setAttribute('hidden', '')
@@ -1525,6 +1488,7 @@ const router = () => {
     $icon_dong.setAttribute('hidden', '')
     $logo.removeAttribute('hidden')
     $last_update_time.removeAttribute('hidden')
+    $card.toggleAttribute('hidden', current_page != PAGE.SINGLE)
 
     const likes = likes_search_params.length
         ? likes_search_params
