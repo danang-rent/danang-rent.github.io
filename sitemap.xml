@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:dk="https://danang.kim/schemas/sitemap">
 	<url>
 		<loc>https://danang.kim/</loc>
-		<lastmod>2026-09-20</lastmod>
+		<lastmod>2026-09-21</lastmod>
 		<changefreq>hourly</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-mat-tien-300m2-ngang-11-met-vi-tri-dac-dia-kinh-doanh</loc>
+		<lastmod>2026-09-20</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178906706</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-chung-cu-2pn-full-noi-that-view-bien-mia-plaza</loc>
@@ -1055,20 +1062,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178884887</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/toi-can-cho-thue-mt-nguyen-luong-bang-nha-2-tang-full-noi-that</loc>
-		<lastmod>2026-09-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178647675</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-gan-fpt</loc>
-		<lastmod>2026-09-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178824568</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-mt-thanh-khe</loc>
@@ -9765,13 +9758,6 @@
 		<dk:id>178714274</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/can-cho-thue-nha-4-tang-duong-phan-triem-hoa-xuan-full-noi-that</loc>
-		<lastmod>2026-09-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178714246</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/can-goc-78m2-2-phong-ngu-2-wc</loc>
 		<lastmod>2026-09-11</lastmod>
 		<changefreq>daily</changefreq>
@@ -10071,13 +10057,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178707441</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-1-phong-ngu-moi-100-nguyen-phan-vinh-son-tra-da-nang</loc>
-		<lastmod>2026-09-11</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178673070</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-cap-dat-duong-le-quang-chi-hoa-xuan</loc>
