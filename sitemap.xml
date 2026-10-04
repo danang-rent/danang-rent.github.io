@@ -6741,13 +6741,6 @@
 		<dk:id>178475156</dk:id>
 	</url>
 	<url>
-		<loc>https://danang.kim/id/cho-thue-nha-khu-nam-viet-a-noi-that-day-du-15tr-thang</loc>
-		<lastmod>2026-09-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178500886</dk:id>
-	</url>
-	<url>
 		<loc>https://danang.kim/id/can-ho-2pn-chung-cu-muong-thanh</loc>
 		<lastmod>2026-09-29</lastmod>
 		<changefreq>daily</changefreq>
@@ -13025,5 +13018,12 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178180672</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-studio-phuoc-truong-15-son-tra</loc>
+		<lastmod>2026-09-23</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178959966</dk:id>
 	</url>
 </urlset>
