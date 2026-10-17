@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-nha-3tang-mat-tien-le-van-thinh-hoa-minh-da-nang</loc>
+		<lastmod>2026-10-17</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179513692</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-dep-moi-xay-ha-huy-giap-hoa-cuong-nam-hai-chau</loc>
 		<lastmod>2026-10-17</lastmod>
 		<changefreq>daily</changefreq>
@@ -12941,12 +12948,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179237095</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-khu-my-an</loc>
-		<lastmod>2026-10-05</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179236982</dk:id>
 	</url>
 </urlset>
