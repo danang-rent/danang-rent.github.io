@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/studio-tach-bep-tttp-gan-aemall-gan-dong-da</loc>
+		<lastmod>2026-10-18</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179531330</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/1pn-my-an-gan-bien-my-khe-khu-an-thuong-gia-tot</loc>
+		<lastmod>2026-10-18</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179531283</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/sieu-pham-chdv-duong-xuan-quynh</loc>
 		<lastmod>2026-10-18</lastmod>
 		<changefreq>daily</changefreq>
@@ -12808,12 +12822,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179218805</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-cho-thue-hai-lo-cap-ly-tu-tan</loc>
-		<lastmod>2026-10-06</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179164140</dk:id>
 	</url>
 </urlset>
