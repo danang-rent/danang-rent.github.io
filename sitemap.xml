@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/can-ho-mini-cho-thue-tai-lien-chieu-da-nang-2-8tr-thang</loc>
+		<lastmod>2026-10-29</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179781778</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-full-noi-that-hoa-xuan-cam-le</loc>
+		<lastmod>2026-10-29</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179781777</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-1pn-dung-si-thanh-khe-da-nang</loc>
 		<lastmod>2026-10-29</lastmod>
 		<changefreq>daily</changefreq>
@@ -2217,13 +2231,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179668477</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-light</loc>
-		<lastmod>2026-10-28</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179042134</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-can-goc-2-phong-ngu-mia-plaza-full-noi-that-gia-13-trieu</loc>
@@ -6053,13 +6060,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179649820</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-3-phong-ngu-2-ve-sinh-110m2-ngay-trung-tam-da-nang</loc>
-		<lastmod>2026-10-26</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>178966784</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-dat-lo-goc-luong-nhu-hoc-huy-can-cam-le</loc>
@@ -13312,26 +13312,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179540104</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-studio-6-5-trieu-thang-khu-vuc-son-tra-gan-bien</loc>
-		<lastmod>2026-10-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179539967</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-1-phong-ngu-7-5-trieu-thang-cho-phep-nuoi-thu-cung</loc>
-		<lastmod>2026-10-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179539902</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-moi-xay</loc>
-		<lastmod>2026-10-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179539860</dk:id>
 	</url>
 </urlset>
