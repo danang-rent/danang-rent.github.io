@@ -7,6 +7,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/toi-can-cho-thue-3-lo-lien-ke-bao-gom-lo-goc-doi-dien-10-toa-chung-cu</loc>
+		<lastmod>2026-10-30</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178624294</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-can-ho-2pn-azura</loc>
 		<lastmod>2026-10-30</lastmod>
 		<changefreq>daily</changefreq>
@@ -1902,13 +1909,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>178933576</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/can-ho-light</loc>
-		<lastmod>2026-10-29</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179042134</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/pass-lai-2-phong-gac-lung-gia-4m-va-4m2</loc>
@@ -13228,12 +13228,5 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>176628077</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-monarchy-2-pn-gia-chi-tu-18tr-thang</loc>
-		<lastmod>2026-10-19</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179546243</dk:id>
 	</url>
 </urlset>
