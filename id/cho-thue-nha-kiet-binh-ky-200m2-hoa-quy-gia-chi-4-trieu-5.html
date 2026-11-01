@@ -359,7 +359,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.gtag = () => null
     window.PAGE = {MAIN: 0, EDIT: 1, SHARED: 2, SINGLE: 3}
 
-    const VER_WASM = '1793511141561'
+    const VER_WASM = '1793538555682'
     const URL_WASM = `/danang.kim.wasm?v=${VER_WASM}`
 
     window.wasm_ready = caches.open('danang.kim.wasm')
@@ -467,7 +467,7 @@ Prices are expressed in Vietnamese dong (VND).
     window.likes_search_params = search_params.has('likes') ? search_params.get('likes').split(',').map(Number).filter(Boolean) : []
 
     window.wasm_ready.then(() => {
-        const KEY = '813558f73ec87f5ef4955c83539d71b8a68646f34c96b9b9a6d99fd112279585'// contact spirin.vladimir@gmail.com
+        const KEY = 'c037d2689d14b6684cde20f85f5c3cec9b711dab9e27949c684b853f00c55bfd'// contact spirin.vladimir@gmail.com
         const auth = init(
             BigInt(Date.now()),
             location.href,
