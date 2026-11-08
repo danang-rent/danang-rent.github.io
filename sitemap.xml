@@ -7,6 +7,20 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
+		<loc>https://danang.kim/id/cho-thue-can-ho-moi-xay-ngu-hanh-son-da-nang</loc>
+		<lastmod>2026-11-08</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>179993343</dk:id>
+	</url>
+	<url>
+		<loc>https://danang.kim/id/can-ho-son-tra-ocean-view</loc>
+		<lastmod>2026-11-08</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
+		<dk:id>178465761</dk:id>
+	</url>
+	<url>
 		<loc>https://danang.kim/id/cho-thue-nha-3pn-duong-do-quy-hoa-xuan</loc>
 		<lastmod>2026-11-08</lastmod>
 		<changefreq>daily</changefreq>
@@ -5150,13 +5164,6 @@
 		<changefreq>daily</changefreq>
 		<priority>0.8</priority>
 		<dk:id>179906030</dk:id>
-	</url>
-	<url>
-		<loc>https://danang.kim/id/cho-thue-can-ho-nguyen-tang-4-1pn-42m2-rieng-biet-ban-cong-sieu-lon</loc>
-		<lastmod>2026-11-04</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.8</priority>
-		<dk:id>179667751</dk:id>
 	</url>
 	<url>
 		<loc>https://danang.kim/id/cho-thue-lau-dai-goc-2mt-dong-sy-nguyen-sat-truc-chinh-minh-mang</loc>
