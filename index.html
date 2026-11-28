@@ -3265,11 +3265,20 @@ apply_filter = throttle(apply_filter, 90)
                 var likes = toggle_like(id)
             })
             map.on('click', 'price-hitbox', e => {
-                const click_priority = {normal: 1, filtered: 0}
-                e.features.sort((a, b) =>
-                    click_priority[b.state.mode] - click_priority[a.state.mode]
-                )
-                const id = e.features[0].id
+                const id = e.features.reduce((best, feat) => {
+                    var feat_mode = feat['state']['mode']
+                    var best_mode = best['state']['mode']
+                    if (feat_mode == 'filtered') return best
+                    if (best_mode == 'filtered' && (!feat_mode || feat_mode == 'normal')) return feat
+                    if (feat_mode == 'selected' && (!best_mode || best_mode == 'normal')) return best
+                    if (
+                        (!feat_mode || feat_mode == 'normal') &&
+                        (!best_mode || best_mode == 'normal')
+                    ) return feat['properties']['price'] < best['properties']['price']
+                        ? feat
+                        : best
+                    return best
+                }, e.features[0]).id
                 const price = e.features[0].properties.price
                 const url = get_url(id)
                 if (!is_touch_vertical()) {
